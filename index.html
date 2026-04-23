@@ -1,0 +1,1939 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gacha Cards | Аниме коллекция</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 30%, #0a0a1a, #050510);
+            font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 10, 26, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 12px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF6B6B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .burger-menu {
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+        }
+
+        .burger-line {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .burger-menu.active .burger-line:nth-child(1) { transform: rotate(45deg) translate(8px, 8px); }
+        .burger-menu.active .burger-line:nth-child(2) { opacity: 0; }
+        .burger-menu.active .burger-line:nth-child(3) { transform: rotate(-45deg) translate(8px, -8px); }
+
+        .dropdown-menu {
+            position: fixed;
+            top: 60px;
+            left: -100%;
+            width: 280px;
+            height: calc(100vh - 60px);
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(20px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            padding: 20px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-menu.open { left: 0; }
+
+        .menu-item {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 215, 0, 0.15);
+            border-left-color: #FFD700;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 998;
+            display: none;
+        }
+
+        .overlay.active { display: block; }
+
+        .main-content {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 80px 16px 20px 16px;
+            flex: 1;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding: 20px 16px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .footer p {
+            margin-bottom: 12px;
+        }
+
+        .support-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .support-btn {
+            background: linear-gradient(135deg, #4a1a6a, #2a0a4a);
+            padding: 8px 20px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .support-btn:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #6a2a8a, #4a1a6a);
+        }
+
+        .telegram-btn {
+            background: linear-gradient(135deg, #0088cc, #0055aa);
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-icon { font-size: 1.8rem; }
+        .stat-info { display: flex; flex-direction: column; }
+        .stat-label { font-size: 0.7rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 1.4rem; font-weight: 700; }
+
+        .ore-icon {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+            vertical-align: middle;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 20px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .profile-info h3 { font-size: 1.3rem; margin-bottom: 5px; }
+        .profile-info p { font-size: 0.8rem; opacity: 0.7; }
+
+        .id-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 6px 12px;
+            border-radius: 40px;
+            width: fit-content;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .id-container:hover {
+            background: rgba(255, 215, 0, 0.2);
+        }
+
+        .copy-icon {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .level-progress {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .level-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FF8C00);
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+        }
+
+        .profile-stat { text-align: center; }
+        .profile-stat .num { font-size: 1.3rem; font-weight: 700; }
+        .profile-stat .label { font-size: 0.7rem; opacity: 0.6; }
+
+        .promo-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .promo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .promo-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 40px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .promo-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .promo-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #1a1a2e;
+        }
+
+        .daily-bonus {
+            background: linear-gradient(135deg, #4a90e2, #8e44ad);
+            border-radius: 28px;
+            padding: 14px;
+            margin-bottom: 20px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .daily-bonus:active { transform: scale(0.98); }
+
+        .fishing-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .fishing-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .fishing-stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .fishing-stat {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .fishing-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .fish-btn {
+            flex: 1;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 28px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .fish-free {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+
+        .fish-paid {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .fish-btn:active { transform: scale(0.97); }
+        .fish-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .fish-info {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 28px;
+            padding: 16px;
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .fish-info h4 {
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .fish-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
+            border-radius: 28px;
+            padding: 18px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.15);
+        }
+
+        .info-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-content {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .info-highlight {
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .info-badge {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+
+        .season-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pack-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .pack-btn {
+            flex: 1;
+            border: none;
+            padding: 16px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 28px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .pack-btn:active { transform: scale(0.97); }
+        .event-btn { background: linear-gradient(135deg, #f093fb, #f5576c); }
+
+        .selection-area {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .cards-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .choice-card {
+            background: linear-gradient(135deg, #1e1b3c, #15122e);
+            border-radius: 20px;
+            padding: 12px;
+            width: calc(33% - 12px);
+            min-width: 100px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+
+        .choice-card.selected {
+            border-color: #FFD700;
+            background: linear-gradient(135deg, #2a2555, #1e1b3c);
+            transform: scale(1.02);
+        }
+
+        .choice-card img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .take-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 14px;
+            border-radius: 28px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            color: #1a1a2e;
+        }
+
+        .take-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .mine-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border-radius: 32px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .mine-button {
+            background: linear-gradient(135deg, #f5af19, #f12711);
+            border: none;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.05s linear;
+            box-shadow: 0 10px 0 #8b3a0e;
+            margin: 15px auto;
+        }
+
+        .mine-button:active { transform: translateY(4px); box-shadow: 0 6px 0 #8b3a0e; }
+
+        .exchange-btn {
+            background: linear-gradient(135deg, #4a90e2, #8e44ad);
+            border: none;
+            padding: 12px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            color: white;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f5af19, #f12711);
+            width: 0%;
+            transition: width 0.2s;
+        }
+
+        .rank-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            margin: 5px 0;
+        }
+
+        .rank-X { background: #dc3545; box-shadow: 0 0 10px #ff0000; }
+        .rank-S { background: #ffc107; color: #1a1a2e; }
+        .rank-A { background: #fc363b; }
+        .rank-P { background: #005db6; }
+        .rank-G { background: #009933; }
+        .rank-B { background: #eb5d9b; }
+        .rank-C { background: #df9300; }
+        .rank-D { background: #718b99; }
+        .rank-E { background: #985e4b; }
+        .rank-H { background: #ff6600; }
+        .rank-N { background: #00ccff; }
+        .rank-V { background: #ff88cc; }
+        .rank-L { background: #ffaa44; }
+        .rank-Q { background: #4984b2; }
+
+        .collection-grid, .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+            max-height: 55vh;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .collected-card, .catalog-card {
+            background: linear-gradient(135deg, rgba(30, 27, 60, 0.9), rgba(20, 18, 45, 0.9));
+            border-radius: 20px;
+            padding: 12px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .collected-card:hover, .catalog-card:hover { transform: translateY(-3px); border-color: #FFD700; }
+
+        .collected-card img, .catalog-card img {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .check-mark {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            font-size: 1.3rem;
+            color: #4caf50;
+            text-shadow: 0 0 3px black;
+        }
+
+        .upgrade-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .modal.active { display: flex; }
+        .modal-content { text-align: center; max-width: 90%; }
+        .modal-content img { max-width: 80vw; max-height: 60vh; object-fit: contain; border-radius: 24px; }
+
+        .reset-btn {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            border: none;
+            padding: 14px;
+            border-radius: 28px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .rank-filter-scroll {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin-bottom: 15px;
+            white-space: nowrap;
+        }
+
+        .rank-filter-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .rank-filter-btn.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            color: #1a1a2e;
+        }
+
+        .level-stat {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            color: #1a1a2e;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: bold;
+            z-index: 2000;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 480px) {
+            .choice-card img { width: 55px; height: 55px; }
+            .mine-button { width: 120px; height: 120px; font-size: 1rem; }
+            .collected-card img, .catalog-card img { width: 70px; height: 70px; }
+            .collection-grid, .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .toast { white-space: normal; text-align: center; max-width: 80%; font-size: 0.8rem; }
+            .promo-input-group { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-container">
+        <div class="logo">🎴 GachaCards</div>
+        <div class="burger-menu" id="burgerBtn">
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+            <div class="burger-line"></div>
+        </div>
+    </div>
+</div>
+
+<div class="dropdown-menu" id="dropdownMenu">
+    <div class="menu-item active" data-section="profile">👤 Профиль</div>
+    <div class="menu-item" data-section="packs">📦 Паки</div>
+    <div class="menu-item" data-section="event">🎪 Ивент</div>
+    <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
+    <div class="menu-item" data-section="mine">⛏️ Шахта</div>
+    <div class="menu-item" data-section="collection">📚 Коллекция</div>
+    <div class="menu-item" data-section="catalog">📖 Каталог</div>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<div class="main-content">
+    <!-- Профиль -->
+    <div id="profileSection" class="section active">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="avatar">🎴</div>
+                <div class="profile-info">
+                    <h3 id="username">Коллекционер</h3>
+                    <div class="id-container" id="copyIdBtn">
+                        <span>🆔 ID: <strong id="userId">XXXX</strong></span>
+                        <span class="copy-icon">📋</span>
+                    </div>
+                </div>
+            </div>
+            <div class="level-progress"><div class="level-fill" id="levelFill"></div></div>
+            <div class="profile-stats">
+                <div class="profile-stat"><div class="num" id="profileLevel">1</div><div class="label">Уровень</div></div>
+                <div class="profile-stat"><div class="num" id="profileExp">0</div><div class="label">Опыт</div></div>
+                <div class="profile-stat"><div class="num" id="profileCards">0</div><div class="label">Карт</div></div>
+                <div class="profile-stat"><div class="num" id="profileShards">0</div><div class="label">Осколки</div></div>
+            </div>
+        </div>
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsProfile">500</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsProfile">40</div></div></div>
+        </div>
+        
+        <div class="daily-bonus" id="dailyBonusBtn">🎁 ЕЖЕДНЕВНЫЙ БОНУС +30 💎</div>
+
+        <div class="promo-card">
+            <div class="info-title">🎫 ПРОМОКОД</div>
+            <div class="info-content">
+                <p>Введите промокод для получения бонуса! Каждый код можно использовать только один раз.</p>
+                <p style="font-size:0.7rem; margin-top:5px;">💎 Обычные промокоды для всех игроков<br>🔐 Персональные промокоды привязаны к вашему ID</p>
+            </div>
+            <div class="promo-input-group">
+                <input type="text" class="promo-input" id="promoInput" placeholder="Введите промокод...">
+                <button class="promo-btn" id="activatePromoBtn">АКТИВИРОВАТЬ</button>
+            </div>
+        </div>
+        
+        <button class="reset-btn" id="resetBtn">🔄 СБРОС ПРОГРЕССА</button>
+    </div>
+
+    <!-- Паки -->
+    <div id="packsSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsPacks">500</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsPacks">40</div></div></div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-title">📦 Что такое пак?</div>
+            <div class="info-content">
+                <p>Пак — это набор из <strong class="info-highlight">3 случайных карт</strong>. Когда вы открываете пак, вам показываются <strong>все 3 карты</strong>, но <strong class="info-highlight">вы можете выбрать только 1 карту</strong> и забрать её в свою коллекцию.</p>
+                <p>✨ Если карта уже есть — вы получите <strong class="info-highlight">7💎</strong> вместо дубликата!</p>
+                <p>🎴 <strong>3 карты</strong> в паке</p>
+                <p>⚡ Карты <strong class="info-highlight">A+</strong> дают осколки ✨</p>
+                <p>🎲 <strong>Выбор только 1 карты</strong></p>
+            </div>
+        </div>
+        
+        <div class="pack-buttons"><button class="pack-btn" id="normalPackBtn">🎁 КУПИТЬ ПАК ЗА 70💎</button></div>
+        
+        <div id="selectionPanel" class="selection-area" style="display: none;">
+            <h3>🎲 ВЫБЕРИ ОДНУ КАРТУ</h3>
+            <div id="choiceContainer" class="cards-row"></div>
+            <button class="take-btn" id="takeSelectedBtn" disabled>✅ ЗАБРАТЬ КАРТУ</button>
+        </div>
+    </div>
+
+    <!-- Ивент -->
+    <div id="eventSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon" id="eventIcon">🌸</div><div class="stat-info"><div class="stat-label" id="eventLabel">ЦВЕТОЧКИ</div><div class="stat-value" id="eventCurrencyValue">100</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsEvent">40</div></div></div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-title">🎪 Уникальные ивент-карты!</div>
+            <div class="info-content">
+                <p>В каждом сезоне доступны <strong class="info-highlight">эксклюзивные карты</strong>, которые нельзя получить в обычных паках ✨</p>
+                <p>🎴 <strong>1 карта</strong> в паке</p>
+                <p>🌸 Цена: <strong class="info-highlight">20 ивент-валюты</strong></p>
+                <p>🎪 Ранги: <span class="info-badge" style="background:#ff6600;">H</span>/ <span class="info-badge" style="background:#00ccff;">N</span>/ <span class="info-badge" style="background:#ff88cc;">V</span>/ <span class="info-badge" style="background:#ffaa44;">L</span></p>
+                <p>🔄 Дубликат = <strong class="info-highlight">7💎</strong></p>
+            </div>
+        </div>
+        
+        <div class="season-card" id="eventSeasonCard">
+            <div id="eventSeasonName">🌸 ВЕСЕННИЙ ИВЕНТ</div>
+            <small id="eventDaysLeft">🎪 Открывайте ивент-паки и собирайте коллекцию сезонных карт!</small>
+        </div>
+        
+        <div class="pack-buttons"><button class="pack-btn event-btn" id="eventPackBtn">🎪 КУПИТЬ ИВЕНТ-ПАК ЗА 20🎴</button></div>
+        
+        <div id="eventResultPanel" class="selection-area" style="display: none;">
+            <h3>✨ ВЫ ПОЛУЧИЛИ КАРТУ ✨</h3>
+            <div id="eventResultContainer" class="cards-row"></div>
+            <button class="take-btn" id="closeEventResultBtn">✅ ЗАБРАТЬ</button>
+        </div>
+    </div>
+
+    <!-- Рыбалка -->
+    <div id="fishingSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ПЛАТНЫХ ЛОВУШЕК</div><div class="stat-value" id="paidFishingLeft">10</div><div class="stat-label">/10</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsFishing">40</div></div></div>
+        </div>
+
+        <div class="fishing-card">
+            <div class="fishing-icon">🎣</div>
+            
+            <div class="fishing-stats">
+                <div class="fishing-stat">🎣 Бесплатных: <strong id="freeFishCount">0</strong></div>
+                <div class="fishing-stat">⏳ Следующая: <strong id="nextFreeTime">--:--</strong></div>
+                <div class="fishing-stat">⚡ Платных: <strong id="paidFishUsed">0</strong>/<strong id="paidFishMax">10</strong></div>
+            </div>
+            
+            <div class="fishing-buttons">
+                <button class="fish-btn fish-free" id="freeFishBtn">🎣 Бесплатно</button>
+                <button class="fish-btn fish-paid" id="paidFishBtn">⚡ За 2 осколка</button>
+            </div>
+            
+            <div class="fish-info">
+                <h4>🎣 Что можно поймать?</h4>
+                <div class="fish-item"><span>🐟 Гнилая рыба</span> <span class="info-highlight">→ +5⛏️</span></div>
+                <div class="fish-item"><span>🐠 Кровавый лосось</span> <span class="info-highlight">→ +2💎</span></div>
+                <div class="fish-item"><span>🦑 Гигантский кальмар</span> <span class="info-highlight">→ +10💎 +10⛏️</span></div>
+                <div class="fish-item"><span>👑 Золотая рыбка</span> <span class="info-highlight">→ +1⚡</span></div>
+                <div class="fish-item"><span>📜 Карта сокровищ</span> <span class="info-highlight">→ 🎴 случайная карта</span></div>
+                <div class="fish-item"><span>🎁 Сундук</span> <span class="info-highlight">→ 🎴 бесплатный пак</span></div>
+            </div>
+            
+            <div style="margin-top: 12px; font-size: 0.7rem; opacity: 0.7; text-align: center;">
+                ⏰ Бесплатно: 1 раз / 5 минут &nbsp;&nbsp;|&nbsp;&nbsp;
+                ⚡ Платно: до 10 раз в день за 2⚡ &nbsp;&nbsp;|&nbsp;&nbsp;
+                🔄 Сброс в 00:00
+            </div>
+        </div>
+    </div>
+
+    <!-- Шахта -->
+    <div id="mineSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='🪨'"></div><div class="stat-info"><div class="stat-label">РУДА</div><div class="stat-value" id="oreAmount">0</div></div></div>
+            <div class="stat-card level-stat"><div class="stat-icon">⭐</div><div class="stat-info"><div class="stat-label">УРОВЕНЬ</div><div class="stat-value" id="levelMine">1</div></div></div>
+        </div>
+        <div class="mine-card">
+            <h2>⛏️ ШАХТА</h2>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
+                <span class="stat-card" style="padding: 8px 16px;">📊 <span id="clicksToday">0</span>/<span id="maxClicks">100</span></span>
+                <span class="stat-card" style="padding: 8px 16px;">💰 <span id="orePerClick">10</span>-<span id="orePerClickMax">15</span><img src="images/cristal.png" style="width:16px; height:16px; vertical-align:middle; margin-left:4px;" onerror="this.style.display='none'"></span>
+            </div>
+            <button class="mine-button" id="mineBtn">⛏️<br>КОПАТЬ</button>
+            <div class="progress-bar"><div class="progress-fill" id="mineProgress"></div></div>
+            <button class="exchange-btn" id="exchangeBtn">🔄 ОБМЕНЯТЬ 100 РУДЫ → 1 💎</button>
+            <small>⚡ 1 клик = 1 XP. С уровнем растёт лимит кликов и руда за клик!</small>
+        </div>
+    </div>
+
+    <!-- Коллекция -->
+    <div id="collectionSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-info"><div class="stat-label">КАРТ В КОЛЛЕКЦИИ</div><div class="stat-value" id="collectionCount">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsCollection">40</div></div></div>
+        </div>
+        <div class="rank-filter-scroll" id="collectionRankFilters"></div>
+        <div id="collectionGrid" class="collection-grid"></div>
+    </div>
+
+    <!-- Каталог -->
+    <div id="catalogSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-info"><div class="stat-label">ВСЕГО КАРТ</div><div class="stat-value" id="totalCardsCount">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-info"><div class="stat-label">СОБРАНО</div><div class="stat-value" id="collectedPercent">0%</div></div></div>
+        </div>
+        <div class="rank-filter-scroll" id="catalogRankFilters"></div>
+        <div id="catalogGrid" class="catalog-grid"></div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <p>⚠️ Изображения используются в ознакомительных целях в рамках фан-проекта. 
+    Права на изображения принадлежат их законным владельцам. 
+    При возникновении претензий — изображения будут заменены.</p>
+    <p>⭐ Все изображения принадлежат mangabuff.ru<br>Фан-проект, не связан с официальными правообладателями<br>© 2026 @b_loody</p>
+    
+    <div class="support-wrapper">
+        <a href="https://yoomoney.ru/to/4100119003253255" target="_blank" rel="noopener noreferrer" class="support-btn">💖 Поддержать проект</a>
+        <a href="https://t.me/b_loody" target="_blank" rel="noopener noreferrer" class="support-btn telegram-btn">📢 Telegram канал</a>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- Модальные окна -->
+<div id="cardModal" class="modal">
+    <div class="modal-content">
+        <img id="cardModalImage" src="" alt="">
+        <h3 id="cardModalName" style="margin-top: 15px;"></h3>
+        <p id="cardModalSet" style="opacity: 0.8;"></p>
+        <button id="cardModalClose" style="margin-top: 20px; padding: 10px 30px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
+    </div>
+</div>
+
+<div id="viewModal" class="modal">
+    <div class="modal-content">
+        <img id="viewModalImage" src="" alt="">
+        <h3 id="viewModalName" style="margin-top: 15px;"></h3>
+        <p id="viewModalSet" style="opacity: 0.8;"></p>
+        <button id="viewModalClose" style="margin-top: 20px; padding: 10px 30px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
+    </div>
+</div>
+
+<script src="cards.js"></script>
+<script>
+    // ========== ГЛОБАЛЬНЫЕ КОНСТАНТЫ (ДОЛЖНЫ БЫТЬ ОПРЕДЕЛЕНЫ ПЕРВЫМИ) ==========
+    const ALL_RANKS = ["ALL", "X", "S", "A", "P", "G", "B", "C", "D", "E", "H", "N", "V", "L", "Q"];
+    
+    // ========== ГЕНЕРАЦИЯ ID ==========
+    function generateUserId() {
+        const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+        let result = '';
+        for (let i = 0; i < 8; i++) {
+            result += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+        return result;
+    }
+    
+    // ========== СОСТОЯНИЕ ==========
+    let crystals = 500;
+    let shards = 40;
+    let ore = 0;
+    let eventCurrency = 100;
+    let collection = [];
+    let currentOfferedCards = [];
+    let selectedCardIndex = null;
+    let collectionRankFilter = "ALL";
+    let catalogRankFilter = "ALL";
+    
+    let level = 1;
+    let exp = 0;
+    let clicksToday = 0;
+    let oreMinedToday = 0;
+    let lastResetDate = new Date().toDateString();
+    let lastDailyBonus = localStorage.getItem("lastDailyBonus") || "";
+    
+    // Рыбалка
+    let lastFreeFishTime = localStorage.getItem("lastFreeFishTime") || "0";
+    let paidFishUsed = parseInt(localStorage.getItem("paidFishUsed")) || 0;
+    let lastPaidResetDate = localStorage.getItem("lastPaidResetDate") || new Date().toDateString();
+    
+    // Промокоды
+    let usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
+    let userId = localStorage.getItem("userId");
+    if (!userId) {
+        userId = generateUserId();
+        localStorage.setItem("userId", userId);
+    }
+    
+    // ========== ПРОМОКОДЫ ==========
+    const PUBLIC_PROMOCODES = {
+        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20✨" },
+        "GACHASTAR": { crystals: 200, shards: 30, message: "Спасибо за поддержку! +200💎 и +30✨" },
+        "SPRING2026": { eventCurrency: 50, message: "Весенний бонус! +50🌸 цветочков" },
+        "LUCKYFISH": { crystals: 50, paidFishCharges: 3, message: "Удачная рыбалка! +50💎 и +3⚡ платных ловушки" },
+        "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
+    };
+    
+    const PERSONAL_PROMOCODES = {
+        "PERSONAL_QVKQJPMX_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPMX" },
+        "PERSONAL_QVKQJPM1_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPM1" }
+    };
+    
+    function checkPersonalPromoCode(code) {
+        if (PERSONAL_PROMOCODES[code]) {
+            const promo = PERSONAL_PROMOCODES[code];
+            if (promo.targetId === userId) {
+                return { ...promo, isPersonal: true };
+            }
+            return null;
+        }
+        
+        const parts = code.split('_');
+        if (parts.length !== 3 || parts[0] !== "PERSONAL") return null;
+        
+        const targetUserId = parts[1];
+        const rewardType = parts[2];
+        
+        if (targetUserId !== userId) return null;
+        
+        switch(rewardType) {
+            case "100CRYSTALS": return { crystals: 100, message: "Персональный бонус! +100💎", isPersonal: true };
+            case "250CRYSTALS": return { crystals: 250, message: "Персональный бонус! +250💎", isPersonal: true };
+            case "500CRYSTALS": return { crystals: 500, message: "Персональный бонус! +500💎", isPersonal: true };
+            case "1000CRYSTALS": return { crystals: 1000, message: "Персональный бонус! +1000💎", isPersonal: true };
+            case "50SHARDS": return { shards: 50, message: "Персональный бонус! +50✨ осколков", isPersonal: true };
+            case "100SHARDS": return { shards: 100, message: "Персональный бонус! +100✨ осколков", isPersonal: true };
+            case "EVENT50": return { eventCurrency: 50, message: "Персональный бонус! +50 ивент-валюты", isPersonal: true };
+            case "EVENT100": return { eventCurrency: 100, message: "Персональный бонус! +100 ивент-валюты", isPersonal: true };
+            case "FREEPACK": return { freePack: true, message: "Персональный бонус! +1 бесплатный пак", isPersonal: true };
+            case "FISHCHARGES": return { paidFishCharges: 3, message: "Персональный бонус! +3⚡ платных ловушки", isPersonal: true };
+            default: return null;
+        }
+    }
+    
+    function showToast(message, isLevelUp = false) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+        if (isLevelUp) {
+            toast.style.background = "linear-gradient(135deg, #FFD700, #FF8C00)";
+        } else {
+            toast.style.background = "linear-gradient(135deg, #4a90e2, #8e44ad)";
+        }
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+    
+    function copyUserId() {
+        navigator.clipboard.writeText(userId).then(() => {
+            showToast("✅ ID скопирован в буфер обмена!");
+        }).catch(() => {
+            showToast("❌ Не удалось скопировать ID");
+        });
+    }
+    
+    function showCardModal(card) {
+        const modal = document.getElementById("cardModal");
+        const img = document.getElementById("cardModalImage");
+        const nameEl = document.getElementById("cardModalName");
+        const setEl = document.getElementById("cardModalSet");
+        
+        const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+        img.src = imgUrl || "https://via.placeholder.com/300";
+        nameEl.innerText = card.name;
+        setEl.innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</span>`;
+        modal.classList.add("active");
+    }
+    
+    function viewCard(card) {
+        const modal = document.getElementById("viewModal");
+        const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+        document.getElementById("viewModalImage").src = imgUrl || "https://via.placeholder.com/300";
+        document.getElementById("viewModalName").innerText = card.name;
+        document.getElementById("viewModalSet").innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</span>`;
+        modal.classList.add("active");
+    }
+    
+    function expNeeded() {
+        if (level >= 100) return 999999;
+        return Math.floor(40 + level * 5);
+    }
+    
+    function getMaxClicks() { 
+        return Math.floor(100 + (level - 1) * 1.5); 
+    }
+    
+    function getOrePerClickMin() { 
+        return Math.floor(8 + (level - 1) * 0.3); 
+    }
+    
+    function getOrePerClickMax() { 
+        return Math.floor(12 + (level - 1) * 0.5); 
+    }
+    
+    function addExp(amount) {
+        if (level >= 100) return;
+        let oldLevel = level;
+        exp += amount;
+        let needed = expNeeded();
+        while (exp >= needed && level < 100) {
+            exp -= needed;
+            level++;
+            needed = expNeeded();
+        }
+        if (level > oldLevel) {
+            showToast(`🎉 УРОВЕНЬ ПОВЫШЕН! ${oldLevel} → ${level} 🎉`, true);
+            saveGame();
+            updateAllUI();
+        }
+        saveGame();
+        updateAllUI();
+    }
+    
+    // ========== СЕЗОНЫ ==========
+    let currentSeason = "spring";
+    let hasEvent = true;
+    let seasonEndDate = null;
+    
+    function updateSeason() {
+        const now = new Date();
+        const springStart = new Date(now.getFullYear(), 2, 20);
+        const springEnd = new Date(now.getFullYear(), 3, 20);
+        const summerStart = new Date(now.getFullYear(), 5, 20);
+        const summerEnd = new Date(now.getFullYear(), 6, 20);
+        const halloweenStart = new Date(now.getFullYear(), 9, 25);
+        const halloweenEnd = new Date(now.getFullYear(), 10, 8);
+        const winterStart = new Date(now.getFullYear(), 11, 21);
+        const winterEnd = new Date(now.getFullYear() + 1, 0, 31);
+        
+        if (now >= springStart && now <= springEnd) {
+            currentSeason = "spring"; hasEvent = true; seasonEndDate = springEnd;
+        } else if (now >= summerStart && now <= summerEnd) {
+            currentSeason = "summer"; hasEvent = true; seasonEndDate = summerEnd;
+        } else if (now >= halloweenStart && now <= halloweenEnd) {
+            currentSeason = "halloween"; hasEvent = true; seasonEndDate = halloweenEnd;
+        } else if (now >= winterStart && now <= winterEnd) {
+            currentSeason = "winter"; hasEvent = true; seasonEndDate = winterEnd;
+        } else {
+            currentSeason = "normal"; hasEvent = false; seasonEndDate = null;
+        }
+        updateSeasonDisplay();
+    }
+    
+    function getSeasonIcon() {
+        const icons = { spring: "🌸", summer: "🍉", halloween: "🎃", winter: "❄️" };
+        return icons[currentSeason] || "⭐";
+    }
+    
+    function getSeasonLabel() {
+        const labels = { spring: "ЦВЕТОЧКИ", summer: "АРБУЗЫ", halloween: "ТЫКВЫ", winter: "СНЕЖИНКИ" };
+        return labels[currentSeason] || "ВАЛЮТА";
+    }
+    
+    function getDaysRemaining() {
+        if (!seasonEndDate) return 0;
+        return Math.ceil((seasonEndDate - new Date()) / (1000 * 60 * 60 * 24));
+    }
+    
+    function updateSeasonDisplay() {
+        const daysLeft = getDaysRemaining();
+        const seasonNames = {
+            spring: "🌸 ВЕСЕННИЙ ИВЕНТ (ранг V)",
+            summer: "☀️ ЛЕТНИЙ ИВЕНТ (ранг L)",
+            halloween: "🎃 ХЭЛЛОУИН (ранг H)",
+            winter: "❄️ ЗИМНИЙ ИВЕНТ (ранг N)"
+        };
+        
+        if (hasEvent && daysLeft > 0) {
+            document.getElementById("eventSeasonName").innerHTML = `${getSeasonIcon()} ${seasonNames[currentSeason]}`;
+            document.getElementById("eventDaysLeft").innerHTML = `⏰ Осталось дней: ${daysLeft}`;
+            document.getElementById("eventIcon").innerHTML = getSeasonIcon();
+            document.getElementById("eventLabel").innerHTML = getSeasonLabel();
+        } else {
+            document.getElementById("eventSeasonName").innerHTML = "❌ НЕТ АКТИВНЫХ ИВЕНТОВ";
+            document.getElementById("eventDaysLeft").innerHTML = "Ивентовые паки недоступны";
+            hasEvent = false;
+        }
+    }
+    
+    // ========== РЫБАЛКА ==========
+    function resetPaidFishingIfNeeded() {
+        const today = new Date().toDateString();
+        if (lastPaidResetDate !== today) {
+            paidFishUsed = 0;
+            lastPaidResetDate = today;
+            saveGame();
+        }
+    }
+    
+    function updateFishingUI() {
+        const now = Date.now();
+        const lastFreeTime = parseInt(lastFreeFishTime);
+        const timeLeft = Math.max(0, 300000 - (now - lastFreeTime));
+        const minutesLeft = Math.floor(timeLeft / 60000);
+        const secondsLeft = Math.floor((timeLeft % 60000) / 1000);
+        
+        if (timeLeft <= 0) {
+            document.getElementById("nextFreeTime").innerHTML = "Готово!";
+            document.getElementById("freeFishBtn").disabled = false;
+        } else {
+            document.getElementById("nextFreeTime").innerHTML = `${minutesLeft}:${secondsLeft.toString().padStart(2, '0')}`;
+            document.getElementById("freeFishBtn").disabled = true;
+        }
+        
+        document.getElementById("freeFishCount").innerHTML = timeLeft <= 0 ? "1" : "0";
+        document.getElementById("paidFishUsed").innerHTML = paidFishUsed;
+        document.getElementById("paidFishMax").innerHTML = 10;
+        document.getElementById("paidFishBtn").disabled = paidFishUsed >= 10;
+    }
+    
+    function getRandomFish() {
+        const fishes = [
+            { name: "🐟 Гнилая рыба", ore: 5, crystals: 0, card: null, freePack: false, paidCharge: 0 },
+            { name: "🐠 Кровавый лосось", ore: 0, crystals: 2, card: null, freePack: false, paidCharge: 0 },
+            { name: "🦑 Гигантский кальмар", ore: 10, crystals: 10, card: null, freePack: false, paidCharge: 0 },
+            { name: "👑 Золотая рыбка", ore: 0, crystals: 0, card: null, freePack: false, paidCharge: 1 },
+            { name: "📜 Карта сокровищ", ore: 0, crystals: 0, card: true, freePack: false, paidCharge: 0 },
+            { name: "🎁 Сундук", ore: 0, crystals: 0, card: null, freePack: true, paidCharge: 0 }
+        ];
+        
+        const weights = [30, 25, 15, 10, 10, 10];
+        let total = weights.reduce((a, b) => a + b, 0);
+        let rand = Math.random() * total;
+        let accum = 0;
+        
+        for (let i = 0; i < fishes.length; i++) {
+            accum += weights[i];
+            if (rand <= accum) return { ...fishes[i] };
+        }
+        return fishes[0];
+    }
+    
+    async function freeFishing() {
+        const now = Date.now();
+        const lastFreeTime = parseInt(lastFreeFishTime);
+        
+        if (now - lastFreeTime < 300000) {
+            const timeLeft = Math.ceil((300000 - (now - lastFreeTime)) / 1000);
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            showToast(`⏳ Бесплатная рыбалка будет доступна через ${minutes}:${seconds.toString().padStart(2, '0')}`);
+            return;
+        }
+        
+        const fish = getRandomFish();
+        let rewardText = "";
+        let obtainedCard = null;
+        
+        if (fish.ore > 0) {
+            ore += fish.ore;
+            rewardText = `+${fish.ore}⛏️ руды`;
+        }
+        if (fish.crystals > 0) {
+            crystals += fish.crystals;
+            rewardText = `+${fish.crystals}💎`;
+        }
+        if (fish.ore > 0 && fish.crystals > 0) {
+            rewardText = `+${fish.ore}⛏️ и +${fish.crystals}💎`;
+        }
+        if (fish.paidCharge > 0) {
+            rewardText = `+1⚡ платная рыбалка`;
+        }
+        if (fish.card) {
+            const card = getRandomCard(false);
+            obtainedCard = card;
+            const existingIndex = collection.findIndex(c => c.id === card.id);
+            if (existingIndex !== -1) {
+                crystals += 7;
+                rewardText = `Дубликат! +7💎`;
+            } else {
+                collection.push({ ...card });
+                rewardText = `🎴 Получена карта: ${card.name} [${card.rank}]`;
+            }
+        }
+        if (fish.freePack) {
+            rewardText = "🎁 Бесплатный пак!";
+            openNormalPack(true);
+        }
+        
+        lastFreeFishTime = now.toString();
+        saveGame();
+        updateAllUI();
+        updateFishingUI();
+        showToast(`🎣 Поймано: ${fish.name}! ${rewardText}`);
+        
+        if (obtainedCard) {
+            setTimeout(() => showCardModal(obtainedCard), 500);
+        }
+    }
+    
+    async function paidFishing() {
+        resetPaidFishingIfNeeded();
+        
+        if (paidFishUsed >= 10) {
+            showToast("❌ Лимит платной рыбалки на сегодня исчерпан (10/10)");
+            return;
+        }
+        
+        if (shards < 2) {
+            showToast("❌ Не хватает осколков! Нужно 2⚡");
+            return;
+        }
+        
+        shards -= 2;
+        paidFishUsed++;
+        
+        const fish = getRandomFish();
+        let rewardText = "";
+        let obtainedCard = null;
+        
+        if (fish.ore > 0) {
+            ore += fish.ore;
+            rewardText = `+${fish.ore}⛏️ руды`;
+        }
+        if (fish.crystals > 0) {
+            crystals += fish.crystals;
+            rewardText = `+${fish.crystals}💎`;
+        }
+        if (fish.ore > 0 && fish.crystals > 0) {
+            rewardText = `+${fish.ore}⛏️ и +${fish.crystals}💎`;
+        }
+        if (fish.paidCharge > 0) {
+            rewardText = `+1⚡ платная рыбалка`;
+        }
+        if (fish.card) {
+            const card = getRandomCard(false);
+            obtainedCard = card;
+            const existingIndex = collection.findIndex(c => c.id === card.id);
+            if (existingIndex !== -1) {
+                crystals += 7;
+                rewardText = `Дубликат! +7💎`;
+            } else {
+                collection.push({ ...card });
+                rewardText = `🎴 Получена карта: ${card.name} [${card.rank}]`;
+            }
+        }
+        if (fish.freePack) {
+            rewardText = "🎁 Бесплатный пак!";
+            openNormalPack(true);
+        }
+        
+        saveGame();
+        updateAllUI();
+        updateFishingUI();
+        showToast(`🎣 Поймано: ${fish.name}! ${rewardText}`);
+        
+        if (obtainedCard) {
+            setTimeout(() => showCardModal(obtainedCard), 500);
+        }
+    }
+    
+    // ========== КАРТЫ ==========
+    function getRandomCard(isEventPack) {
+        let availableCards = ALL_CARDS.filter(c => c.rank !== "A+");
+        
+        if (isEventPack && hasEvent) {
+            const seasonMap = { "spring": "V", "summer": "L", "halloween": "H", "winter": "N" };
+            const targetRank = seasonMap[currentSeason];
+            availableCards = availableCards.filter(c => c.rank === targetRank && c.season === currentSeason);
+            if (availableCards.length === 0) {
+                availableCards = ALL_CARDS.filter(c => ["H","N","V","L"].includes(c.rank));
+            }
+        } else {
+            availableCards = availableCards.filter(c => ["X","S","A","P","G","B","C","D","E"].includes(c.rank));
+        }
+        
+        if (availableCards.length === 0) return ALL_CARDS[0];
+        
+        const rankWeights = { "X":1, "S":2, "A":5, "P":7, "G":10, "B":15, "C":20, "D":25, "E":30 };
+        let weightArray = [];
+        for (let card of availableCards) {
+            let weight = rankWeights[card.rank] || 10;
+            for (let i = 0; i < weight * 10; i++) weightArray.push(card);
+        }
+        return { ...weightArray[Math.floor(Math.random() * weightArray.length)] };
+    }
+    
+    function checkAplusDrop() { return Math.random() < 0.03; }
+    
+    function generateThreeCards() {
+        let cards = [];
+        for (let i = 0; i < 3; i++) cards.push(getRandomCard(false));
+        return cards;
+    }
+    
+    // ========== ШАХТА ==========
+    function resetDailyIfNeeded() {
+        const today = new Date().toDateString();
+        if (lastResetDate !== today) {
+            clicksToday = 0;
+            oreMinedToday = 0;
+            lastResetDate = today;
+            saveGame();
+        }
+    }
+    
+    function mineOre() {
+        resetDailyIfNeeded();
+        const maxClicks = getMaxClicks();
+        if (clicksToday >= maxClicks) {
+            showToast(`⛔ Лимит кликов на сегодня: ${maxClicks}/${maxClicks}`);
+            return;
+        }
+        const oreGained = Math.floor(Math.random() * (getOrePerClickMax() - getOrePerClickMin() + 1)) + getOrePerClickMin();
+        ore += oreGained;
+        clicksToday++;
+        oreMinedToday += oreGained;
+        addExp(1);
+        saveGame();
+        updateAllUI();
+    }
+    
+    function exchangeOre() {
+        if (ore < 100) {
+            showToast(`Не хватает руды! У вас ${ore} / 100`);
+            return;
+        }
+        const exchangeCount = Math.floor(ore / 100);
+        crystals += exchangeCount;
+        ore -= exchangeCount * 100;
+        saveGame();
+        updateAllUI();
+        showToast(`🔄 Обменяно ${exchangeCount} 💎! Получено ${exchangeCount} кристаллов!`);
+    }
+    
+    // ========== ОБЫЧНЫЕ ПАКИ ==========
+    function showChoicePanel(cards) {
+        currentOfferedCards = cards;
+        selectedCardIndex = null;
+        const container = document.getElementById("choiceContainer");
+        container.innerHTML = "";
+        cards.forEach((card, idx) => {
+            const div = document.createElement("div");
+            div.className = "choice-card";
+            div.innerHTML = `
+                <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
+                <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 15 ? card.name.substring(0,12)+'...' : card.name}</div>
+                <div style="font-size:0.6rem; opacity:0.7;">${card.set || ""}</div>
+            `;
+            div.onclick = () => {
+                document.querySelectorAll("#choiceContainer .choice-card").forEach(c => c.classList.remove("selected"));
+                div.classList.add("selected");
+                selectedCardIndex = idx;
+                document.getElementById("takeSelectedBtn").disabled = false;
+            };
+            container.appendChild(div);
+        });
+        document.getElementById("selectionPanel").style.display = "block";
+        document.getElementById("takeSelectedBtn").disabled = true;
+    }
+    
+    function takeSelectedCard() {
+        if (selectedCardIndex === null) return;
+        const chosen = currentOfferedCards[selectedCardIndex];
+        
+        if (chosen.rank === "A+") {
+            shards += 15;
+            showToast(`✨ Осколок (A+)! +15 осколков ✨`);
+            saveGame();
+            updateAllUI();
+            document.getElementById("selectionPanel").style.display = "none";
+            return;
+        }
+        
+        const existingIndex = collection.findIndex(c => c.id === chosen.id);
+        if (existingIndex !== -1) {
+            crystals += 7;
+            showToast(`🔄 Дубликат! +7 кристаллов`);
+            saveGame();
+            updateAllUI();
+            document.getElementById("selectionPanel").style.display = "none";
+            return;
+        }
+        
+        collection.push({ ...chosen });
+        saveGame();
+        updateAllUI();
+        document.getElementById("selectionPanel").style.display = "none";
+        showToast(`🎉 + ${chosen.name} [${chosen.rank}] из "${chosen.set}"!`);
+        showCardModal(chosen);
+    }
+    
+    function openNormalPack(isFree = false) {
+        if (!isFree && crystals < 70) { showToast("❌ Нет кристаллов! Идите в шахту!"); return; }
+        if (!isFree) crystals -= 70;
+        addExp(3);
+        
+        if (checkAplusDrop()) {
+            shards += 10;
+            showToast("🌟 УДАЧА! Выпал Осколок (A+)! +10 осколков 🌟");
+            saveGame();
+            updateAllUI();
+            return;
+        }
+        
+        saveGame();
+        updateAllUI();
+        showChoicePanel(generateThreeCards());
+    }
+    
+    // ========== ИВЕНТОВЫЕ ПАКИ ==========
+    function openEventPack() {
+        if (!hasEvent) { showToast("❌ Нет активного ивента!"); return; }
+        if (eventCurrency < 20) { showToast(`❌ Не хватает ${getSeasonLabel()}!`); return; }
+        eventCurrency -= 20;
+        addExp(3);
+        
+        const card = getRandomCard(true);
+        
+        const container = document.getElementById("eventResultContainer");
+        container.innerHTML = "";
+        const div = document.createElement("div");
+        div.className = "choice-card";
+        div.style.width = "100%";
+        div.style.cursor = "default";
+        div.innerHTML = `
+            <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
+            <div class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</div>
+            <div style="font-size:0.8rem; font-weight:bold; margin-top:5px;">${card.name}</div>
+            <div style="font-size:0.65rem; opacity:0.7;">${card.set || ""}</div>
+        `;
+        container.appendChild(div);
+        document.getElementById("eventResultPanel").style.display = "block";
+        
+        window.pendingEventCard = card;
+    }
+    
+    function takeEventCard() {
+        const chosen = window.pendingEventCard;
+        if (!chosen) return;
+        
+        if (chosen.rank === "A+") {
+            shards += 15;
+            showToast(`✨ Осколок (A+)! +15 осколков ✨`);
+            saveGame();
+            updateAllUI();
+            document.getElementById("eventResultPanel").style.display = "none";
+            window.pendingEventCard = null;
+            return;
+        }
+        
+        const existingIndex = collection.findIndex(c => c.id === chosen.id);
+        if (existingIndex !== -1) {
+            crystals += 7;
+            showToast(`🔄 Дубликат! +7 кристаллов`);
+            saveGame();
+            updateAllUI();
+            document.getElementById("eventResultPanel").style.display = "none";
+            window.pendingEventCard = null;
+            return;
+        }
+        
+        collection.push({ ...chosen });
+        saveGame();
+        updateAllUI();
+        document.getElementById("eventResultPanel").style.display = "none";
+        window.pendingEventCard = null;
+        showToast(`🎉 + ${chosen.name} [${chosen.rank}] из "${chosen.set}"!`);
+        showCardModal(chosen);
+    }
+    
+    function claimDailyBonus() {
+        const today = new Date().toDateString();
+        if (lastDailyBonus === today) { showToast("Вы уже получили бонус сегодня!"); return; }
+        crystals += 30;
+        lastDailyBonus = today;
+        saveGame();
+        updateAllUI();
+        showToast("🎁 +30 кристаллов! Заходите завтра снова 🎁");
+    }
+    
+    function upgradeCard(cardId) {
+        const cardIndex = collection.findIndex(c => c.id === cardId);
+        if (cardIndex === -1) return;
+        const card = collection[cardIndex];
+        if (!card.canUpgrade) { showToast("Эту карту нельзя улучшить!"); return; }
+        if (shards < 25) { showToast("Не хватает осколков! Нужно 25"); return; }
+        if (card.isUpgraded) { showToast("Карта уже улучшена!"); return; }
+        shards -= 25;
+        card.isUpgraded = true;
+        saveGame();
+        updateAllUI();
+        showToast(`✨ Карта "${card.name}" улучшена! Теперь у неё есть анимация! ✨`);
+    }
+    
+    // ========== СОРТИРОВКА ==========
+    function sortByRank(cards) {
+        const rankOrder = { "X":0, "S":1, "A":2, "P":3, "G":4, "B":5, "C":6, "D":7, "E":8, "H":9, "N":10, "V":11, "L":12, "Q":13 };
+        return [...cards].sort((a, b) => (rankOrder[a.rank] || 99) - (rankOrder[b.rank] || 99));
+    }
+    
+    function filterByRank(cards, rankFilter) {
+        if (rankFilter === "ALL") return cards;
+        return cards.filter(c => c.rank === rankFilter);
+    }
+    
+    // ========== СОХРАНЕНИЕ ==========
+    function saveGame() {
+        localStorage.setItem("gacha_crystals", crystals);
+        localStorage.setItem("gacha_shards", shards);
+        localStorage.setItem("gacha_ore", ore);
+        localStorage.setItem("gacha_eventCurrency", eventCurrency);
+        localStorage.setItem("gacha_collection", JSON.stringify(collection));
+        localStorage.setItem("gacha_level", level);
+        localStorage.setItem("gacha_exp", exp);
+        localStorage.setItem("gacha_clicksToday", clicksToday);
+        localStorage.setItem("gacha_oreMinedToday", oreMinedToday);
+        localStorage.setItem("gacha_lastReset", lastResetDate);
+        localStorage.setItem("lastDailyBonus", lastDailyBonus);
+        localStorage.setItem("lastFreeFishTime", lastFreeFishTime);
+        localStorage.setItem("paidFishUsed", paidFishUsed);
+        localStorage.setItem("lastPaidResetDate", lastPaidResetDate);
+        localStorage.setItem("usedPromoCodes", JSON.stringify(usedPromoCodes));
+        localStorage.setItem("userId", userId);
+    }
+    
+    function loadGame() {
+        crystals = parseInt(localStorage.getItem("gacha_crystals")) || 500;
+        shards = parseInt(localStorage.getItem("gacha_shards")) || 40;
+        ore = parseInt(localStorage.getItem("gacha_ore")) || 0;
+        eventCurrency = parseInt(localStorage.getItem("gacha_eventCurrency")) || 100;
+        collection = JSON.parse(localStorage.getItem("gacha_collection")) || [];
+        level = parseInt(localStorage.getItem("gacha_level")) || 1;
+        exp = parseInt(localStorage.getItem("gacha_exp")) || 0;
+        clicksToday = parseInt(localStorage.getItem("gacha_clicksToday")) || 0;
+        oreMinedToday = parseInt(localStorage.getItem("gacha_oreMinedToday")) || 0;
+        lastResetDate = localStorage.getItem("gacha_lastReset") || new Date().toDateString();
+        lastDailyBonus = localStorage.getItem("lastDailyBonus") || "";
+        lastFreeFishTime = localStorage.getItem("lastFreeFishTime") || "0";
+        paidFishUsed = parseInt(localStorage.getItem("paidFishUsed")) || 0;
+        lastPaidResetDate = localStorage.getItem("lastPaidResetDate") || new Date().toDateString();
+        usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
+        resetDailyIfNeeded();
+        resetPaidFishingIfNeeded();
+        if (!Array.isArray(collection)) collection = [];
+        updateAllUI();
+    }
+    
+    function createRankFilters(containerId, type) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+        ALL_RANKS.forEach(rank => {
+            const btn = document.createElement("button");
+            btn.className = "rank-filter-btn";
+            if ((type === "collection" && collectionRankFilter === rank) || 
+                (type === "catalog" && catalogRankFilter === rank)) {
+                btn.classList.add("active");
+            }
+            btn.innerText = rank;
+            btn.onclick = () => {
+                if (type === "collection") {
+                    collectionRankFilter = rank;
+                    document.querySelectorAll(`#${containerId} .rank-filter-btn`).forEach(b => b.classList.remove("active"));
+                } else {
+                    catalogRankFilter = rank;
+                    document.querySelectorAll(`#${containerId} .rank-filter-btn`).forEach(b => b.classList.remove("active"));
+                }
+                btn.classList.add("active");
+                updateAllUI();
+            };
+            container.appendChild(btn);
+        });
+    }
+    
+    function updateAllUI() {
+        document.getElementById("userId").innerText = userId;
+        
+        document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine").forEach(el => el && (el.innerText = crystals));
+        document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing").forEach(el => el && (el.innerText = shards));
+        document.querySelectorAll("#eventCurrencyValue").forEach(el => el && (el.innerText = eventCurrency));
+        document.querySelectorAll("#oreAmount").forEach(el => el && (el.innerText = ore));
+        document.querySelectorAll("#levelMine, #profileLevel").forEach(el => el && (el.innerText = level));
+        
+        document.getElementById("profileExp").innerText = exp;
+        document.getElementById("profileCards").innerText = collection.length;
+        document.getElementById("profileShards").innerText = shards;
+        const expPercent = Math.min(100, (exp / expNeeded()) * 100);
+        document.getElementById("levelFill").style.width = `${expPercent}%`;
+        
+        document.getElementById("clicksToday").innerText = clicksToday;
+        document.getElementById("maxClicks").innerText = getMaxClicks();
+        document.getElementById("orePerClick").innerText = getOrePerClickMin();
+        document.getElementById("orePerClickMax").innerText = getOrePerClickMax();
+        document.getElementById("mineProgress").style.width = `${(clicksToday / getMaxClicks()) * 100}%`;
+        
+        updateFishingUI();
+        
+        // Коллекция
+        let filteredCollection = filterByRank(collection, collectionRankFilter);
+        filteredCollection = sortByRank(filteredCollection);
+        
+        document.getElementById("collectionCount").innerText = collection.length;
+        const collectionGrid = document.getElementById("collectionGrid");
+        if (filteredCollection.length === 0) {
+            collectionGrid.innerHTML = "<div style='text-align:center; padding:40px;'>Нет карт. Открывайте паки!</div>";
+        } else {
+            collectionGrid.innerHTML = "";
+            filteredCollection.forEach(card => {
+                const div = document.createElement("div");
+                div.className = "collected-card";
+                const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+                div.innerHTML = `
+                    <img src="${imgUrl || 'https://via.placeholder.com/90'}" onerror="this.src='https://via.placeholder.com/90'">
+                    <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
+                    <div style="font-size:0.55rem; opacity:0.6;">${card.set ? (card.set.length > 12 ? card.set.substring(0,10)+'...' : card.set) : ""}</div>
+                    ${card.canUpgrade && !card.isUpgraded ? `<button class="upgrade-btn" data-id="${card.id}">✨ Улучшить (25)</button>` : (card.isUpgraded ? '<span style="font-size:0.6rem; color:#FFD700;">✨ Анимация</span>' : '')}
+                `;
+                div.onclick = (e) => { if(!e.target.classList.contains("upgrade-btn")) viewCard(card); };
+                const btn = div.querySelector(".upgrade-btn");
+                if(btn) btn.onclick = (e) => { e.stopPropagation(); upgradeCard(card.id); };
+                collectionGrid.appendChild(div);
+            });
+        }
+        
+        // Каталог
+        let allCards = ALL_CARDS.filter(c => c.rank !== "A+");
+        allCards = filterByRank(allCards, catalogRankFilter);
+        allCards = sortByRank(allCards);
+        
+        document.getElementById("totalCardsCount").innerText = allCards.length;
+        const totalExistCards = ALL_CARDS.filter(c => c.rank !== "A+").length;
+        const percent = totalExistCards > 0 ? Math.round((collection.length / totalExistCards) * 100) : 0;
+        document.getElementById("collectedPercent").innerHTML = `${percent}%`;
+        const catalogGrid = document.getElementById("catalogGrid");
+        catalogGrid.innerHTML = "";
+        allCards.forEach(card => {
+            const owned = collection.some(c => c.id === card.id);
+            const div = document.createElement("div");
+            div.className = "catalog-card";
+            div.innerHTML = `
+                ${owned ? '<div class="check-mark">✓</div>' : ''}
+                <img src="${card.image || 'https://via.placeholder.com/90'}" onerror="this.src='https://via.placeholder.com/90'">
+                <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
+                <div style="font-size:0.55rem; opacity:0.6;">${card.set ? (card.set.length > 12 ? card.set.substring(0,10)+'...' : card.set) : ""}</div>
+            `;
+            div.onclick = () => viewCard(card);
+            catalogGrid.appendChild(div);
+        });
+    }
+    
+    function resetGame() {
+        if (confirm("Сбросить ВСЁ? Коллекция, кристаллы, осколки, уровни будут очищены.")) {
+            crystals = 500; shards = 40; ore = 0; eventCurrency = 100; collection = [];
+            level = 1; exp = 0; clicksToday = 0; oreMinedToday = 0;
+            lastResetDate = new Date().toDateString();
+            lastDailyBonus = "";
+            lastFreeFishTime = "0";
+            paidFishUsed = 0;
+            lastPaidResetDate = new Date().toDateString();
+            usedPromoCodes = [];
+            saveGame();
+            updateAllUI();
+            document.getElementById("selectionPanel").style.display = "none";
+            document.getElementById("eventResultPanel").style.display = "none";
+            showToast("Игра сброшена!");
+        }
+    }
+    
+    function activatePromoCode() {
+        const input = document.getElementById("promoInput");
+        const code = input.value.trim().toUpperCase();
+        
+        if (!code) {
+            showToast("❌ Введите промокод!");
+            return;
+        }
+        
+        if (usedPromoCodes.includes(code)) {
+            showToast("❌ Этот промокод уже был активирован!");
+            return;
+        }
+        
+        let promo = checkPersonalPromoCode(code);
+        let isPersonal = !!promo;
+        
+        if (!promo) {
+            promo = PUBLIC_PROMOCODES[code];
+        }
+        
+        if (!promo) {
+            showToast("❌ Неверный промокод!");
+            return;
+        }
+        
+        usedPromoCodes.push(code);
+        
+        if (promo.crystals) crystals += promo.crystals;
+        if (promo.shards) shards += promo.shards;
+        if (promo.eventCurrency) eventCurrency += promo.eventCurrency;
+        if (promo.paidFishCharges) paidFishUsed = Math.max(0, paidFishUsed - promo.paidFishCharges);
+        if (promo.freePack) setTimeout(() => openNormalPack(true), 100);
+        
+        saveGame();
+        updateAllUI();
+        
+        const typeMessage = isPersonal ? "🔐 Персональный промокод активирован!" : "🎉 Промокод активирован!";
+        showToast(`${typeMessage} ${promo.message}`);
+        input.value = "";
+    }
+    
+    // ========== НАВИГАЦИЯ ==========
+    function switchSection(sectionId) {
+        document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+        document.getElementById(`${sectionId}Section`).classList.add("active");
+        document.querySelectorAll(".menu-item").forEach(item => item.classList.remove("active"));
+        document.querySelector(`.menu-item[data-section="${sectionId}"]`).classList.add("active");
+        document.getElementById("dropdownMenu").classList.remove("open");
+        document.getElementById("overlay").classList.remove("active");
+        document.getElementById("burgerBtn").classList.remove("active");
+        if (sectionId === "fishing") updateFishingUI();
+    }
+    
+    // Обновление таймера рыбалки
+    setInterval(() => {
+        if (document.getElementById("fishingSection").classList.contains("active")) {
+            updateFishingUI();
+        }
+    }, 1000);
+    
+    // ========== ИНИЦИАЛИЗАЦИЯ ==========
+    window.onload = () => {
+        updateSeason();
+        loadGame();
+        createRankFilters("collectionRankFilters", "collection");
+        createRankFilters("catalogRankFilters", "catalog");
+        
+        document.getElementById("mineBtn").onclick = mineOre;
+        document.getElementById("exchangeBtn").onclick = exchangeOre;
+        document.getElementById("normalPackBtn").onclick = () => openNormalPack(false);
+        document.getElementById("eventPackBtn").onclick = openEventPack;
+        document.getElementById("resetBtn").onclick = resetGame;
+        document.getElementById("dailyBonusBtn").onclick = claimDailyBonus;
+        document.getElementById("takeSelectedBtn").onclick = takeSelectedCard;
+        document.getElementById("closeEventResultBtn").onclick = takeEventCard;
+        document.getElementById("freeFishBtn").onclick = freeFishing;
+        document.getElementById("paidFishBtn").onclick = paidFishing;
+        document.getElementById("activatePromoBtn").onclick = activatePromoCode;
+        document.getElementById("copyIdBtn").onclick = copyUserId;
+        
+        document.getElementById("cardModalClose").onclick = () => document.getElementById("cardModal").classList.remove("active");
+        document.getElementById("cardModal").onclick = (e) => { if(e.target === document.getElementById("cardModal")) document.getElementById("cardModal").classList.remove("active"); };
+        document.getElementById("viewModalClose").onclick = () => document.getElementById("viewModal").classList.remove("active");
+        document.getElementById("viewModal").onclick = (e) => { if(e.target === document.getElementById("viewModal")) document.getElementById("viewModal").classList.remove("active"); };
+        
+        const burger = document.getElementById("burgerBtn");
+        const dropdown = document.getElementById("dropdownMenu");
+        const overlay = document.getElementById("overlay");
+        burger.onclick = () => {
+            burger.classList.toggle("active");
+            dropdown.classList.toggle("open");
+            overlay.classList.toggle("active");
+        };
+        overlay.onclick = () => {
+            burger.classList.remove("active");
+            dropdown.classList.remove("open");
+            overlay.classList.remove("active");
+        };
+        document.querySelectorAll(".menu-item").forEach(item => {
+            item.onclick = () => switchSection(item.dataset.section);
+        });
+    };
+</script>
+</body>
+</html>
