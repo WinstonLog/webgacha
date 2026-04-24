@@ -431,7 +431,7 @@
         }
 
         .fishing-icon {
-            font-size: 3rem;
+            font-size: 1rem;
             text-align: center;
             margin-bottom: 10px;
         }
@@ -762,6 +762,15 @@
             .navbar-stats { gap: 5px; }
             .crystals-display, .shards-display { font-size: 0.65rem; padding: 3px 8px; }
             .burger-menu { width: 28px; height: 28px; }
+            .exchange-slots { gap: 8px; }
+            .exchange-slot { min-height: 140px; padding: 8px 4px; }
+            .exchange-slot img { width: 55px; height: 55px; }
+            .exchange-slot-name { font-size: 0.6rem; white-space: normal; word-break: break-word; line-height: 1.2; max-width: 100%; }
+            .exchange-slot-rank { font-size: 0.55rem; }
+            .exchange-slot-empty { font-size: 0.6rem; }
+            .exchange-card-item img { width: 40px; height: 40px; }
+            .exchange-card-name { font-size: 0.65rem; }
+            .exchange-card-rank { font-size: 0.5rem; }
         }
 
         @media (max-width: 380px) {
@@ -1000,17 +1009,17 @@
         .exchange-slots {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
             margin: 20px 0;
         }
 
         .exchange-slot {
             background: rgba(30, 27, 60, 0.8);
             border-radius: 16px;
-            padding: 15px;
+            padding: 12px 8px;
             text-align: center;
             border: 2px dashed rgba(255, 215, 0, 0.3);
-            min-height: 180px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1025,26 +1034,31 @@
         }
 
         .exchange-slot img {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
-            border-radius: 12px;
-            margin-bottom: 8px;
+            border-radius: 10px;
+            margin-bottom: 6px;
         }
 
         .exchange-slot-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .exchange-slot-rank {
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             opacity: 0.7;
         }
 
         .exchange-slot-empty {
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.8rem;
+            font-size: 0.7rem;
+            text-align: center;
         }
 
         .exchange-cards-list {
@@ -1063,7 +1077,6 @@
             gap: 10px;
             cursor: pointer;
             transition: 0.2s;
-            opacity: 1;
         }
 
         .exchange-card-item.disabled {
@@ -1086,19 +1099,24 @@
             height: 50px;
             object-fit: contain;
             border-radius: 8px;
+            flex-shrink: 0;
         }
 
         .exchange-card-info {
             flex: 1;
+            min-width: 0;
         }
 
         .exchange-card-name {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         .exchange-card-rank {
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             opacity: 0.7;
         }
 
@@ -1396,7 +1414,7 @@
         </div>
         
         <div class="exchange-container">
-            <div class="info-content" style="margin-bottom:15px; text-align:center;">
+            <div class="info-content" style="margin-bottom:15px; text-align:center; font-size:0.7rem;">
                 📌 Выберите 3 карты одного ранга. Ранг результата определяется автоматически!
             </div>
             
@@ -1412,7 +1430,7 @@
                 </div>
             </div>
             
-            <div style="margin: 15px 0 5px 0; font-size:0.8rem; opacity:0.7;">📋 ДОСТУПНЫЕ КАРТЫ ДЛЯ ОБМЕНА:</div>
+            <div style="margin: 15px 0 8px 0; font-size:0.75rem; opacity:0.7;">📋 ДОСТУПНЫЕ КАРТЫ ДЛЯ ОБМЕНА:</div>
             <div class="exchange-cards-list" id="exchangeCardsList"></div>
             
             <button class="exchange-action-btn" id="exchangeActionBtn" disabled>❌ НУЖНО 3 КАРТЫ</button>
@@ -1423,11 +1441,10 @@
             <div class="info-title">📜 Правила обмена</div>
             <div class="info-content">
                 <p>🔄 Выберите <strong class="info-highlight">3 карты одного ранга</strong> из списка ниже</p>
-                <p>🎴 Порядок рангов: <strong class="info-highlight">E → D → C → B → G → P → A → S → X</strong></p>
-                <p>✨ Карты поместятся в ячейки и станут неактивными для повторного выбора</p>
-                <p>🗑 Нажмите на ячейку, чтобы убрать карту (она вернётся в список)</p>
-                <p>⚡ Нажмите "ПЕРЕПЛАВИТЬ", чтобы получить <strong class="info-highlight">1 карту на ранг выше</strong></p>
-                <p>🎁 X → X даёт новую случайную X-ранг карту</p>
+                <p>🎴 Порядок рангов: <strong class="info-highlight">E → D → C → B → G → P → A → S</strong></p>
+                <p>🔄 <strong class="info-highlight">S и X ранг</strong> — переплавка 3 карт в новую карту того же ранга</p>
+                <p>✨ Карты поместятся в ячейки и станут неактивными</p>
+                <p>🗑 Нажмите на ячейку, чтобы убрать карту</p>
             </div>
         </div>
     </div>
@@ -1445,8 +1462,8 @@
             <div id="auctionCardDisplay" style="text-align: center; margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 16px;">
                 <div style="font-size: 1rem; opacity: 0.7;">🎴 Текущий лот:</div>
                 <img id="auctionCardImage" src="" alt="" style="width: 200px; height: 200px; object-fit: contain; border-radius: 12px; margin: 8px auto; display: block;">
-                <div id="auctionCardInfo" style="font-size: 0.9rem; font-weight: bold;">Ожидание начала аукциона...</div>
-                <div id="auctionCardSet" style="font-size: 0.7rem; opacity: 0.7;">&nbsp;</div>
+                <div id="auctionCardInfo" style="font-size: 0.85rem; font-weight: bold;">Ожидание начала аукциона...</div>
+                <div id="auctionCardSet" style="font-size: 0.7rem; opacity: 0.7;"></div>
             </div>
             
             <div class="auction-bid">
@@ -1471,6 +1488,7 @@
                 <p>🎁 При победе: <strong class="info-highlight">Q-ранг карта</strong>!</p>
                 <p>🔄 Дубликат Q-ранга = <strong class="info-highlight">100💎</strong></p>
                 <p>⏸ После завершения аукциона <strong class="info-highlight">5 минут</strong> ожидания</p>
+                <p class="info-highlight" style="margin-top: 8px; background: rgba(231, 76, 60, 0.2); padding: 6px; border-radius: 12px;">⚠️ ВАЖНО: Не покидайте игру до завершения аукциона! При перезагрузке страницы ваш прогресс ставок сохранится, но ИИ продолжит торги.</p>
             </div>
         </div>
     </div>
@@ -2567,8 +2585,22 @@
         
         const timerSpan = document.getElementById("auctionTimer");
         const statusDiv = document.getElementById("auctionStatus");
+        const auctionCardImage = document.getElementById("auctionCardImage");
+        const auctionCardInfo = document.getElementById("auctionCardInfo");
+        const auctionCardSet = document.getElementById("auctionCardSet");
         
-        if (auctionActive) {
+        if (auctionActive && currentAuctionCard) {
+            // Обновляем изображение карты аукциона
+            if (auctionCardImage) {
+                const imgUrl = (currentAuctionCard.isUpgraded && currentAuctionCard.animImage) 
+                    ? currentAuctionCard.animImage 
+                    : currentAuctionCard.image;
+                auctionCardImage.src = imgUrl || "https://via.placeholder.com/200?text=Q-Rank+Card";
+                auctionCardImage.style.display = "block";
+            }
+            if (auctionCardInfo) auctionCardInfo.innerHTML = `<strong>${currentAuctionCard.name}</strong> [${currentAuctionCard.rank}]`;
+            if (auctionCardSet) auctionCardSet.innerHTML = currentAuctionCard.set || "?";
+            
             const timeLeft = Math.max(0, auctionEndTime - Date.now());
             if (timeLeft <= 0) {
                 endAuction();
@@ -2577,8 +2609,23 @@
             const minutes = Math.floor(timeLeft / 60000);
             const seconds = Math.floor((timeLeft % 60000) / 1000);
             timerSpan.innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            statusDiv.innerHTML = `<span style="color: #2ecc71;">🏆 АУКЦИОН АКТИВЕН 🏆</span><br>Последняя ставка: ${currentBidder || "ИИ"}`;
+            statusDiv.innerHTML = `<span style="color: #2ecc71;">🏆 АУКЦИОН АКТИВЕН 🏆</span><br>Последняя ставка: ${currentBidder || "ИИ"}<br>🎴 Лот: ${currentAuctionCard.name} [${currentAuctionCard.rank}]`;
         } else {
+            if (currentAuctionCard && auctionCardImage) {
+                const imgUrl = (currentAuctionCard.isUpgraded && currentAuctionCard.animImage) 
+                    ? currentAuctionCard.animImage 
+                    : currentAuctionCard.image;
+                auctionCardImage.src = imgUrl || "https://via.placeholder.com/200?text=Q-Rank+Card";
+                auctionCardImage.style.display = "block";
+                if (auctionCardInfo) auctionCardInfo.innerHTML = `<strong>${currentAuctionCard.name}</strong> [${currentAuctionCard.rank}]`;
+                if (auctionCardSet) auctionCardSet.innerHTML = currentAuctionCard.set || "?";
+            } else if (auctionCardImage) {
+                auctionCardImage.src = "";
+                auctionCardImage.style.display = "none";
+                if (auctionCardInfo) auctionCardInfo.innerHTML = "Ожидание начала аукциона...";
+                if (auctionCardSet) auctionCardSet.innerHTML = "";
+            }
+            
             const cooldownLeft = Math.max(0, auctionCooldownEnd - Date.now());
             if (cooldownLeft > 0) {
                 const minutes = Math.floor(cooldownLeft / 60000);
@@ -2594,6 +2641,7 @@
     
     function startAuction() {
         const now = Date.now();
+        
         if (auctionActive) {
             showToast("❌ Аукцион уже активен!");
             return;
@@ -2606,17 +2654,32 @@
             return;
         }
         
+        // Выбираем случайную Q-ранг карту для аукциона
+        const qCards = ALL_CARDS.filter(c => c.rank === "Q");
+        if (qCards.length === 0) {
+            showToast("❌ Нет доступных Q-ранг карт для аукциона!");
+            return;
+        }
+        
+        // Сохраняем полную копию карты со всеми полями
+        currentAuctionCard = JSON.parse(JSON.stringify(qCards[Math.floor(Math.random() * qCards.length)]));
+        
         // Запуск аукциона
         auctionActive = true;
         currentBid = 100;
         currentBidder = "";
-        auctionEndTime = now + 15 * 60 * 1000;
-        aiBidsLeft = Math.floor(Math.random() * 3) + 3;
+        auctionEndTime = now + 15 * 60 * 1000; // 15 минут
+        aiBidsLeft = Math.floor(Math.random() * 3) + 3; // 3-5 ставок ИИ
         
-        showToast("🏆 АУКЦИОН НАЧАЛСЯ! Стартовая ставка 100💎");
-        updateAuctionUI();
+        showToast(`🏆 АУКЦИОН НАЧАЛСЯ! Разыгрывается карта: ${currentAuctionCard.name} [${currentAuctionCard.rank}]! Стартовая ставка 100💎`);
         
-        if (auctionInterval) clearInterval(auctionInterval);
+        // Останавливаем старый интервал если есть
+        if (auctionInterval) {
+            clearInterval(auctionInterval);
+            auctionInterval = null;
+        }
+        
+        // Запускаем новый интервал
         auctionInterval = setInterval(() => {
             if (auctionActive) {
                 updateAuctionUI();
@@ -2626,6 +2689,7 @@
             }
         }, 1000);
         
+        updateAuctionUI();
         saveGame();
     }
     
@@ -2678,7 +2742,7 @@
 
         setTimeout(() => makeAIBid(previousBid, previousBidder), 1000);
     }
-    
+        
     function makeAIBid(previousBid = 0, previousBidder = "") {
         if (!auctionActive) return;
         if (Date.now() >= auctionEndTime) {
@@ -2701,12 +2765,15 @@
         if (oldBidder === userId && oldBid > 0) {
             crystals += oldBid;
             showToast(`🔄 Ваша предыдущая ставка ${oldBid}💎 возвращена!`);
+            saveGame();
+            updateAllUI();
         }
         
         saveGame();
         updateAllUI();
         
         showToast(`🤖 ИИ повысил ставку до ${currentBid}💎! Осталось ставок ИИ: ${aiBidsLeft}`);
+        updateAuctionUI();
         
         if (Date.now() >= auctionEndTime) {
             endAuction();
@@ -2714,38 +2781,115 @@
     }
     
     function endAuction() {
-        if (auctionInterval) clearInterval(auctionInterval);
-        auctionActive = false;
-        
-        if (currentBidder === userId) {
-            showToast(`🏆 ПОЗДРАВЛЯЕМ! Вы выиграли аукцион со ставкой ${currentBid}💎! Получена Q-ранг карта! 🏆`);
-            
-            const qCards = ALL_CARDS.filter(c => c.rank === "Q");
-            if (qCards.length > 0) {
-                const newCard = { ...qCards[Math.floor(Math.random() * qCards.length)] };
-                const existingIndex = collection.findIndex(c => c.id === newCard.id);
-                if (existingIndex !== -1) {
-                    crystals += 100;
-                    showToast(`🔄 У вас уже есть эта Q-ранг карта! +100💎 за дубликат!`);
-                } else {
-                    collection.push(newCard);
-                    showCardModalWithRank(newCard);
-                    showToast(`🎉 Вы получили Q-ранг карту: ${newCard.name}!`);
-                }
-            }
-        } else {
-            showToast(`🏆 АУКЦИОН ЗАВЕРШЁН! Победитель: ${currentBidder === "" ? "не определён" : currentBidder}. Ставка: ${currentBid}💎`);
+        // Останавливаем интервал
+        if (auctionInterval) {
+            clearInterval(auctionInterval);
+            auctionInterval = null;
         }
         
+        const wasActive = auctionActive;
+        auctionActive = false;
+        
+        if (wasActive && currentBidder === userId) {
+            showToast(`🏆 ПОЗДРАВЛЯЕМ! Вы выиграли аукцион со ставкой ${currentBid}💎!`);
+            
+            if (currentAuctionCard) {
+                const existingIndex = collection.findIndex(c => c.id === currentAuctionCard.id);
+                if (existingIndex !== -1) {
+                    crystals += 100;
+                    showToast(`🔄 У вас уже есть эта карта! +100💎 за дубликат!`);
+                } else {
+                    collection.push({ ...currentAuctionCard });
+                    showCardModalWithRank(currentAuctionCard);
+                    showToast(`🎉 Вы получили Q-ранг карту: ${currentAuctionCard.name}!`);
+                }
+            } else {
+                const qCards = ALL_CARDS.filter(c => c.rank === "Q");
+                if (qCards.length > 0) {
+                    const newCard = { ...qCards[Math.floor(Math.random() * qCards.length)] };
+                    const existingIndex = collection.findIndex(c => c.id === newCard.id);
+                    if (existingIndex !== -1) {
+                        crystals += 100;
+                        showToast(`🔄 Дубликат! +100💎`);
+                    } else {
+                        collection.push(newCard);
+                        showCardModalWithRank(newCard);
+                    }
+                }
+            }
+        } else if (wasActive && currentBidder === "🤖 ИИ") {
+            showToast(`🏆 АУКЦИОН ЗАВЕРШЁН! Победитель: ИИ. Ставка: ${currentBid}💎`);
+        } else if (wasActive) {
+            showToast(`🏆 АУКЦИОН ЗАВЕРШЁН! Ставок не было.`);
+        }
+        
+        // Устанавливаем кулдаун 5 минут
         auctionCooldownEnd = Date.now() + 5 * 60 * 1000;
         currentBid = 0;
         currentBidder = "";
+        currentAuctionCard = null;
+        aiBidsLeft = 0;
         
-        updateAuctionUI();
         saveGame();
         updateAllUI();
+        updateAuctionUI();
     }
-    
+        
+    function restoreAuction() {
+        const now = Date.now();
+        
+        // Проверяем, нужно ли восстановить активный аукцион
+        if (auctionActive && auctionEndTime > now) {
+            console.log("🔄 Восстанавливаем активный аукцион...");
+            // Останавливаем старый интервал
+            if (auctionInterval) {
+                clearInterval(auctionInterval);
+                auctionInterval = null;
+            }
+            // Запускаем новый интервал
+            auctionInterval = setInterval(() => {
+                if (auctionActive) {
+                    updateAuctionUI();
+                    if (Date.now() >= auctionEndTime) {
+                        endAuction();
+                    }
+                }
+            }, 1000);
+            updateAuctionUI();
+        } else if (auctionActive && auctionEndTime <= now) {
+            // Аукцион должен был завершиться
+            console.log("🏆 Аукцион завершился во время отсутствия");
+            if (currentBidder === userId && currentAuctionCard) {
+                const existingIndex = collection.findIndex(c => c.id === currentAuctionCard.id);
+                if (existingIndex !== -1) {
+                    crystals += 100;
+                    showToast(`🔄 Аукцион завершился! Вы получили +100💎 за дубликат Q-ранг карты!`);
+                } else {
+                    collection.push({ ...currentAuctionCard });
+                    showToast(`🎉 Аукцион завершился! Вы ВЫИГРАЛИ и получили карту: ${currentAuctionCard.name}!`);
+                }
+            } else if (currentBidder !== userId && currentBidder !== "") {
+                showToast(`🏆 Аукцион завершился! Победитель: ${currentBidder}. Ставка: ${currentBid}💎`);
+            }
+            auctionActive = false;
+            auctionCooldownEnd = now + 5 * 60 * 1000;
+            currentBid = 0;
+            currentBidder = "";
+            currentAuctionCard = null;
+            aiBidsLeft = 0;
+            if (auctionInterval) {
+                clearInterval(auctionInterval);
+                auctionInterval = null;
+            }
+            saveGame();
+            updateAllUI();
+        } else if (auctionCooldownEnd > now) {
+            console.log("⏸ Аукцион на паузе, осталось:", Math.ceil((auctionCooldownEnd - now) / 1000), "сек");
+        }
+        
+        updateAuctionUI();
+    }
+
     // ========== СОХРАНЕНИЕ ==========
     function saveGame() {
         localStorage.setItem("gacha_crystals", crystals);
@@ -2766,12 +2910,18 @@
         localStorage.setItem("userId", userId);
         localStorage.setItem("gacha_proExpiry", proExpiry);
         
+        // Сохраняем состояние аукциона
         localStorage.setItem("auction_active", auctionActive);
         localStorage.setItem("auction_endTime", auctionEndTime);
         localStorage.setItem("auction_currentBid", currentBid);
         localStorage.setItem("auction_currentBidder", currentBidder);
         localStorage.setItem("auction_aiBidsLeft", aiBidsLeft);
         localStorage.setItem("auction_cooldownEnd", auctionCooldownEnd);
+        if (currentAuctionCard) {
+            localStorage.setItem("auction_currentCard", JSON.stringify(currentAuctionCard));
+        } else {
+            localStorage.setItem("auction_currentCard", "");
+        }
     }
     
     function loadGame() {
@@ -2795,21 +2945,65 @@
         usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
         proExpiry = parseInt(localStorage.getItem("gacha_proExpiry")) || 0;
         
+        // Загружаем состояние аукциона
         const savedAuctionActive = localStorage.getItem("auction_active");
-        if (savedAuctionActive !== null) {
+        if (savedAuctionActive !== null && savedAuctionActive !== "") {
             auctionActive = savedAuctionActive === "true";
             auctionEndTime = parseInt(localStorage.getItem("auction_endTime")) || 0;
             currentBid = parseInt(localStorage.getItem("auction_currentBid")) || 0;
             currentBidder = localStorage.getItem("auction_currentBidder") || "";
             aiBidsLeft = parseInt(localStorage.getItem("auction_aiBidsLeft")) || 0;
             auctionCooldownEnd = parseInt(localStorage.getItem("auction_cooldownEnd")) || 0;
-        } else {
-            auctionActive = false;
-            auctionEndTime = 0;
-            currentBid = 0;
-            currentBidder = "";
-            aiBidsLeft = 0;
-            auctionCooldownEnd = 0;
+            const savedCard = localStorage.getItem("auction_currentCard");
+            if (savedCard && savedCard !== "") {
+                try {
+                    currentAuctionCard = JSON.parse(savedCard);
+                } catch(e) {
+                    currentAuctionCard = null;
+                }
+            } else {
+                currentAuctionCard = null;
+            }
+            
+            // Проверяем, нужно ли возобновить аукцион
+            const now = Date.now();
+            if (auctionActive && auctionEndTime > now) {
+                // Аукцион всё ещё активен - возобновляем таймер
+                console.log("🔄 Аукцион активен, возобновляем... До завершения:", Math.ceil((auctionEndTime - now) / 1000), "сек");
+                if (auctionInterval) clearInterval(auctionInterval);
+                auctionInterval = setInterval(() => {
+                    if (auctionActive) {
+                        updateAuctionUI();
+                        if (Date.now() >= auctionEndTime) {
+                            endAuction();
+                        }
+                    }
+                }, 1000);
+            } else if (auctionActive && auctionEndTime <= now) {
+                // Аукцион должен был завершиться - завершаем
+                console.log("🏆 Аукцион завершился во время отсутствия");
+                // Завершаем аукцион без вызова endAuction (чтобы не дублировать)
+                if (currentBidder === userId && currentAuctionCard) {
+                    const existingIndex = collection.findIndex(c => c.id === currentAuctionCard.id);
+                    if (existingIndex !== -1) {
+                        crystals += 100;
+                        showToast(`🔄 Аукцион завершился! Вы получили +100💎 за дубликат Q-ранг карты!`);
+                    } else {
+                        collection.push({ ...currentAuctionCard });
+                        showToast(`🎉 Аукцион завершился! Вы ВЫИГРАЛИ и получили карту: ${currentAuctionCard.name}!`);
+                    }
+                } else if (currentBidder !== userId && currentBidder !== "") {
+                    showToast(`🏆 Аукцион завершился! Победитель: ${currentBidder}. Ставка: ${currentBid}💎`);
+                }
+                auctionActive = false;
+                auctionCooldownEnd = now + 5 * 60 * 1000;
+                currentBid = 0;
+                currentBidder = "";
+                currentAuctionCard = null;
+                aiBidsLeft = 0;
+            } else if (auctionCooldownEnd > now) {
+                console.log("⏸ Аукцион на паузе, осталось:", Math.ceil((auctionCooldownEnd - now) / 1000), "сек");
+            }
         }
         
         resetDailyIfNeeded();
@@ -2818,6 +3012,7 @@
         
         updateAllUI();
         checkDailyBonusButton();
+        restoreAuction();
     }
     
     function createRankFilters(containerId, type) {
@@ -3028,8 +3223,6 @@
     
     setInterval(() => {
         if (document.getElementById("fishingSection")?.classList.contains("active")) updateFishingUI();
-        if (document.getElementById("auctionSection")?.classList.contains("active")) updateAuctionUI();
-        if (auctionActive && Date.now() >= auctionEndTime) endAuction();
         updateProUI();
     }, 1000);
     
