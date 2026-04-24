@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Gacha Cards | Аниме коллекция</title>
+    <title>BLOODY CARDS | Коллекция</title>
     <style>
         * {
             margin: 0;
@@ -988,13 +988,216 @@
             margin-top: 8px;
             display: inline-block;
         }
+
+        /* Обмены */
+        .exchange-container {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .exchange-slots {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .exchange-slot {
+            background: rgba(30, 27, 60, 0.8);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .exchange-slot.filled {
+            border: 2px solid #FFD700;
+            background: linear-gradient(135deg, #2a2555, #1e1b3c);
+        }
+
+        .exchange-slot img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 8px;
+        }
+
+        .exchange-slot-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .exchange-slot-rank {
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+
+        .exchange-slot-empty {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+        }
+
+        .exchange-cards-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .exchange-card-item {
+            background: rgba(30, 27, 60, 0.6);
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            opacity: 1;
+        }
+
+        .exchange-card-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .exchange-card-item.disabled:hover {
+            transform: none;
+        }
+
+        .exchange-card-item:hover:not(.disabled) {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+
+        .exchange-card-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .exchange-card-info {
+            flex: 1;
+        }
+
+        .exchange-card-name {
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .exchange-card-rank {
+            font-size: 0.6rem;
+            opacity: 0.7;
+        }
+
+        .exchange-action-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 12px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            color: #1a1a2e;
+        }
+
+        .exchange-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .exchange-clear-btn {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        /* Аукцион */
+        .auction-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin-bottom: 20px;
+        }
+
+        .auction-bid {
+            font-size: 1.3rem;
+            margin: 10px 0;
+        }
+
+        .auction-input-group {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .auction-input {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 40px;
+            padding: 10px 14px;
+            color: white;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .auction-bid-btn {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+        }
+
+        .auction-start-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .auction-status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
 
 <div class="navbar">
     <div class="navbar-container">
-        <div class="logo">🎴 GachaCards</div>
+        <div class="logo">🎴 BLOODY</div>
         <div class="navbar-right">
             <div class="navbar-stats">
                 <div class="crystals-display" id="navbarCrystals">💎 500</div>
@@ -1015,6 +1218,8 @@
     <div class="menu-item" data-section="event">🎪 Ивент</div>
     <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
     <div class="menu-item" data-section="mine">⛏️ Шахта</div>
+    <div class="menu-item" data-section="exchange">🔄 Обмены</div>
+    <div class="menu-item" data-section="auction">🏆 Аукцион</div>
     <div class="menu-item" data-section="shop">🛒 Магазин</div>
     <div class="menu-item" data-section="collection">📚 Коллекция</div>
     <div class="menu-item" data-section="catalog">📖 Каталог</div>
@@ -1183,6 +1388,93 @@
         </div>
     </div>
 
+    <!-- Обмены -->
+    <div id="exchangeSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">🔄</div><div class="stat-info"><div class="stat-label">ОБМЕН КАРТ</div><div class="stat-value">3 → 1</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⬆️</div><div class="stat-info"><div class="stat-label">РЕЗУЛЬТАТ</div><div class="stat-value" id="exchangeTargetRank">?</div></div></div>
+        </div>
+        
+        <div class="exchange-container">
+            <div class="info-content" style="margin-bottom:15px; text-align:center;">
+                📌 Выберите 3 карты одного ранга. Ранг результата определяется автоматически!
+            </div>
+            
+            <div class="exchange-slots" id="exchangeSlots">
+                <div class="exchange-slot empty" data-slot="0">
+                    <div class="exchange-slot-empty">➕ Ячейка 1</div>
+                </div>
+                <div class="exchange-slot empty" data-slot="1">
+                    <div class="exchange-slot-empty">➕ Ячейка 2</div>
+                </div>
+                <div class="exchange-slot empty" data-slot="2">
+                    <div class="exchange-slot-empty">➕ Ячейка 3</div>
+                </div>
+            </div>
+            
+            <div style="margin: 15px 0 5px 0; font-size:0.8rem; opacity:0.7;">📋 ДОСТУПНЫЕ КАРТЫ ДЛЯ ОБМЕНА:</div>
+            <div class="exchange-cards-list" id="exchangeCardsList"></div>
+            
+            <button class="exchange-action-btn" id="exchangeActionBtn" disabled>❌ НУЖНО 3 КАРТЫ</button>
+            <button class="exchange-clear-btn" id="exchangeClearBtn">🗑 ОЧИСТИТЬ ВСЕ ЯЧЕЙКИ</button>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-title">📜 Правила обмена</div>
+            <div class="info-content">
+                <p>🔄 Выберите <strong class="info-highlight">3 карты одного ранга</strong> из списка ниже</p>
+                <p>🎴 Порядок рангов: <strong class="info-highlight">E → D → C → B → G → P → A → S → X</strong></p>
+                <p>✨ Карты поместятся в ячейки и станут неактивными для повторного выбора</p>
+                <p>🗑 Нажмите на ячейку, чтобы убрать карту (она вернётся в список)</p>
+                <p>⚡ Нажмите "ПЕРЕПЛАВИТЬ", чтобы получить <strong class="info-highlight">1 карту на ранг выше</strong></p>
+                <p>🎁 X → X даёт новую случайную X-ранг карту</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Аукцион -->
+    <div id="auctionSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-label">ТЕКУЩАЯ СТАВКА</div><div class="stat-value" id="currentBid">0</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⏰</div><div class="stat-info"><div class="stat-label">ДО ЗАВЕРШЕНИЯ</div><div class="stat-value" id="auctionTimer">--:--</div></div></div>
+        </div>
+        
+        <div class="auction-card">
+            <div class="fishing-icon">🏆 Q-РАНГ АУКЦИОН 🏆</div>
+            
+            <div id="auctionCardDisplay" style="text-align: center; margin: 15px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 16px;">
+                <div style="font-size: 1rem; opacity: 0.7;">🎴 Текущий лот:</div>
+                <img id="auctionCardImage" src="" alt="" style="width: 200px; height: 200px; object-fit: contain; border-radius: 12px; margin: 8px auto; display: block;">
+                <div id="auctionCardInfo" style="font-size: 0.9rem; font-weight: bold;">Ожидание начала аукциона...</div>
+                <div id="auctionCardSet" style="font-size: 0.7rem; opacity: 0.7;">&nbsp;</div>
+            </div>
+            
+            <div class="auction-bid">
+                💎 Текущая ставка: <strong id="currentBidAmount">100</strong> 💎
+            </div>
+            <div class="auction-input-group">
+                <input type="number" class="auction-input" id="bidAmount" placeholder="Введите ставку...">
+                <button class="auction-bid-btn" id="placeBidBtn">ПОВЫСИТЬ СТАВКУ</button>
+            </div>
+            <button class="auction-start-btn" id="startAuctionBtn">🏆 НАЧАТЬ ТОРГИ 🏆</button>
+            <div id="auctionStatus" class="auction-status"></div>
+        </div>
+        
+        <div class="info-card">
+            <div class="info-title">📜 Правила аукциона</div>
+            <div class="info-content">
+                <p>🏆 Начальная ставка: <strong class="info-highlight">100💎</strong></p>
+                <p>⚡ Минимальное повышение: <strong class="info-highlight">10%</strong> от текущей ставки</p>
+                <p>🤖 ИИ делает <strong class="info-highlight">3-5 ставок</strong>, повышая на 10-20%</p>
+                <p>🤖 При перебивании ставки, ваша предыдущая ставка <strong class="info-highlight">возвращается</strong></p>
+                <p>⏰ Длительность: <strong class="info-highlight">15 минут</strong></p>
+                <p>🎁 При победе: <strong class="info-highlight">Q-ранг карта</strong>!</p>
+                <p>🔄 Дубликат Q-ранга = <strong class="info-highlight">100💎</strong></p>
+                <p>⏸ После завершения аукциона <strong class="info-highlight">5 минут</strong> ожидания</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Магазин -->
     <div id="shopSection" class="section">
         <div class="stats-row">
@@ -1309,6 +1601,9 @@
 <script>
     // ========== ГЛОБАЛЬНЫЕ КОНСТАНТЫ ==========
     const ALL_RANKS = ["ALL", "X", "S", "A", "P", "G", "B", "C", "D", "E", "H", "N", "V", "L", "Q"];
+    const RANK_ORDER = { "X":0, "S":1, "A":2, "P":3, "G":4, "B":5, "C":6, "D":7, "E":8, "H":9, "N":10, "V":11, "L":12, "Q":13 };
+    const RANK_LIST_EXCHANGE = ["E", "D", "C", "B", "G", "P", "A", "S", "X"];
+    const RANK_NEXT_EXCHANGE = { "E": "D", "D": "C", "C": "B", "B": "G", "G": "P", "P": "A", "A": "S", "S": "S", "X": "X" };
     
     // ========== ГЕНЕРАЦИЯ ID ==========
     function generateUserId() {
@@ -1332,7 +1627,12 @@
     let catalogRankFilter = "ALL";
     let isPackOpen = false;
     let isEventPackOpen = false;
+    let currentAuctionCard = null;
     
+    // Состояние для обменов
+    let exchangeSlots = [null, null, null];
+    let exchangeAvailableCards = [];
+
     let level = 1;
     let exp = 0;
     let clicksToday = 0;
@@ -1354,6 +1654,15 @@
     // PRO-аккаунт
     let proExpiry = localStorage.getItem("gacha_proExpiry") ? parseInt(localStorage.getItem("gacha_proExpiry")) : 0;
     
+    // Аукцион
+    let auctionActive = false;
+    let auctionEndTime = 0;
+    let auctionCooldownEnd = 0;
+    let currentBid = 0;
+    let currentBidder = "";
+    let aiBidsLeft = 0;
+    let auctionInterval = null;
+    
     // ========== ПРОМОКОДЫ ==========
     const PUBLIC_PROMOCODES = {
         "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
@@ -1363,9 +1672,7 @@
         "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
     };
     
-    const PERSONAL_PROMOCODES = {
-/*        "PERSONAL_QVKQJPMX_PRO30_V2": { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", targetId: "QVKQJPMX" },*/
-    };
+    const PERSONAL_PROMOCODES = {};
     
     // PRO функции
     function isProActive() {
@@ -1389,19 +1696,14 @@
     function activatePro(days = 30) {
         const now = Date.now();
         let newExpiry;
-        
         if (proExpiry > now) {
-            // Если PRO уже активен - ПРИБАВЛЯЕМ дни к текущему сроку
             newExpiry = proExpiry + days * 24 * 60 * 60 * 1000;
         } else {
-            // Если PRO не активен - устанавливаем с сегодня + days
             newExpiry = now + days * 24 * 60 * 60 * 1000;
         }
-        
         proExpiry = newExpiry;
         localStorage.setItem("gacha_proExpiry", proExpiry);
         updateProUI();
-        
         const daysLeft = Math.ceil((proExpiry - now) / (1000 * 60 * 60 * 24));
         showToast(`👑 PRO-аккаунт продлён до ${daysLeft} дней!`);
     }
@@ -1823,31 +2125,6 @@
     
     function checkAplusDrop() { return Math.random() < 0.03; }
     
-    function generateThreeCards() {
-        let cards = [];
-        let usedCardIds = new Set();
-        
-        while (cards.length < 3) {
-            const card = getRandomCard(false);
-            // Проверяем, что такой карты ещё нет в пачке
-            if (!usedCardIds.has(card.id)) {
-                usedCardIds.add(card.id);
-                cards.push(card);
-            }
-        }
-        
-        const hasShardChance = Math.random() < 0.05;
-        if (hasShardChance) {
-            const shardIndex = Math.floor(Math.random() * 3);
-            cards[shardIndex] = {
-                ...cards[shardIndex],
-                hasShard: true,
-                shardValue: 1
-            };
-        }
-        return cards;
-    }
-    
     // ========== ШАХТА ==========
     function resetDailyIfNeeded() {
         const today = new Date().toDateString();
@@ -1887,7 +2164,224 @@
         showToast(`🔄 +${count}💎`);
     }
     
+    // ========== ОБМЕНЫ - НОВАЯ ВЕРСИЯ ==========
+    function updateExchangeUI() {
+        const filledSlots = exchangeSlots.filter(s => s !== null);
+        let selectedRank = null;
+        let targetRank = "?";
+        let isReroll = false;
+        
+        if (filledSlots.length > 0) {
+            selectedRank = filledSlots[0].rank;
+            targetRank = RANK_NEXT_EXCHANGE[selectedRank] || "?";
+            isReroll = (selectedRank === "S" || selectedRank === "X");
+        }
+        
+        document.getElementById("exchangeTargetRank").innerHTML = isReroll ? `🔄 ${selectedRank} → ${selectedRank} (РЕРОЛЛ)` : targetRank;
+        
+        // Если есть выбранный ранг, показываем только карты этого ранга
+        let availableCards = [];
+        if (selectedRank) {
+            const cardsInSlotsIds = exchangeSlots.filter(s => s !== null).map(s => s.id);
+            availableCards = collection.filter(c => 
+                c.rank === selectedRank && !cardsInSlotsIds.includes(c.id)
+            );
+        } else {
+            // Если ячейки пустые, показываем все карты, сортируя по рангу
+            availableCards = [...collection];
+            availableCards = sortByRank(availableCards);
+        }
+        
+        // Обновляем список карт
+        const listContainer = document.getElementById("exchangeCardsList");
+        listContainer.innerHTML = "";
+        
+        if (availableCards.length === 0) {
+            if (selectedRank) {
+                listContainer.innerHTML = `<div style='text-align:center; padding:20px; opacity:0.6;'>Нет карт ранга ${selectedRank} в коллекции</div>`;
+            } else {
+                listContainer.innerHTML = "<div style='text-align:center; padding:20px; opacity:0.6;'>Выберите карту, нажав на неё в списке ниже</div>";
+            }
+        } else {
+            availableCards.forEach(card => {
+                const isInSlot = exchangeSlots.some(slot => slot && slot.id === card.id);
+                const div = document.createElement("div");
+                div.className = `exchange-card-item ${isInSlot ? "disabled" : ""}`;
+                div.innerHTML = `
+                    <img src="${card.image || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
+                    <div class="exchange-card-info">
+                        <div class="exchange-card-name">${card.name.length > 20 ? card.name.substring(0,18)+'...' : card.name}</div>
+                        <div class="exchange-card-rank">Ранг: ${card.rank} | ${card.set || "?"}</div>
+                    </div>
+                    <div style="font-size:0.7rem; color:#4caf50;">+</div>
+                `;
+                if (!isInSlot) {
+                    div.onclick = () => addToExchangeSlot(card);
+                }
+                listContainer.appendChild(div);
+            });
+        }
+        
+        // Обновляем ячейки
+        const slotsContainer = document.getElementById("exchangeSlots");
+        slotsContainer.innerHTML = "";
+        for (let i = 0; i < 3; i++) {
+            const slot = exchangeSlots[i];
+            const slotDiv = document.createElement("div");
+            if (slot) {
+                slotDiv.className = "exchange-slot filled";
+                slotDiv.innerHTML = `
+                    <img src="${slot.image || 'https://via.placeholder.com/80'}" onerror="this.src='https://via.placeholder.com/80'">
+                    <div class="exchange-slot-name">${slot.name.length > 12 ? slot.name.substring(0,10)+'...' : slot.name}</div>
+                    <div class="exchange-slot-rank">${slot.rank}</div>
+                `;
+            } else {
+                slotDiv.className = "exchange-slot empty";
+                slotDiv.innerHTML = `<div class="exchange-slot-empty">➕ Ячейка ${i+1}</div>`;
+            }
+            slotDiv.onclick = () => removeFromExchangeSlot(i);
+            slotsContainer.appendChild(slotDiv);
+        }
+        
+        // Обновляем кнопку обмена
+        const filledCount = exchangeSlots.filter(s => s !== null).length;
+        const actionBtn = document.getElementById("exchangeActionBtn");
+        if (filledCount === 3) {
+            actionBtn.disabled = false;
+            if (isReroll) {
+                actionBtn.innerHTML = `🔄 ПЕРЕПЛАВИТЬ (3x${selectedRank} → НОВАЯ ${selectedRank} КАРТА)`;
+            } else {
+                actionBtn.innerHTML = `🔮 ПЕРЕПЛАВИТЬ (3x${selectedRank} → 1x${targetRank})`;
+            }
+        } else {
+            actionBtn.disabled = true;
+            actionBtn.innerHTML = `❌ НУЖНО ЕЩЁ ${3 - filledCount} КАРТЫ (все одного ранга)`;
+        }
+    }
+    
+    function addToExchangeSlot(card) {
+        // Проверяем, есть ли уже карты в ячейках
+        const existingCards = exchangeSlots.filter(s => s !== null);
+        
+        // Если есть карты в ячейках, проверяем что новая карта того же ранга
+        if (existingCards.length > 0) {
+            const existingRank = existingCards[0].rank;
+            if (card.rank !== existingRank) {
+                showToast(`❌ Все карты должны быть одного ранга! Сейчас в ячейках: ${existingRank}`);
+                return;
+            }
+        }
+        
+        const emptyIndex = exchangeSlots.findIndex(slot => slot === null);
+        if (emptyIndex === -1) {
+            showToast("❌ Все ячейки заняты! Сначала уберите карты или выполните обмен");
+            return;
+        }
+        
+        exchangeSlots[emptyIndex] = card;
+        updateExchangeUI();
+    }
+    
+    function removeFromExchangeSlot(index) {
+        if (exchangeSlots[index] !== null) {
+            exchangeSlots[index] = null;
+            updateExchangeUI();
+        }
+    }
+    
+    function clearExchangeSlots() {
+        exchangeSlots = [null, null, null];
+        updateExchangeUI();
+    }
+    
+    function performExchange() {
+        const filledCount = exchangeSlots.filter(s => s !== null).length;
+        if (filledCount !== 3) {
+            showToast("❌ Нужно выбрать 3 карты для обмена!");
+            return;
+        }
+        
+        const fromRank = exchangeSlots[0].rank;
+        const toRank = RANK_NEXT_EXCHANGE[fromRank];
+        const isReroll = (fromRank === "S" || fromRank === "X");
+        
+        // Проверяем, что все карты одного ранга
+        const allSameRank = exchangeSlots.every(slot => slot && slot.rank === fromRank);
+        if (!allSameRank) {
+            showToast("❌ Все карты должны быть одного ранга!");
+            return;
+        }
+        
+        // Удаляем карты из коллекции
+        for (let i = 0; i < exchangeSlots.length; i++) {
+            const slotCard = exchangeSlots[i];
+            if (slotCard) {
+                const index = collection.findIndex(c => c.id === slotCard.id);
+                if (index !== -1) collection.splice(index, 1);
+            }
+        }
+        
+        // Создаём новую карту
+        let newCard = null;
+        
+        if (isReroll) {
+            // Для S и X ранга - реролл (получаем новую карту того же ранга)
+            const sameRankCards = ALL_CARDS.filter(c => c.rank === fromRank && c.rank !== "A+");
+            if (sameRankCards.length > 0) {
+                newCard = { ...sameRankCards[Math.floor(Math.random() * sameRankCards.length)] };
+            } else {
+                newCard = { ...exchangeSlots[0] };
+            }
+        } else {
+            // Обычное повышение ранга
+            const possibleCards = ALL_CARDS.filter(c => c.rank === toRank && c.rank !== "A+");
+            if (possibleCards.length > 0) {
+                newCard = { ...possibleCards[Math.floor(Math.random() * possibleCards.length)] };
+            } else {
+                newCard = { ...exchangeSlots[0], rank: toRank, rankLabel: toRank };
+            }
+        }
+        
+        collection.push(newCard);
+        
+        if (isReroll) {
+            showToast(`🔄 Переплавка: 3x${fromRank} → Новая ${fromRank} карта! Получена: ${newCard.name}`);
+        } else {
+            showToast(`🔄 Обмен: 3x${fromRank} → 1x${toRank}! Получена карта: ${newCard.name}`);
+        }
+        
+        // Очищаем ячейки
+        exchangeSlots = [null, null, null];
+        saveGame();
+        updateAllUI();
+        showCardModalWithRank(newCard);
+    }
+    
     // ========== ОБЫЧНЫЕ ПАКИ ==========
+    function generateThreeCards() {
+        let cards = [];
+        let usedCardIds = new Set();
+        
+        while (cards.length < 3) {
+            const card = getRandomCard(false);
+            if (!usedCardIds.has(card.id)) {
+                usedCardIds.add(card.id);
+                cards.push(card);
+            }
+        }
+        
+        const hasShardChance = Math.random() < 0.05;
+        if (hasShardChance) {
+            const shardIndex = Math.floor(Math.random() * 3);
+            cards[shardIndex] = {
+                ...cards[shardIndex],
+                hasShard: true,
+                shardValue: 1
+            };
+        }
+        return cards;
+    }
+    
     function showChoicePanel(cards) {
         currentOfferedCards = cards;
         selectedCardIndex = null;
@@ -1897,9 +2391,6 @@
             const ownsCard = collection.some(c => c.id === card.id);
             const div = document.createElement("div");
             div.className = "choice-card";
-            
-            // Проверяем, является ли эта карта осколком
-            const isShardCard = card.isShard || false;
             
             div.innerHTML = `
                 <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
@@ -1924,7 +2415,7 @@
         if (selectedCardIndex === null) return;
         const chosen = currentOfferedCards[selectedCardIndex];
         
-        // Сначала проверяем осколок на карте
+        // Проверка на осколок (на карте может быть бейдж с осколком)
         if (chosen.hasShard) {
             shards += chosen.shardValue || 3;
             showToast(`⚡ На карте "${chosen.name}" найден осколок! +${chosen.shardValue || 3}⚡`);
@@ -1935,7 +2426,6 @@
             return;
         }
         
-        // Дальше как обычно...
         const existingIndex = collection.findIndex(c => c.id === chosen.id);
         if (existingIndex !== -1) {
             crystals += 7;
@@ -1957,7 +2447,6 @@
     }
     
     function openNormalPack(isFree = false) {
-        // === НОВАЯ ПРОВЕРКА ===
         if (isPackOpen) {
             showToast("❌ Сначала выберите карту из открытого пака!");
             return;
@@ -1967,23 +2456,14 @@
         if (!isFree) crystals -= 70;
         addExp(3);
         
-        if (checkAplusDrop()) {
-            shards += 10;
-            showToast("🌟 Осколок A+! +10⚡");
-            saveGame();
-            updateAllUI();
-            return;
-        }
-        
         saveGame();
         updateAllUI();
-        isPackOpen = true; // Устанавливаем флаг, что пак открыт
+        isPackOpen = true;
         showChoicePanel(generateThreeCards());
     }
-    
+        
     // ========== ИВЕНТОВЫЕ ПАКИ ==========
     function openEventPack() {
-        // === НОВАЯ ПРОВЕРКА ===
         if (isEventPackOpen) {
             showToast("❌ Сначала заберите карту из открытого ивент-пака!");
             return;
@@ -1995,7 +2475,7 @@
         addExp(3);
         
         const card = getRandomCard(true);
-        isEventPackOpen = true; // Флаг, что ивент-пак открыт
+        isEventPackOpen = true;
         
         const existingIndex = collection.findIndex(c => c.id === card.id);
         if (existingIndex !== -1) {
@@ -2004,7 +2484,7 @@
             updateAllUI();
             showCardModalSimple(card, true);
             showToast(`🔄 Дубликат! +7💎`);
-            isEventPackOpen = false; // Сбрасываем флаг
+            isEventPackOpen = false;
             return;
         }
         
@@ -2013,7 +2493,7 @@
             saveGame();
             updateAllUI();
             showToast(`⚡ Осколок (A+)! +15⚡`);
-            isEventPackOpen = false; // Сбрасываем флаг
+            isEventPackOpen = false;
             return;
         }
         
@@ -2022,9 +2502,9 @@
         updateAllUI();
         showCardModalSimple(card, false);
         showToast(`🎉 Вы получили карту из ивент-пака!`);
-        isEventPackOpen = false; // Сбрасываем флаг
+        isEventPackOpen = false;
     }
-        
+    
     function claimDailyBonus() {
         const today = new Date().toDateString();
         if (lastDailyBonus === today) { 
@@ -2037,7 +2517,6 @@
         updateAllUI();
         showToast("🎁 +30 кристаллов!");
         
-        // Скрываем кнопку после получения
         const dailyBonusBtn = document.getElementById("dailyBonusBtn");
         if (dailyBonusBtn) {
             dailyBonusBtn.style.display = "none";
@@ -2055,15 +2534,15 @@
             }
         }
     }
-
+    
     function upgradeCard(cardId) {
         const idx = collection.findIndex(c => c.id === cardId);
         if (idx === -1) return;
         const card = collection[idx];
         if (!card.canUpgrade) { showToast("Эту карту нельзя улучшить"); return; }
-        if (shards < 3) { showToast("Нужно 3⚡"); return; }  // ← 25 → 3
+        if (shards < 3) { showToast("Нужно 3⚡"); return; }
         if (card.isUpgraded) { showToast("Уже улучшена"); return; }
-        shards -= 3;  // ← 25 → 3
+        shards -= 3;
         card.isUpgraded = true;
         saveGame();
         updateAllUI();
@@ -2079,6 +2558,192 @@
     function filterByRank(cards, filter) {
         if (filter === "ALL") return cards;
         return cards.filter(c => c.rank === filter);
+    }
+    
+    // ========== АУКЦИОН ==========
+    function updateAuctionUI() {
+        const currentBidAmountSpan = document.getElementById("currentBidAmount");
+        if (currentBidAmountSpan) currentBidAmountSpan.innerText = currentBid;
+        
+        const timerSpan = document.getElementById("auctionTimer");
+        const statusDiv = document.getElementById("auctionStatus");
+        
+        if (auctionActive) {
+            const timeLeft = Math.max(0, auctionEndTime - Date.now());
+            if (timeLeft <= 0) {
+                endAuction();
+                return;
+            }
+            const minutes = Math.floor(timeLeft / 60000);
+            const seconds = Math.floor((timeLeft % 60000) / 1000);
+            timerSpan.innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+            statusDiv.innerHTML = `<span style="color: #2ecc71;">🏆 АУКЦИОН АКТИВЕН 🏆</span><br>Последняя ставка: ${currentBidder || "ИИ"}`;
+        } else {
+            const cooldownLeft = Math.max(0, auctionCooldownEnd - Date.now());
+            if (cooldownLeft > 0) {
+                const minutes = Math.floor(cooldownLeft / 60000);
+                const seconds = Math.floor((cooldownLeft % 60000) / 1000);
+                timerSpan.innerText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                statusDiv.innerHTML = `<span style="color: #e74c3c;">⏸ АУКЦИОН НА ПАУЗЕ</span><br>Следующий аукцион через ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            } else {
+                timerSpan.innerText = "--:--";
+                statusDiv.innerHTML = `<span style="color: #f39c12;">⚡ АУКЦИОН НЕ АКТИВЕН</span><br>Нажмите "Начать торги" чтобы начать!`;
+            }
+        }
+    }
+    
+    function startAuction() {
+        const now = Date.now();
+        if (auctionActive) {
+            showToast("❌ Аукцион уже активен!");
+            return;
+        }
+        if (now < auctionCooldownEnd) {
+            const cooldownLeft = Math.ceil((auctionCooldownEnd - now) / 1000);
+            const minutes = Math.floor(cooldownLeft / 60);
+            const seconds = cooldownLeft % 60;
+            showToast(`❌ Аукцион на паузе! Доступен через ${minutes}:${seconds.toString().padStart(2, '0')}`);
+            return;
+        }
+        
+        // Запуск аукциона
+        auctionActive = true;
+        currentBid = 100;
+        currentBidder = "";
+        auctionEndTime = now + 15 * 60 * 1000;
+        aiBidsLeft = Math.floor(Math.random() * 3) + 3;
+        
+        showToast("🏆 АУКЦИОН НАЧАЛСЯ! Стартовая ставка 100💎");
+        updateAuctionUI();
+        
+        if (auctionInterval) clearInterval(auctionInterval);
+        auctionInterval = setInterval(() => {
+            if (auctionActive) {
+                updateAuctionUI();
+                if (Date.now() >= auctionEndTime) {
+                    endAuction();
+                }
+            }
+        }, 1000);
+        
+        saveGame();
+    }
+    
+    function placeBid() {
+        if (!auctionActive) {
+            showToast("❌ Аукцион не активен!");
+            return;
+        }
+        
+        if (currentBidder === userId) {
+            showToast("❌ Вы уже лидер! Дождитесь, пока кто-то перебьёт вашу ставку");
+            return;
+        }
+        
+        const input = document.getElementById("bidAmount");
+        let bidAmount = parseInt(input.value);
+        if (isNaN(bidAmount) || bidAmount <= 0) {
+            showToast("❌ Введите корректную сумму!");
+            return;
+        }
+        
+        const minBid = Math.ceil(currentBid * 1.1);
+        if (bidAmount < minBid) {
+            showToast(`❌ Минимальная ставка: ${minBid}💎 (текущая ${currentBid}💎 + 10%)`);
+            return;
+        }
+        
+        if (bidAmount > crystals) {
+            showToast(`❌ Не хватает кристаллов! У вас ${crystals}💎, нужно ${bidAmount}💎`);
+            return;
+        }
+        
+        const previousBid = currentBid;
+        const previousBidder = currentBidder;
+        
+        crystals -= bidAmount;
+        currentBid = bidAmount;
+        currentBidder = userId;
+        
+        saveGame();
+        updateAllUI();
+        
+        showToast(`✅ Вы повысили ставку до ${currentBid}💎! Списано ${bidAmount}💎`);
+        input.value = "";
+
+        if (Date.now() >= auctionEndTime) {
+            endAuction();
+            return;
+        }
+
+        setTimeout(() => makeAIBid(previousBid, previousBidder), 1000);
+    }
+    
+    function makeAIBid(previousBid = 0, previousBidder = "") {
+        if (!auctionActive) return;
+        if (Date.now() >= auctionEndTime) {
+            endAuction();
+            return;
+        }
+        
+        if (aiBidsLeft <= 0) return;
+        
+        const increase = 0.1 + Math.random() * 0.1;
+        const aiBid = Math.ceil(currentBid * (1 + increase));
+        
+        const oldBid = currentBid;
+        const oldBidder = currentBidder;
+        
+        aiBidsLeft--;
+        currentBid = aiBid;
+        currentBidder = "🤖 ИИ";
+        
+        if (oldBidder === userId && oldBid > 0) {
+            crystals += oldBid;
+            showToast(`🔄 Ваша предыдущая ставка ${oldBid}💎 возвращена!`);
+        }
+        
+        saveGame();
+        updateAllUI();
+        
+        showToast(`🤖 ИИ повысил ставку до ${currentBid}💎! Осталось ставок ИИ: ${aiBidsLeft}`);
+        
+        if (Date.now() >= auctionEndTime) {
+            endAuction();
+        }
+    }
+    
+    function endAuction() {
+        if (auctionInterval) clearInterval(auctionInterval);
+        auctionActive = false;
+        
+        if (currentBidder === userId) {
+            showToast(`🏆 ПОЗДРАВЛЯЕМ! Вы выиграли аукцион со ставкой ${currentBid}💎! Получена Q-ранг карта! 🏆`);
+            
+            const qCards = ALL_CARDS.filter(c => c.rank === "Q");
+            if (qCards.length > 0) {
+                const newCard = { ...qCards[Math.floor(Math.random() * qCards.length)] };
+                const existingIndex = collection.findIndex(c => c.id === newCard.id);
+                if (existingIndex !== -1) {
+                    crystals += 100;
+                    showToast(`🔄 У вас уже есть эта Q-ранг карта! +100💎 за дубликат!`);
+                } else {
+                    collection.push(newCard);
+                    showCardModalWithRank(newCard);
+                    showToast(`🎉 Вы получили Q-ранг карту: ${newCard.name}!`);
+                }
+            }
+        } else {
+            showToast(`🏆 АУКЦИОН ЗАВЕРШЁН! Победитель: ${currentBidder === "" ? "не определён" : currentBidder}. Ставка: ${currentBid}💎`);
+        }
+        
+        auctionCooldownEnd = Date.now() + 5 * 60 * 1000;
+        currentBid = 0;
+        currentBidder = "";
+        
+        updateAuctionUI();
+        saveGame();
+        updateAllUI();
     }
     
     // ========== СОХРАНЕНИЕ ==========
@@ -2100,6 +2765,13 @@
         localStorage.setItem("usedPromoCodes", JSON.stringify(usedPromoCodes));
         localStorage.setItem("userId", userId);
         localStorage.setItem("gacha_proExpiry", proExpiry);
+        
+        localStorage.setItem("auction_active", auctionActive);
+        localStorage.setItem("auction_endTime", auctionEndTime);
+        localStorage.setItem("auction_currentBid", currentBid);
+        localStorage.setItem("auction_currentBidder", currentBidder);
+        localStorage.setItem("auction_aiBidsLeft", aiBidsLeft);
+        localStorage.setItem("auction_cooldownEnd", auctionCooldownEnd);
     }
     
     function loadGame() {
@@ -2123,9 +2795,27 @@
         usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
         proExpiry = parseInt(localStorage.getItem("gacha_proExpiry")) || 0;
         
+        const savedAuctionActive = localStorage.getItem("auction_active");
+        if (savedAuctionActive !== null) {
+            auctionActive = savedAuctionActive === "true";
+            auctionEndTime = parseInt(localStorage.getItem("auction_endTime")) || 0;
+            currentBid = parseInt(localStorage.getItem("auction_currentBid")) || 0;
+            currentBidder = localStorage.getItem("auction_currentBidder") || "";
+            aiBidsLeft = parseInt(localStorage.getItem("auction_aiBidsLeft")) || 0;
+            auctionCooldownEnd = parseInt(localStorage.getItem("auction_cooldownEnd")) || 0;
+        } else {
+            auctionActive = false;
+            auctionEndTime = 0;
+            currentBid = 0;
+            currentBidder = "";
+            aiBidsLeft = 0;
+            auctionCooldownEnd = 0;
+        }
+        
         resetDailyIfNeeded();
         resetPaidFishingIfNeeded();
         if (!Array.isArray(collection)) collection = [];
+        
         updateAllUI();
         checkDailyBonusButton();
     }
@@ -2165,6 +2855,10 @@
         if (userIdEl) userIdEl.innerText = userId;
         
         updateProUI();
+        if (document.getElementById("exchangeSection").classList.contains("active")) {
+            updateExchangeUI();
+        }
+        updateAuctionUI();
         
         document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine, #crystalsShop").forEach(el => el && (el.innerText = crystals));
         document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing, #shardsShop").forEach(el => el && (el.innerText = shards));
@@ -2262,7 +2956,7 @@
     
     function resetGame() {
         if (confirm("Сбросить ВСЁ?")) {
-            crystals = 40; shards = 0; ore = 0; eventCurrency = 0; collection = [];
+            crystals = 500; shards = 40; ore = 0; eventCurrency = 100; collection = [];
             level = 1; exp = 0; clicksToday = 0; oreMinedToday = 0;
             lastResetDate = new Date().toDateString();
             lastDailyBonus = "";
@@ -2273,9 +2967,13 @@
             proExpiry = 0;
             isPackOpen = false;
             isEventPackOpen = false;
+            auctionCooldownEnd = 0;
+            auctionActive = false;
+            exchangeSlots = [null, null, null];
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
+            document.getElementById("eventResultPanel").style.display = "none";
             showToast("Игра сброшена!");
         }
     }
@@ -2312,6 +3010,8 @@
         document.getElementById("overlay").classList.remove("active");
         document.getElementById("burgerBtn").classList.remove("active");
         if (sectionId === "fishing") updateFishingUI();
+        if (sectionId === "exchange") updateExchangeUI();
+        if (sectionId === "auction") updateAuctionUI();
     }
     
     function initShopTabs() {
@@ -2328,6 +3028,8 @@
     
     setInterval(() => {
         if (document.getElementById("fishingSection")?.classList.contains("active")) updateFishingUI();
+        if (document.getElementById("auctionSection")?.classList.contains("active")) updateAuctionUI();
+        if (auctionActive && Date.now() >= auctionEndTime) endAuction();
         updateProUI();
     }, 1000);
     
@@ -2337,6 +3039,10 @@
         createRankFilters("collectionRankFilters", "collection");
         createRankFilters("catalogRankFilters", "catalog");
         initShopTabs();
+        
+        // Обработчики для обменов
+        document.getElementById("exchangeActionBtn").onclick = performExchange;
+        document.getElementById("exchangeClearBtn").onclick = clearExchangeSlots;
         
         document.getElementById("mineBtn").onclick = mineOre;
         document.getElementById("exchangeBtn").onclick = exchangeOre;
@@ -2349,6 +3055,8 @@
         document.getElementById("paidFishBtn").onclick = paidFishing;
         document.getElementById("activatePromoBtn").onclick = activatePromoCode;
         document.getElementById("copyIdBtn").onclick = copyUserId;
+        document.getElementById("startAuctionBtn").onclick = startAuction;
+        document.getElementById("placeBidBtn").onclick = placeBid;
         
         document.getElementById("cardModalClose").onclick = () => document.getElementById("cardModal").classList.remove("active");
         document.getElementById("cardModal").onclick = (e) => { if(e.target === document.getElementById("cardModal")) document.getElementById("cardModal").classList.remove("active"); };
