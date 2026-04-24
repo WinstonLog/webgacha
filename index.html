@@ -2044,7 +2044,10 @@
         crystals = parseInt(localStorage.getItem("gacha_crystals")) || 500;
         shards = parseInt(localStorage.getItem("gacha_shards")) || 40;
         ore = parseInt(localStorage.getItem("gacha_ore")) || 0;
-        eventCurrency = parseInt(localStorage.getItem("gacha_eventCurrency")) || 100;
+        
+        const savedEventCurrency = localStorage.getItem("gacha_eventCurrency");
+        eventCurrency = savedEventCurrency !== null ? parseInt(savedEventCurrency) : 100;
+        
         collection = JSON.parse(localStorage.getItem("gacha_collection")) || [];
         level = parseInt(localStorage.getItem("gacha_level")) || 1;
         exp = parseInt(localStorage.getItem("gacha_exp")) || 0;
@@ -2056,6 +2059,7 @@
         paidFishUsed = parseInt(localStorage.getItem("paidFishUsed")) || 0;
         lastPaidResetDate = localStorage.getItem("lastPaidResetDate") || new Date().toDateString();
         usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
+        
         resetDailyIfNeeded();
         resetPaidFishingIfNeeded();
         if (!Array.isArray(collection)) collection = [];
