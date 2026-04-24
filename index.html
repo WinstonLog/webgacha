@@ -1807,7 +1807,9 @@
         "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
     };
     
-    const PERSONAL_PROMOCODES = {};
+    const PERSONAL_PROMOCODES = {
+        "PERSONAL_CJN9DZX8_1200CRYSTALS": { crystals: 1200, message: "Персональный бонус! +1200💎", targetId: "CJN9DZX8" }
+    };
     
     // PRO функции
     function isProActive() {
@@ -1865,6 +1867,8 @@
             case "250CRYSTALS": return { crystals: 250, message: "Персональный бонус! +250💎", isPersonal: true };
             case "500CRYSTALS": return { crystals: 500, message: "Персональный бонус! +500💎", isPersonal: true };
             case "1000CRYSTALS": return { crystals: 1000, message: "Персональный бонус! +1000💎", isPersonal: true };
+            case "1200CRYSTALS": return { crystals: 1200, message: "Персональный бонус! +1200💎", isPersonal: true };
+            case "5000CRYSTALS": return { crystals: 5000, message: "Персональный бонус! +5000💎", isPersonal: true };
             case "50SHARDS": return { shards: 50, message: "Персональный бонус! +50⚡ осколков", isPersonal: true };
             case "100SHARDS": return { shards: 100, message: "Персональный бонус! +100⚡ осколков", isPersonal: true };
             case "EVENT50": return { eventCurrency: 50, message: "Персональный бонус! +50 ивент-валюты", isPersonal: true };
