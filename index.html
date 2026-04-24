@@ -1149,6 +1149,252 @@
             width: 100%;
         }
 
+        /* Переплавка и Раскол - раздельные секции */
+        .exchange-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .exchange-tab {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 10px;
+            border-radius: 28px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .exchange-tab.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            color: #1a1a2e;
+        }
+
+        .exchange-panel {
+            display: none;
+        }
+
+        .exchange-panel.active {
+            display: block;
+        }
+
+        /* Секция раскола (PRO) */
+        .split-container {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .split-title {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .pro-badge-split {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border-radius: 20px;
+            padding: 2px 8px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-left: 8px;
+        }
+
+        .split-select {
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 28px;
+        }
+
+        .split-select select {
+            background: linear-gradient(135deg, #2a2555, #1e1b3c);
+            color: white;
+            border: 1px solid #FFD700;
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23FFD700' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 30px;
+        }
+
+        .split-select select option {
+            background: #1e1b3c;
+            color: white;
+            padding: 8px;
+        }
+
+        select {
+            background: linear-gradient(135deg, #2a2555, #1e1b3c);
+            color: white;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 40px;
+            padding: 8px 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1e1b3c;
+            color: white;
+        }
+
+        .split-slot {
+            background: rgba(30, 27, 60, 0.8);
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            border: 2px dashed rgba(255, 215, 0, 0.3);
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .split-slot.filled {
+            border: 2px solid #FFD700;
+            background: linear-gradient(135deg, #2a2555, #1e1b3c);
+        }
+
+        .split-slot img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 10px;
+            margin-bottom: 6px;
+        }
+
+        .split-result {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+        }
+
+        .split-result-title {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .split-result-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .split-result-card {
+            background: linear-gradient(135deg, rgba(30, 27, 60, 0.9), rgba(20, 18, 45, 0.9));
+            border-radius: 12px;
+            padding: 6px;
+            text-align: center;
+            width: 85px;
+        }
+
+        .split-result-card img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .split-action-btn {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 10px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+            color: #1a1a2e;
+        }
+
+        .split-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .split-cards-list {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .split-card-item {
+            background: rgba(30, 27, 60, 0.6);
+            border-radius: 12px;
+            padding: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .split-card-item:hover:not(.disabled) {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateX(5px);
+        }
+
+        .split-card-item.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            filter: grayscale(0.5);
+        }
+
+        .split-card-item img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .split-card-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .split-card-name {
+            font-size: 0.7rem;
+            font-weight: bold;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .split-card-rank {
+            font-size: 0.55rem;
+            opacity: 0.7;
+        }
+
+        .pro-badge {
+            display: none;
+        }
+
         /* Аукцион */
         .auction-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
@@ -1305,6 +1551,49 @@
             background: rgba(0,0,0,0.3);
             border-radius: 20px;
         }
+
+        /* Скролл меню */
+        .dropdown-menu {
+            position: fixed;
+            top: 60px;
+            left: -100%;
+            width: 280px;
+            height: calc(100vh - 60px);
+            background: rgba(15, 15, 35, 0.98);
+            backdrop-filter: blur(20px);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999;
+            padding: 15px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .dropdown-menu::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .dropdown-menu::-webkit-scrollbar-thumb {
+            background: #FFD700;
+            border-radius: 10px;
+        }
+
+        .menu-item {
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 3px solid transparent;
+        }
+
     </style>
 </head>
 <body>
@@ -1390,7 +1679,7 @@
         </div>
         
         <div class="daily-bonus" id="dailyBonusBtn">🎁 ЕЖЕДНЕВНЫЙ БОНУС +30 💎</div>
-        <button class="reset-btn" id="resetBtn">🔄 СБРОС ПРОГРЕССА</button>
+        <!-- <button class="reset-btn" id="resetBtn">🔄 СБРОС ПРОГРЕССА</button> -->
     </div>
 
     <!-- Паки -->
@@ -1500,6 +1789,7 @@
             <button class="mine-button" id="mineBtn">⛏️<br>КОПАТЬ</button>
             <div class="progress-bar"><div class="progress-fill" id="mineProgress"></div></div>
             <button class="exchange-btn" id="exchangeBtn">🔄 ОБМЕНЯТЬ 100 РУДЫ → 1 💎</button>
+            <button class="exchange-btn" id="exchangeOreToEventBtn">🔄 ОБМЕНЯТЬ 500 РУДЫ → 10 🌸</button>
             <small>⚡ 1 клик = 1 XP. С уровнем растёт лимит кликов и руда за клик!</small>
         </div>
     </div>
@@ -1511,38 +1801,94 @@
             <div class="stat-card"><div class="stat-icon">⬆️</div><div class="stat-info"><div class="stat-label">РЕЗУЛЬТАТ</div><div class="stat-value" id="exchangeTargetRank">?</div></div></div>
         </div>
         
-        <div class="exchange-container">
-            <div class="info-content" style="margin-bottom:15px; text-align:center; font-size:0.7rem;">
-                📌 Выберите 3 карты одного ранга. Ранг результата определяется автоматически!
-            </div>
-            
-            <div class="exchange-slots" id="exchangeSlots">
-                <div class="exchange-slot empty" data-slot="0">
-                    <div class="exchange-slot-empty">➕ Ячейка 1</div>
-                </div>
-                <div class="exchange-slot empty" data-slot="1">
-                    <div class="exchange-slot-empty">➕ Ячейка 2</div>
-                </div>
-                <div class="exchange-slot empty" data-slot="2">
-                    <div class="exchange-slot-empty">➕ Ячейка 3</div>
-                </div>
-            </div>
-            
-            <div style="margin: 15px 0 8px 0; font-size:0.75rem; opacity:0.7;">📋 ДОСТУПНЫЕ КАРТЫ ДЛЯ ОБМЕНА:</div>
-            <div class="exchange-cards-list" id="exchangeCardsList"></div>
-            
-            <button class="exchange-action-btn" id="exchangeActionBtn" disabled>❌ НУЖНО 3 КАРТЫ</button>
-            <button class="exchange-clear-btn" id="exchangeClearBtn">🗑 ОЧИСТИТЬ ВСЕ ЯЧЕЙКИ</button>
+        <div class="exchange-tabs">
+            <button class="exchange-tab active" data-exchange="merge">🔄 ПЕРЕПЛАВКА</button>
+            <button class="exchange-tab" data-exchange="split">✨ РАСКОЛ (PRO)</button>
         </div>
         
-        <div class="info-card">
-            <div class="info-title">📜 Правила обмена</div>
-            <div class="info-content">
-                <p>🔄 Выберите <strong class="info-highlight">3 карты одного ранга</strong> из списка ниже</p>
-                <p>🎴 Порядок рангов: <strong class="info-highlight">E → D → C → B → G → P → A → S</strong></p>
-                <p>🔄 <strong class="info-highlight">S и X ранг</strong> — переплавка 3 карт в новую карту того же ранга</p>
-                <p>✨ Карты поместятся в ячейки и станут неактивными</p>
-                <p>🗑 Нажмите на ячейку, чтобы убрать карту</p>
+        <!-- Панель переплавки -->
+        <div id="mergePanel" class="exchange-panel active">
+            <div class="exchange-container">
+                <div class="info-content" style="margin-bottom:15px; text-align:center; font-size:0.7rem;">
+                    📌 Выберите 3 карты одного ранга. Ранг результата определяется автоматически!
+                </div>
+                
+                <div class="exchange-slots" id="exchangeSlots">
+                    <div class="exchange-slot empty" data-slot="0">
+                        <div class="exchange-slot-empty">➕ Ячейка 1</div>
+                    </div>
+                    <div class="exchange-slot empty" data-slot="1">
+                        <div class="exchange-slot-empty">➕ Ячейка 2</div>
+                    </div>
+                    <div class="exchange-slot empty" data-slot="2">
+                        <div class="exchange-slot-empty">➕ Ячейка 3</div>
+                    </div>
+                </div>
+                
+                <div style="margin: 15px 0 8px 0; font-size:0.75rem; opacity:0.7;">📋 ДОСТУПНЫЕ КАРТЫ ДЛЯ ОБМЕНА:</div>
+                <div class="exchange-cards-list" id="exchangeCardsList"></div>
+                
+                <button class="exchange-action-btn" id="exchangeActionBtn" disabled>❌ НУЖНО 3 КАРТЫ</button>
+                <button class="exchange-clear-btn" id="exchangeClearBtn">🗑 ОЧИСТИТЬ ВСЕ ЯЧЕЙКИ</button>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-title">📜 Правила переплавки</div>
+                <div class="info-content">
+                    <p>🔄 Выберите <strong class="info-highlight">3 карты одного ранга</strong> из списка ниже</p>
+                    <p>🎴 Порядок рангов: <strong class="info-highlight">E → D → C → B → G → P → A → S → X</strong></p>
+                    <p>🔄 <strong class="info-highlight">S и X ранг</strong> — переплавка 3 карт в новую карту того же ранга</p>
+                    <p>✨ Карты поместятся в ячейки и станут неактивными</p>
+                    <p>🗑 Нажмите на ячейку, чтобы убрать карту</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Панель раскола (PRO) -->
+        <div id="splitPanel" class="exchange-panel">
+            <div class="split-container" id="splitContainer">
+                <div class="split-title">✨ РАСКОЛ КАРТЫ ✨ <span class="pro-badge-split">👑 PRO</span></div>
+                <div class="info-content" style="text-align:center; font-size:0.7rem; margin-bottom:15px;">
+                    🔥 Разделите карту на несколько карт более низкого ранга!<br>
+                    📊 X → 5S | S → 2A | A → 2P | P → 2G | G → 2B | B → 2C | C → 2D | D → 2E
+                </div>
+                
+                <div class="split-select">
+                    <label>🎴 Выберите ранг карты для раскола:</label>
+                    <select id="splitRankSelect">
+                        <option value="X">X (→ 5 карт S)</option>
+                        <option value="S">S (→ 2 карты A)</option>
+                        <option value="A">A (→ 2 карты P)</option>
+                        <option value="P">P (→ 2 карты G)</option>
+                        <option value="G">G (→ 2 карты B)</option>
+                        <option value="B">B (→ 2 карты C)</option>
+                        <option value="C">C (→ 2 карты D)</option>
+                        <option value="D">D (→ 2 карты E)</option>
+                    </select>
+                </div>
+                
+                <div class="split-slot" id="splitSlot">
+                    <div class="exchange-slot-empty">➕ Выберите карту для раскола</div>
+                </div>
+                
+                <div id="splitResultContainer" class="split-result" style="display: none;">
+                    <div class="split-result-title">📦 Результат раскола:</div>
+                    <div id="splitResultCards" class="split-result-cards"></div>
+                </div>
+                
+                <div id="splitCardsList" class="split-cards-list"></div>
+                
+                <button class="split-action-btn" id="splitActionBtn" disabled>✨ РАСКОЛОТЬ КАРТУ ✨</button>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-title">📜 Правила раскола</div>
+                <div class="info-content">
+                    <p>👑 Доступно только для <strong class="info-highlight">PRO-аккаунта</strong>!</p>
+                    <p>✨ Разделите одну карту на <strong class="info-highlight">несколько карт более низкого ранга</strong></p>
+                    <p>📊 X → 5S | S → 2A | A → 2P | P → 2G | G → 2B | B → 2C | C → 2D | D → 2E</p>
+                    <p>⚠️ <strong class="info-highlight">E, H, N, V, L, Q ранги</strong> нельзя расколоть</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1751,8 +2097,8 @@
     }
     
     // ========== СОСТОЯНИЕ ==========
-    let crystals = 500;
-    let shards = 40;
+    let crystals = 40;
+    let shards = 0;
     let ore = 0;
     let eventCurrency = 100;
     let collection = [];
@@ -1808,7 +2154,7 @@
     };
     
     const PERSONAL_PROMOCODES = {
-        "PERSONAL_CJN9DZX8_1200CRYSTALS": { crystals: 1200, message: "Персональный бонус! +1200💎", targetId: "CJN9DZX8" }
+        "PERSONAL_QVKQJPMX_30PRO_TEST": { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", targetId: "QVKQJPMX" }
     };
     
     // PRO функции
@@ -2052,10 +2398,17 @@
             document.getElementById("eventDaysLeft").innerHTML = `⏰ Осталось дней: ${daysLeft}`;
             document.getElementById("eventIcon").innerHTML = getSeasonIcon();
             document.getElementById("eventLabel").innerHTML = getSeasonLabel();
+            
+            // Обновляем кнопку обмена руды
+            updateExchangeOreButton();
         } else {
             document.getElementById("eventSeasonName").innerHTML = "❌ НЕТ АКТИВНЫХ ИВЕНТОВ";
             document.getElementById("eventDaysLeft").innerHTML = "Ивентовые паки недоступны";
             hasEvent = false;
+            
+            // Скрываем кнопку обмена
+            const btn = document.getElementById("exchangeOreToEventBtn");
+            if (btn) btn.style.display = "none";
         }
     }
     
@@ -2090,26 +2443,38 @@
         document.getElementById("paidFishBtn").disabled = paidFishUsed >= 10;
     }
     
+    function getSeasonCurrencyItem() {
+        const seasonItems = {
+            spring: { name: "Цветочек", emoji: "🌸", value: 10 },
+            summer: { name: "Арбуз", emoji: "🍉", value: 10 },
+            halloween: { name: "Тыква", emoji: "🎃", value: 10 },
+            winter: { name: "Снежинка", emoji: "❄️", value: 10 }
+        };
+        return seasonItems[currentSeason] || { name: "Звезда", emoji: "⭐", value: 10 };
+    }
+
     function getRandomFish() {
-        const fishes = [
-            { name: "🐟 Гнилая рыба", ore: 5, crystals: 0, card: null, freePack: false, paidCharge: 0 },
-            { name: "🐠 Кровавый лосось", ore: 0, crystals: 2, card: null, freePack: false, paidCharge: 0 },
-            { name: "🦑 Гигантский кальмар", ore: 10, crystals: 10, card: null, freePack: false, paidCharge: 0 },
-            { name: "👑 Золотая рыбка", ore: 0, crystals: 0, card: null, freePack: false, paidCharge: 1 },
-            { name: "📜 Карта сокровищ", ore: 0, crystals: 0, card: true, freePack: false, paidCharge: 0 },
-            { name: "🎁 Сундук", ore: 0, crystals: 0, card: null, freePack: true, paidCharge: 0 }
+        const seasonItem = getSeasonCurrencyItem();
+        const baseFishes = [
+            { name: "🐟 Гнилая рыба", ore: 5, crystals: 0, card: null, freePack: false, paidCharge: 0, eventCurrency: 0 },
+            { name: "🐠 Кровавый лосось", ore: 0, crystals: 2, card: null, freePack: false, paidCharge: 0, eventCurrency: 0 },
+            { name: "🦑 Гигантский кальмар", ore: 10, crystals: 10, card: null, freePack: false, paidCharge: 0, eventCurrency: 0 },
+            { name: "👑 Золотая рыбка", ore: 0, crystals: 0, card: null, freePack: false, paidCharge: 1, eventCurrency: 0 },
+            { name: "📜 Карта сокровищ", ore: 0, crystals: 0, card: true, freePack: false, paidCharge: 0, eventCurrency: 0 },
+            { name: "🎁 Сундук", ore: 0, crystals: 0, card: null, freePack: true, paidCharge: 0, eventCurrency: 0 },
+            { name: `${seasonItem.emoji} ${seasonItem.name}`, ore: 0, crystals: 0, card: null, freePack: false, paidCharge: 0, eventCurrency: seasonItem.value }
         ];
         
-        const weights = [30, 25, 15, 10, 10, 10];
+        const weights = [30, 25, 15, 10, 10, 10, 5]; // 5% шанс на сезонный предмет
         let total = weights.reduce((a, b) => a + b, 0);
         let rand = Math.random() * total;
         let accum = 0;
         
-        for (let i = 0; i < fishes.length; i++) {
+        for (let i = 0; i < baseFishes.length; i++) {
             accum += weights[i];
-            if (rand <= accum) return { ...fishes[i] };
+            if (rand <= accum) return { ...baseFishes[i] };
         }
-        return fishes[0];
+        return baseFishes[0];
     }
     
     async function freeFishing() {
@@ -2140,6 +2505,12 @@
         if (fish.ore > 0 && fish.crystals > 0) {
             rewardText = `+${fish.ore}⛏️ +${fish.crystals}💎`;
         }
+
+        if (fish.eventCurrency > 0) {
+            eventCurrency += fish.eventCurrency;
+            rewardText = `+${fish.eventCurrency} ${getSeasonLabel()}`;
+        }
+
         if (fish.paidCharge > 0) {
             rewardText = `+1⚡ ловушка`;
         }
@@ -2661,6 +3032,14 @@
             return; 
         }
         crystals += 30;
+        
+        // Бонус за PRO-аккаунт
+        if (isProActive() && hasEvent) {
+            const proBonus = 20;
+            eventCurrency += proBonus;
+            showToast(`👑 PRO-бонус! +${proBonus} ${getSeasonLabel()}`);
+        }
+        
         lastDailyBonus = today;
         saveGame();
         updateAllUI();
@@ -3268,11 +3647,21 @@
         checkDailyBonusButton();
         updateAchievementsUI();
         updateQuestsUI();
+        updateExchangeOreButton();
+
+        if (document.getElementById("exchangeSection").classList.contains("active")) {
+            if (document.getElementById("mergePanel").classList.contains("active")) {
+                updateExchangeUI();
+            }
+            if (document.getElementById("splitPanel").classList.contains("active")) {
+                updateSplitUI();
+            }
+        }
     }
     
-    function resetGame() {
+/*    function resetGame() {
         if (confirm("Сбросить ВСЁ?")) {
-            crystals = 500; shards = 40; ore = 0; eventCurrency = 100; collection = [];
+            crystals = 40; shards = 0; ore = 0; eventCurrency = 0; collection = [];
             level = 1; exp = 0; clicksToday = 0; oreMinedToday = 0;
             lastResetDate = new Date().toDateString();
             lastDailyBonus = "";
@@ -3292,7 +3681,7 @@
             document.getElementById("eventResultPanel").style.display = "none";
             showToast("Игра сброшена!");
         }
-    }
+    }*/
     
     function activatePromoCode() {
         const input = document.getElementById("promoInput");
@@ -3585,6 +3974,267 @@
         timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }
 
+
+    // ========== ВКЛАДКИ ПЕРЕПЛАВКА/РАСКОЛ ==========
+    function initExchangeTabs() {
+        const tabs = document.querySelectorAll('.exchange-tab');
+        const panels = document.querySelectorAll('.exchange-panel');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.exchange;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                panels.forEach(panel => panel.classList.remove('active'));
+                document.getElementById(`${target}Panel`).classList.add('active');
+                
+                // При переключении на раскол обновляем UI
+                if (target === 'split') {
+                    updateSplitUI();
+                }
+                // При переключении на переплавку обновляем UI
+                if (target === 'merge') {
+                    updateExchangeUI();
+                }
+            });
+        });
+    }
+
+    // ========== РАСКОЛ (PRO) ==========
+    let splitSelectedCard = null;
+
+    const SPLIT_RULES = {
+        "X": { targetRank: "S", count: 5 },
+        "S": { targetRank: "A", count: 2 },
+        "A": { targetRank: "P", count: 2 },
+        "P": { targetRank: "G", count: 2 },
+        "G": { targetRank: "B", count: 2 },
+        "B": { targetRank: "C", count: 2 },
+        "C": { targetRank: "D", count: 2 },
+        "D": { targetRank: "E", count: 2 }
+    };
+
+    // Ранги, которые нельзя расколоть
+    const UNSPLITTABLE_RANKS = ["E", "H", "N", "V", "L", "Q"];
+
+    function updateSplitUI() {
+        const splitContainer = document.getElementById("splitContainer");
+        if (!splitContainer) return;
+        
+        if (!isProActive()) {
+            splitContainer.style.opacity = "0.5";
+            splitContainer.style.filter = "grayscale(0.3)";
+            const splitActionBtn = document.getElementById("splitActionBtn");
+            if (splitActionBtn) splitActionBtn.disabled = true;
+            return;
+        } else {
+            splitContainer.style.opacity = "1";
+            splitContainer.style.filter = "none";
+        }
+        
+        const selectedRank = document.getElementById("splitRankSelect").value;
+        
+        // Проверка, можно ли расколоть выбранный ранг
+        if (UNSPLITTABLE_RANKS.includes(selectedRank)) {
+            const selectEl = document.getElementById("splitRankSelect");
+            // Автоматически выбираем доступный ранг
+            const availableRanks = Object.keys(SPLIT_RULES);
+            if (availableRanks.length > 0) {
+                selectEl.value = availableRanks[0];
+                updateSplitUI();
+            }
+            return;
+        }
+        
+        const availableCards = collection.filter(c => c.rank === selectedRank);
+        
+        const splitSlot = document.getElementById("splitSlot");
+        if (splitSelectedCard) {
+            splitSlot.className = "split-slot filled";
+            splitSlot.innerHTML = `
+                <img src="${splitSelectedCard.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
+                <div class="exchange-slot-name">${splitSelectedCard.name.length > 12 ? splitSelectedCard.name.substring(0,10)+'...' : splitSelectedCard.name}</div>
+                <div class="exchange-slot-rank">${splitSelectedCard.rank}</div>
+            `;
+        } else {
+            splitSlot.className = "split-slot";
+            splitSlot.innerHTML = `<div class="exchange-slot-empty">➕ Выберите карту для раскола</div>`;
+        }
+        
+        const listContainer = document.getElementById("splitCardsList");
+        if (availableCards.length === 0) {
+            listContainer.innerHTML = "<div style='text-align:center; padding:20px; opacity:0.6;'>Нет карт этого ранга в коллекции</div>";
+        } else {
+            listContainer.innerHTML = "";
+            availableCards.forEach(card => {
+                const isSelected = splitSelectedCard && splitSelectedCard.id === card.id;
+                const div = document.createElement("div");
+                div.className = `split-card-item ${isSelected ? "disabled" : ""}`;
+                div.innerHTML = `
+                    <img src="${card.image || 'https://via.placeholder.com/45'}" onerror="this.src='https://via.placeholder.com/45'">
+                    <div class="split-card-info">
+                        <div class="split-card-name">${card.name.length > 20 ? card.name.substring(0,18)+'...' : card.name}</div>
+                        <div class="split-card-rank">Ранг: ${card.rank} | ${card.set || "?"}</div>
+                    </div>
+                    <div style="font-size:0.7rem; color:#FFD700;">➡️</div>
+                `;
+                div.onclick = () => {
+                    splitSelectedCard = card;
+                    const actionBtn = document.getElementById("splitActionBtn");
+                    if (actionBtn) actionBtn.disabled = false;
+                    updateSplitUI();
+                    document.getElementById("splitResultContainer").style.display = "none";
+                };
+                listContainer.appendChild(div);
+            });
+        }
+        
+        const actionBtn = document.getElementById("splitActionBtn");
+        if (actionBtn) {
+            actionBtn.disabled = !splitSelectedCard;
+        }
+    }
+
+    function performSplit() {
+        if (!isProActive()) {
+            showToast("❌ Раскол доступен только для PRO-аккаунта!");
+            return;
+        }
+        
+        if (!splitSelectedCard) {
+            showToast("❌ Выберите карту для раскола!");
+            return;
+        }
+        
+        // Проверка, можно ли расколоть этот ранг
+        if (UNSPLITTABLE_RANKS.includes(splitSelectedCard.rank)) {
+            showToast(`❌ ${splitSelectedCard.rank} ранг нельзя расколоть!`);
+            return;
+        }
+        
+        const rule = SPLIT_RULES[splitSelectedCard.rank];
+        if (!rule) {
+            showToast("❌ Эту карту нельзя расколоть!");
+            return;
+        }
+        
+        const cardIndex = collection.findIndex(c => c.id === splitSelectedCard.id);
+        if (cardIndex === -1) {
+            showToast("❌ Карта не найдена в коллекции!");
+            splitSelectedCard = null;
+            updateSplitUI();
+            return;
+        }
+        
+        const targetCards = ALL_CARDS.filter(c => c.rank === rule.targetRank && c.rank !== "A+");
+        if (targetCards.length === 0) {
+            showToast(`❌ Нет доступных карт ранга ${rule.targetRank} для раскола!`);
+            return;
+        }
+        
+        // Удаляем выбранную карту
+        collection.splice(cardIndex, 1);
+        
+        // Создаём новые карты
+        const newCards = [];
+        for (let i = 0; i < rule.count; i++) {
+            const randomCard = { ...targetCards[Math.floor(Math.random() * targetCards.length)] };
+            newCards.push(randomCard);
+            collection.push(randomCard);
+        }
+        
+        // Показываем результат
+        const resultContainer = document.getElementById("splitResultContainer");
+        const resultCardsDiv = document.getElementById("splitResultCards");
+        resultCardsDiv.innerHTML = "";
+        newCards.forEach(card => {
+            const div = document.createElement("div");
+            div.className = "split-result-card";
+            const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+            div.innerHTML = `
+                <img src="${imgUrl || 'https://via.placeholder.com/55'}" onerror="this.src='https://via.placeholder.com/55'">
+                <div style="font-size:0.55rem; font-weight:bold;">${card.name.length > 8 ? card.name.substring(0,6)+'...' : card.name}</div>
+                <div class="rank-badge rank-${card.rank}" style="font-size:0.5rem; padding:2px 6px;">${card.rank}</div>
+            `;
+            resultCardsDiv.appendChild(div);
+        });
+        resultContainer.style.display = "block";
+        
+        showToast(`✨ Раскол выполнен! ${splitSelectedCard.name} [${splitSelectedCard.rank}] → ${rule.count} карт ранга ${rule.targetRank}! ✨`);
+        
+        // Очищаем выбор
+        splitSelectedCard = null;
+        
+        saveGame();
+        updateAllUI();
+        updateSplitUI();
+    }
+
+    function initSplit() {
+        const rankSelect = document.getElementById("splitRankSelect");
+        if (rankSelect) {
+            rankSelect.onchange = () => {
+                splitSelectedCard = null;
+                updateSplitUI();
+                document.getElementById("splitResultContainer").style.display = "none";
+            };
+        }
+        
+        const splitBtn = document.getElementById("splitActionBtn");
+        if (splitBtn) {
+            splitBtn.onclick = performSplit;
+        }
+    }
+
+    function exchangeOreToEvent() {
+        if (ore < 500) {
+            showToast(`Не хватает руды! Нужно 500, у вас ${ore}`);
+            return;
+        }
+        if (!hasEvent) {
+            showToast("❌ Нет активного ивента! Ивентовая валюта не нужна.");
+            return;
+        }
+        const exchangeCount = Math.floor(ore / 500);
+        const eventGained = exchangeCount * 10;
+        ore -= exchangeCount * 500;
+        eventCurrency += eventGained;
+        saveGame();
+        updateAllUI();
+        const seasonItem = getSeasonCurrencyItem();
+        showToast(`🔄 Обменяно ${exchangeCount * 500} руды → +${eventGained} ${seasonItem.emoji} ${getSeasonLabel()}!`);
+    }
+
+    function buyEventCurrency() {
+        if (crystals < 100) {
+            showToast("❌ Не хватает кристаллов!");
+            return;
+        }
+        if (!hasEvent) {
+            showToast("❌ Нет активного ивента! Ивентовая валюта не нужна.");
+            return;
+        }
+        crystals -= 100;
+        eventCurrency += 50;
+        saveGame();
+        updateAllUI();
+        showToast(`🎉 +50 ${getSeasonLabel()}!`);
+    }
+
+    function updateExchangeOreButton() {
+        const btn = document.getElementById("exchangeOreToEventBtn");
+        if (!btn) return;
+        
+        if (!hasEvent) {
+            btn.style.display = "none";
+            return;
+        }
+        
+        btn.style.display = "block";
+        const seasonItem = getSeasonCurrencyItem();
+        btn.innerHTML = `🔄 ОБМЕНЯТЬ 500 РУДЫ → 10 ${seasonItem.emoji}`;
+    }
+
     function initShopTabs() {
         document.querySelectorAll('.shop-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -3617,7 +4267,9 @@
         createRankFilters("collectionRankFilters", "collection");
         createRankFilters("catalogRankFilters", "catalog");
         initShopTabs();
-        
+        initExchangeTabs();
+        initSplit();
+
         // Обработчики для обменов
         const exchangeActionBtn = document.getElementById("exchangeActionBtn");
         const exchangeClearBtn = document.getElementById("exchangeClearBtn");
