@@ -1209,6 +1209,102 @@
             border-radius: 20px;
             font-size: 0.9rem;
         }
+
+        /* Достижения и квесты */
+        .achievements-grid, .quests-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+            margin-top: 15px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
+        .achievement-card, .quest-card {
+            background: linear-gradient(135deg, rgba(30, 27, 60, 0.9), rgba(20, 18, 45, 0.9));
+            border-radius: 20px;
+            padding: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .achievement-card.completed, .quest-card.completed {
+            border-color: #2ecc71;
+            background: linear-gradient(135deg, rgba(46, 204, 113, 0.2), rgba(20, 18, 45, 0.9));
+        }
+
+        .achievement-card.locked, .quest-card.locked {
+            opacity: 0.6;
+            filter: grayscale(0.3);
+        }
+
+        .achievement-title, .quest-title {
+            font-size: 1rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .achievement-desc, .quest-desc {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .achievement-progress, .quest-progress {
+            font-size: 0.65rem;
+            color: #FFD700;
+            margin-bottom: 8px;
+        }
+
+        .achievement-reward, .quest-reward {
+            font-size: 0.65rem;
+            color: #4caf50;
+        }
+
+        .quest-timer {
+            font-size: 0.6rem;
+            color: #f39c12;
+            margin-top: 8px;
+            text-align: right;
+        }
+
+        .completed-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.2rem;
+            color: #2ecc71;
+        }
+
+        .progress-bar-small {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill-small {
+            height: 100%;
+            background: linear-gradient(90deg, #FFD700, #FF8C00);
+            width: 0%;
+            border-radius: 10px;
+        }
+
+        .quest-reset {
+            text-align: center;
+            font-size: 0.6rem;
+            opacity: 0.6;
+            margin-top: 15px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+        }
     </style>
 </head>
 <body>
@@ -1234,6 +1330,8 @@
     <div class="menu-item active" data-section="profile">👤 Профиль</div>
     <div class="menu-item" data-section="packs">📦 Паки</div>
     <div class="menu-item" data-section="event">🎪 Ивент</div>
+    <div class="menu-item" data-section="achievements">🏆 Достижения</div>
+    <div class="menu-item" data-section="quests">📋 Квесты</div>
     <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
     <div class="menu-item" data-section="mine">⛏️ Шахта</div>
     <div class="menu-item" data-section="exchange">🔄 Обмены</div>
@@ -1559,6 +1657,25 @@
         </div>
     </div>
 
+    <!-- Достижения -->
+    <div id="achievementsSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">🏆</div><div class="stat-info"><div class="stat-label">ВЫПОЛНЕНО</div><div class="stat-value" id="achievementsCompleted">0</div><div class="stat-label">/<span id="achievementsTotal">0</span></div></div></div>
+            <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-info"><div class="stat-label">ОБЩИЙ ПРОГРЕСС</div><div class="stat-value" id="achievementsPercent">0</div><div class="stat-label">%</div></div></div>
+        </div>
+        <div id="achievementsGrid" class="achievements-grid"></div>
+    </div>
+
+    <!-- Квесты -->
+    <div id="questsSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-info"><div class="stat-label">ЕЖЕДНЕВНЫЕ КВЕСТЫ</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⏰</div><div class="stat-info"><div class="stat-label">СБРОС ЧЕРЕЗ</div><div class="stat-value" id="questResetTimer">--:--:--</div></div></div>
+        </div>
+        <div id="questsGrid" class="quests-grid"></div>
+        <div class="quest-reset">✨ Квесты обновляются каждый день в 00:00 ✨</div>
+    </div>
+
     <!-- Коллекция -->
     <div id="collectionSection" class="section">
         <div class="allcards-header">
@@ -1869,6 +1986,7 @@
         }
         saveGame();
         updateAllUI();
+        updateAchievement("level", 1);
     }
     
     // ========== СЕЗОНЫ ==========
@@ -2049,6 +2167,10 @@
         if (obtainedCard) {
             setTimeout(() => showCardModalSimple(obtainedCard, isDuplicate), 500);
         }
+
+        updateAchievement("fishing_total", 1);
+        updateQuestProgress("fish_catch", 1);
+        if (fish.paidCharge > 0) updateQuestProgress("paid_fishing", 1);
     }
     
     async function paidFishing() {
@@ -2113,6 +2235,10 @@
         if (obtainedCard) {
             setTimeout(() => showCardModalSimple(obtainedCard, isDuplicate), 500);
         }
+
+        updateAchievement("fishing_total", 1);
+        updateQuestProgress("fish_catch", 1);
+        if (fish.paidCharge > 0) updateQuestProgress("paid_fishing", 1);
     }
     
     // ========== КАРТЫ ==========
@@ -2180,6 +2306,9 @@
         saveGame();
         updateAllUI();
         showToast(`🔄 +${count}💎`);
+        updateAchievement("clicks", 1);
+        updateQuestProgress("mine_clicks", 1);
+        updateQuestProgress("exchange_ore", count * 100);
     }
     
     // ========== ОБМЕНЫ - НОВАЯ ВЕРСИЯ ==========
@@ -2373,6 +2502,8 @@
         saveGame();
         updateAllUI();
         showCardModalWithRank(newCard);
+        updateAchievement("exchanges", 1);
+        updateQuestProgress("exchange_cards", 1);
     }
     
     // ========== ОБЫЧНЫЕ ПАКИ ==========
@@ -2462,6 +2593,8 @@
         isPackOpen = false;
         showToast(`🎉 + ${chosen.name} [${chosen.rank}]`);
         showCardModalWithRank(chosen);
+        updateAchievement("unique_cards", 1);
+        updateQuestProgress("new_cards", 1);
     }
     
     function openNormalPack(isFree = false) {
@@ -2478,6 +2611,8 @@
         updateAllUI();
         isPackOpen = true;
         showChoicePanel(generateThreeCards());
+        updateAchievement("packs", 1);
+        updateQuestProgress("open_packs", 1);
     }
         
     // ========== ИВЕНТОВЫЕ ПАКИ ==========
@@ -2512,6 +2647,7 @@
         showCardModalSimple(card, false);
         showToast(`🎉 Вы получили карту из ивент-пака!`);
         isEventPackOpen = false;
+        updateQuestProgress("open_event_packs", 1);
     }
     
     function claimDailyBonus() {
@@ -2830,6 +2966,7 @@
         saveGame();
         updateAllUI();
         updateAuctionUI();
+        updateAchievement("auction_wins", 1);
     }
         
     function restoreAuction() {
@@ -2922,6 +3059,17 @@
     }
     
     function loadGame() {
+        achievementStats = {
+            packs: 0,
+            unique_cards: collection.length,
+            clicks: 0,
+            ore_total: 0,
+            level: level,
+            fishing_total: 0,
+            exchanges: 0,
+            shards_total: shards,
+            auction_wins: 0
+        };
         crystals = parseInt(localStorage.getItem("gacha_crystals")) || 500;
         shards = parseInt(localStorage.getItem("gacha_shards")) || 40;
         ore = parseInt(localStorage.getItem("gacha_ore")) || 0;
@@ -2973,13 +3121,13 @@
         
         resetDailyIfNeeded();
         resetPaidFishingIfNeeded();
+        resetDailyQuestsIfNeeded();
         if (!Array.isArray(collection)) collection = [];
         
         updateAllUI();
         checkDailyBonusButton();
-        
-        // Восстанавливаем аукцион (таймеры и проверки)
         restoreAuction();
+        
     }
     
     function createRankFilters(containerId, type) {
@@ -3114,6 +3262,8 @@
             });
         }
         checkDailyBonusButton();
+        updateAchievementsUI();
+        updateQuestsUI();
     }
     
     function resetGame() {
@@ -3176,6 +3326,261 @@
         if (sectionId === "auction") updateAuctionUI();
     }
     
+    // ========== ДОСТИЖЕНИЯ ==========
+    const ACHIEVEMENTS = [
+        { id: "first_pack", name: "Первый пак", desc: "Откройте первый пак", target: 1, type: "packs", reward: { crystals: 50, shards: 5 }, icon: "🎴" },
+        { id: "pack_master", name: "Мастер паков", desc: "Откройте 50 паков", target: 50, type: "packs", reward: { crystals: 500, shards: 30 }, icon: "📦" },
+        { id: "pack_legend", name: "Легендарный коллекционер", desc: "Откройте 200 паков", target: 200, type: "packs", reward: { crystals: 2000, shards: 100 }, icon: "🏆" },
+        { id: "cards_10", name: "Начало коллекции", desc: "Соберите 10 уникальных карт", target: 10, type: "unique_cards", reward: { crystals: 100, shards: 10 }, icon: "📖" },
+        { id: "cards_50", name: "Опытный коллекционер", desc: "Соберите 50 уникальных карт", target: 50, type: "unique_cards", reward: { crystals: 500, shards: 50 }, icon: "⭐" },
+        { id: "cards_100", name: "Мастер коллекции", desc: "Соберите 100 уникальных карт", target: 100, type: "unique_cards", reward: { crystals: 1000, shards: 100 }, icon: "🎖️" },
+        { id: "cards_200", name: "Король коллекции", desc: "Соберите 200 уникальных карт", target: 200, type: "unique_cards", reward: { crystals: 5000, shards: 300 }, icon: "👑" },
+        { id: "clicks_100", name: "Усердный шахтёр", desc: "Сделайте 100 кликов в шахте", target: 100, type: "clicks", reward: { crystals: 100, ore: 50 }, icon: "⛏️" },
+        { id: "clicks_1000", name: "Профессионал", desc: "Сделайте 1000 кликов в шахте", target: 1000, type: "clicks", reward: { crystals: 1000, ore: 500 }, icon: "💎" },
+        { id: "clicks_5000", name: "Легенда шахты", desc: "Сделайте 5000 кликов в шахте", target: 5000, type: "clicks", reward: { crystals: 5000, shards: 150 }, icon: "🔥" },
+        { id: "ore_1000", name: "Накопитель", desc: "Накопите 1000 руды", target: 1000, type: "ore_total", reward: { crystals: 200 }, icon: "<img src='images/cristal.png' style='width:16px; height:18px; vertical-align:middle;' onerror='this.style.display=\"none\"; this.parentElement.innerHTML=\"🪨\"'>" },
+        { id: "ore_10000", name: "Богач", desc: "Накопите 10000 руды", target: 10000, type: "ore_total", reward: { crystals: 2000, shards: 100 }, icon: "💰" },
+        { id: "level_10", name: "Новичок", desc: "Достигните 10 уровня", target: 10, type: "level", reward: { crystals: 200, shards: 20 }, icon: "⬆️" },
+        { id: "level_30", name: "Опытный", desc: "Достигните 30 уровня", target: 30, type: "level", reward: { crystals: 500, shards: 50 }, icon: "🎯" },
+        { id: "level_50", name: "Мастер", desc: "Достигните 50 уровня", target: 50, type: "level", reward: { crystals: 1000, shards: 100 }, icon: "⚡" },
+        { id: "level_100", name: "Бог карт", desc: "Достигните 100 уровня", target: 100, type: "level", reward: { crystals: 5000, shards: 500 }, icon: "🌌" },
+        { id: "fishing_10", name: "Рыбак", desc: "Поймайте 10 рыб", target: 10, type: "fishing_total", reward: { crystals: 50, shards: 5 }, icon: "🎣" },
+        { id: "fishing_100", name: "Мастер рыбалки", desc: "Поймайте 100 рыб", target: 100, type: "fishing_total", reward: { crystals: 500, shards: 30 }, icon: "🐟" },
+        { id: "exchange_first", name: "Первый обмен", desc: "Выполните первый обмен карт", target: 1, type: "exchanges", reward: { crystals: 50, shards: 10 }, icon: "🔄" },
+        { id: "exchange_10", name: "Алхимик", desc: "Выполните 10 обменов", target: 10, type: "exchanges", reward: { crystals: 500, shards: 50 }, icon: "🔁" },
+        { id: "shards_100", name: "Коллекционер осколков", desc: "Накопите 100 осколков", target: 100, type: "shards_total", reward: { crystals: 200 }, icon: "✨" },
+        { id: "shards_500", name: "Мастер осколков", desc: "Накопите 500 осколков", target: 500, type: "shards_total", reward: { crystals: 1000, shards: 50 }, icon: "⭐" },
+        { id: "auction_win", name: "Победитель аукциона", desc: "Выиграйте аукцион", target: 1, type: "auction_wins", reward: { crystals: 500, shards: 50 }, icon: "🏆" }
+    ];
+    
+    let achievementsCompleted = [];
+    let achievementStats = {
+        packs: 0,
+        unique_cards: 0,
+        clicks: 0,
+        ore_total: 0,
+        level: 1,
+        fishing_total: 0,
+        exchanges: 0,
+        shards_total: 0,
+        auction_wins: 0
+    };
+    
+    // ========== ЕЖЕДНЕВНЫЕ КВЕСТЫ ==========
+    let dailyQuests = [];
+    let lastQuestReset = localStorage.getItem("lastQuestReset") || "";
+    
+    function generateDailyQuests() {
+        const questTemplates = [
+            { name: "📦 Открыть паки", desc: "Откройте 3 обычных пака", target: 3, type: "open_packs", reward: { crystals: 50, shards: 5 } },
+            { name: "🎪 Ивент-паки", desc: "Откройте 2 ивент-пака", target: 2, type: "open_event_packs", reward: { eventCurrency: 20, crystals: 30 } },
+            { name: "⛏️ Копатель", desc: "Сделайте 50 кликов в шахте", target: 50, type: "mine_clicks", reward: { crystals: 40, ore: 30 } },
+            { name: "💰 Обмен руды", desc: "Обменяйте 300 руды на кристаллы", target: 300, type: "exchange_ore", reward: { crystals: 60 } },
+            { name: "🔄 Обмен карт", desc: "Выполните 2 обмена карт", target: 2, type: "exchange_cards", reward: { shards: 15, crystals: 30 } },
+            { name: "🎣 Рыбалка", desc: "Поймайте 5 рыб", target: 5, type: "fish_catch", reward: { crystals: 40, shards: 5 } },
+            { name: "🎴 Получить карты", desc: "Получите 3 новые карты", target: 3, type: "new_cards", reward: { crystals: 60, shards: 10 } },
+            { name: "⚡ Платная рыбалка", desc: "Используйте 3 платные ловушки", target: 3, type: "paid_fishing", reward: { crystals: 50, shards: 8 } },
+            { name: "💎 Трата кристаллов", desc: "Потратьте 200 кристаллов", target: 200, type: "spend_crystals", reward: { crystals: 40, shards: 5 } }
+        ];
+        // Выбираем 4 случайных квеста
+        const shuffled = [...questTemplates];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, 4).map((q, idx) => ({
+            id: `quest_${Date.now()}_${idx}`,
+            name: q.name,
+            desc: q.desc,
+            target: q.target,
+            type: q.type,
+            reward: q.reward,
+            progress: 0,
+            completed: false
+        }));
+    }
+    
+    function resetDailyQuestsIfNeeded() {
+        const today = new Date().toDateString();
+        if (lastQuestReset !== today) {
+            dailyQuests = generateDailyQuests();
+            lastQuestReset = today;
+            saveGame();
+            updateAllUI();
+        }
+    }
+    
+    function updateQuestProgress(type, amount = 1, value = null) {
+        let updated = false;
+        dailyQuests.forEach(quest => {
+            if (quest.completed) return;
+            let progressAdded = false;
+            switch(quest.type) {
+                case "open_packs": if (type === "open_packs") progressAdded = true; break;
+                case "open_event_packs": if (type === "open_event_packs") progressAdded = true; break;
+                case "mine_clicks": if (type === "mine_clicks") progressAdded = true; break;
+                case "exchange_ore": if (type === "exchange_ore") progressAdded = true; break;
+                case "exchange_cards": if (type === "exchange_cards") progressAdded = true; break;
+                case "fish_catch": if (type === "fish_catch") progressAdded = true; break;
+                case "new_cards": if (type === "new_cards") progressAdded = true; break;
+                case "paid_fishing": if (type === "paid_fishing") progressAdded = true; break;
+                case "spend_crystals": if (type === "spend_crystals") progressAdded = true; break;
+            }
+            if (progressAdded) {
+                quest.progress += amount;
+                if (quest.progress >= quest.target) {
+                    quest.completed = true;
+                    quest.progress = quest.target;
+                    giveQuestReward(quest);
+                    updated = true;
+                }
+                updated = true;
+            }
+        });
+        if (updated) {
+            saveGame();
+            updateAllUI();
+        }
+    }
+
+    function giveQuestReward(quest) {
+        if (quest.reward.crystals) crystals += quest.reward.crystals;
+        if (quest.reward.shards) shards += quest.reward.shards;
+        if (quest.reward.eventCurrency) eventCurrency += quest.reward.eventCurrency;
+        if (quest.reward.ore) ore += quest.reward.ore;
+        showToast(`✅ Квест выполнен! +${quest.reward.crystals || 0}💎 +${quest.reward.shards || 0}⚡`);
+    }
+    
+    function updateAchievement(type, amount = 1) {
+        let updated = false;
+        switch(type) {
+            case "packs": achievementStats.packs += amount; break;
+            case "unique_cards": achievementStats.unique_cards = collection.length; break;
+            case "clicks": achievementStats.clicks += amount; break;
+            case "ore_total": achievementStats.ore_total += amount; break;
+            case "level": achievementStats.level = level; break;
+            case "fishing_total": achievementStats.fishing_total += amount; break;
+            case "exchanges": achievementStats.exchanges += amount; break;
+            case "shards_total": achievementStats.shards_total = shards; break;
+            case "auction_wins": achievementStats.auction_wins += amount; break;
+        }
+        
+        ACHIEVEMENTS.forEach(achievement => {
+            if (achievementsCompleted.includes(achievement.id)) return;
+            let progress = 0;
+            switch(achievement.type) {
+                case "packs": progress = achievementStats.packs; break;
+                case "unique_cards": progress = achievementStats.unique_cards; break;
+                case "clicks": progress = achievementStats.clicks; break;
+                case "ore_total": progress = achievementStats.ore_total; break;
+                case "level": progress = achievementStats.level; break;
+                case "fishing_total": progress = achievementStats.fishing_total; break;
+                case "exchanges": progress = achievementStats.exchanges; break;
+                case "shards_total": progress = achievementStats.shards_total; break;
+                case "auction_wins": progress = achievementStats.auction_wins; break;
+            }
+            if (progress >= achievement.target) {
+                achievementsCompleted.push(achievement.id);
+                if (achievement.reward.crystals) crystals += achievement.reward.crystals;
+                if (achievement.reward.shards) shards += achievement.reward.shards;
+                if (achievement.reward.ore) ore += achievement.reward.ore;
+                showToast(`🏆 Достижение "${achievement.name}" выполнено! +${achievement.reward.crystals || 0}💎 +${achievement.reward.shards || 0}⚡`);
+                updated = true;
+            }
+        });
+        
+        if (updated) {
+            saveGame();
+            updateAllUI();
+        }
+    }
+    
+    function updateAchievementsUI() {
+        const grid = document.getElementById("achievementsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        let completed = 0;
+        ACHIEVEMENTS.forEach(ach => {
+            const isCompleted = achievementsCompleted.includes(ach.id);
+            if (isCompleted) completed++;
+            let progress = 0;
+            switch(ach.type) {
+                case "packs": progress = achievementStats.packs; break;
+                case "unique_cards": progress = achievementStats.unique_cards; break;
+                case "clicks": progress = achievementStats.clicks; break;
+                case "ore_total": progress = achievementStats.ore_total; break;
+                case "level": progress = achievementStats.level; break;
+                case "fishing_total": progress = achievementStats.fishing_total; break;
+                case "exchanges": progress = achievementStats.exchanges; break;
+                case "shards_total": progress = achievementStats.shards_total; break;
+                case "auction_wins": progress = achievementStats.auction_wins; break;
+            }
+            const percent = Math.min(100, (progress / ach.target) * 100);
+            const div = document.createElement("div");
+            div.className = `achievement-card ${isCompleted ? "completed" : ""}`;
+            div.innerHTML = `
+                <div class="achievement-title">${ach.icon} ${ach.name}</div>
+                <div class="achievement-desc">${ach.desc}</div>
+                <div class="achievement-progress">📊 Прогресс: ${progress} / ${ach.target}</div>
+                <div class="progress-bar-small"><div class="progress-fill-small" style="width: ${percent}%;"></div></div>
+                <div class="achievement-reward">🎁 Награда: +${ach.reward.crystals || 0}💎 ${ach.reward.shards ? `+${ach.reward.shards}⚡` : ""} ${ach.reward.ore ? `+${ach.reward.ore}⛏️` : ""}</div>
+                ${isCompleted ? '<div class="completed-badge">✓</div>' : ''}
+            `;
+            grid.appendChild(div);
+        });
+        document.getElementById("achievementsCompleted").innerText = completed;
+        document.getElementById("achievementsTotal").innerText = ACHIEVEMENTS.length;
+        document.getElementById("achievementsPercent").innerText = Math.round((completed / ACHIEVEMENTS.length) * 100);
+    }
+    
+    function updateQuestsUI() {
+        const grid = document.getElementById("questsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        let completed = 0;
+        dailyQuests.forEach(quest => {
+            if (quest.completed) completed++;
+            const percent = (quest.progress / quest.target) * 100;
+            const div = document.createElement("div");
+            div.className = `quest-card ${quest.completed ? "completed" : ""}`;
+            div.innerHTML = `
+                <div class="quest-title">${quest.name}</div>
+                <div class="quest-desc">${quest.desc}</div>
+                <div class="quest-progress">📊 Прогресс: ${quest.progress} / ${quest.target}</div>
+                <div class="progress-bar-small"><div class="progress-fill-small" style="width: ${percent}%;"></div></div>
+                <div class="quest-reward">🎁 Награда: +${quest.reward.crystals || 0}💎 ${quest.reward.shards ? `+${quest.reward.shards}⚡` : ""} ${quest.reward.eventCurrency ? `+${quest.reward.eventCurrency}🌸` : ""} ${quest.reward.ore ? `+${quest.reward.ore}⛏️` : ""}</div>
+                ${quest.completed ? '<div class="completed-badge">✓</div>' : ''}
+            `;
+            grid.appendChild(div);
+        });
+        
+        // Обновляем таймер
+        updateQuestTimer();
+    }
+
+    function updateQuestTimer() {
+        const timerElement = document.getElementById("questResetTimer");
+        if (!timerElement) return;
+        
+        const now = new Date();
+        const tomorrow = new Date(now);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        tomorrow.setHours(0, 0, 0, 0);
+        const msLeft = tomorrow - now;
+        
+        if (msLeft <= 0) {
+            resetDailyQuestsIfNeeded();
+            updateQuestsUI();
+            timerElement.innerHTML = "00:00:00";
+            return;
+        }
+        
+        const hours = Math.floor(msLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((msLeft % (1000 * 60)) / 1000);
+        timerElement.innerHTML = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }
+
     function initShopTabs() {
         document.querySelectorAll('.shop-tab').forEach(tab => {
             tab.addEventListener('click', () => {
@@ -3195,6 +3600,9 @@
         }
         if (document.getElementById("auctionSection")?.classList.contains("active")) {
             updateAuctionUI();
+        }
+        if (document.getElementById("questsSection")?.classList.contains("active")) {
+            updateQuestTimer();
         }
         updateProUI();
     }, 1000);
