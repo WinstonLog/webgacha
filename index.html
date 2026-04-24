@@ -44,10 +44,20 @@
         .logo {
             font-size: 1.4rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF6B6B);
+            background: linear-gradient(135deg, #c0c0c0, #a0a0a0, #808080);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        .shards-display {
+            background: rgba(0,0,0,0.5);
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .burger-menu {
@@ -135,6 +145,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Контейнер для коллекции и каталога с правильной прокруткой */
+        .collection-container, .catalog-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 220px);
+            min-height: 400px;
+        }
+
+        .collection-grid, .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            overflow-y: auto;
+            padding: 5px;
+            flex: 1;
+        }
+
         .footer {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
             backdrop-filter: blur(10px);
@@ -200,12 +227,34 @@
             flex: 1;
             justify-content: center;
             border: 1px solid rgba(255, 215, 0, 0.2);
+            min-width: 0;
         }
 
-        .stat-icon { font-size: 1.8rem; }
-        .stat-info { display: flex; flex-direction: column; }
-        .stat-label { font-size: 0.7rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px; }
-        .stat-value { font-size: 1.4rem; font-weight: 700; }
+        .stat-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .stat-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 0;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
 
         .ore-icon {
             width: 38px;
@@ -508,9 +557,8 @@
         }
 
         .cards-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
             margin-top: 15px;
         }
@@ -519,8 +567,6 @@
             background: linear-gradient(135deg, #1e1b3c, #15122e);
             border-radius: 20px;
             padding: 12px;
-            width: calc(33% - 12px);
-            min-width: 100px;
             cursor: pointer;
             transition: 0.2s;
             border: 2px solid transparent;
@@ -633,15 +679,6 @@
         .rank-V { background: #ff88cc; }
         .rank-L { background: #ffaa44; }
         .rank-Q { background: #4984b2; }
-
-        .collection-grid, .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 12px;
-            max-height: 55vh;
-            overflow-y: auto;
-            padding: 5px;
-        }
 
         .collected-card, .catalog-card {
             background: linear-gradient(135deg, rgba(30, 27, 60, 0.9), rgba(20, 18, 45, 0.9));
@@ -764,13 +801,161 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Вкладки магазина */
+        .shop-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .shop-tab {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 12px;
+            border-radius: 28px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .shop-tab.active {
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            color: #1a1a2e;
+        }
+
+        .shop-panel {
+            display: none;
+        }
+
+        .shop-panel.active {
+            display: block;
+        }
+
+        .shop-item {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .shop-item-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .shop-item-icon {
+            font-size: 2rem;
+        }
+
+        .shop-item-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .shop-item-price {
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .shop-buy-btn {
+            background: linear-gradient(135deg, #4a90e2, #8e44ad);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+        }
+
+        .shop-buy-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .pro-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 30px 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .pro-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .pro-description {
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+
+        .allcards-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 5px;
+            flex-shrink: 0;
+        }
+
+        /* Телефоны - 3 карточки в ряд */
         @media (max-width: 480px) {
             .choice-card img { width: 55px; height: 55px; }
             .mine-button { width: 120px; height: 120px; font-size: 1rem; }
-            .collected-card img, .catalog-card img { width: 70px; height: 70px; }
-            .collection-grid, .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .collected-card img, .catalog-card img { width: 75px; height: 75px; }
             .toast { white-space: normal; text-align: center; max-width: 80%; font-size: 0.8rem; }
             .promo-input-group { flex-direction: column; }
+            .cards-row { gap: 8px; }
+            .choice-card { padding: 8px; }
+            .choice-card img { width: 55px; height: 55px; }
+            
+            /* Фиксированная сетка 3 колонки */
+            .collection-grid, .catalog-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+            
+            .collected-card, .catalog-card {
+                padding: 8px;
+            }
+            
+            .collected-card img, .catalog-card img {
+                width: 65px;
+                height: 65px;
+            }
+            
+            .collected-card div:first-of-type, .catalog-card div:first-of-type {
+                font-size: 0.6rem;
+            }
+            
+            .stat-label { white-space: normal; font-size: 0.6rem; text-align: center; }
+            .stat-value { font-size: 1.1rem; }
+            .stat-icon { font-size: 1.4rem; }
+            .stat-card { padding: 8px 12px; min-width: 0; }
+            .stat-icon { font-size: 1.2rem; }
+            .stat-value { font-size: 1rem; }
+            .stat-label { font-size: 0.55rem; white-space: normal; word-break: break-word; }
+            .navbar-container { justify-content: space-between; gap: 8px; }
+            .logo { font-size: 1.2rem; }
+            .shards-display { font-size: 0.7rem; padding: 2px 8px; }
+            .collection-container, .catalog-container {
+                height: calc(100vh - 190px);
+                min-height: 300px;
+            }
         }
     </style>
 </head>
@@ -778,7 +963,8 @@
 
 <div class="navbar">
     <div class="navbar-container">
-        <div class="logo">🎴 GachaCards</div>
+        <div class="logo">🎴 Bloody</div>
+        <div class="shards-display" id="navbarShards">✨ 40</div>
         <div class="burger-menu" id="burgerBtn">
             <div class="burger-line"></div>
             <div class="burger-line"></div>
@@ -793,6 +979,7 @@
     <div class="menu-item" data-section="event">🎪 Ивент</div>
     <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
     <div class="menu-item" data-section="mine">⛏️ Шахта</div>
+    <div class="menu-item" data-section="shop">🛒 Магазин</div>
     <div class="menu-item" data-section="collection">📚 Коллекция</div>
     <div class="menu-item" data-section="catalog">📖 Каталог</div>
 </div>
@@ -822,11 +1009,14 @@
         </div>
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsProfile">500</div></div></div>
-            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsProfile">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsProfile">40</div></div></div>
         </div>
         
-        <div class="daily-bonus" id="dailyBonusBtn">🎁 ЕЖЕДНЕВНЫЙ БОНУС +30 💎</div>
-
+        <div style="background: rgba(0,0,0,0.4); border-radius: 28px; padding: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div><span style="font-weight: 700;">📖 Всего карт:</span> <span id="totalExistCardsCount">0</span></div>
+            <div><span style="font-weight: 700;">✅ Собрано:</span> <span id="profileCollectedPercent">0%</span> <span style="font-size: 0.7rem;">(<span id="profileCollectedCount">0</span>/<span id="profileTotalCount">0</span>)</span></div>
+        </div>
+        
         <div class="promo-card">
             <div class="info-title">🎫 ПРОМОКОД</div>
             <div class="info-content">
@@ -839,6 +1029,7 @@
             </div>
         </div>
         
+        <div class="daily-bonus" id="dailyBonusBtn">🎁 ЕЖЕДНЕВНЫЙ БОНУС +30 💎</div>
         <button class="reset-btn" id="resetBtn">🔄 СБРОС ПРОГРЕССА</button>
     </div>
 
@@ -846,7 +1037,7 @@
     <div id="packsSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsPacks">500</div></div></div>
-            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsPacks">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsPacks">40</div></div></div>
         </div>
         
         <div class="info-card">
@@ -873,7 +1064,7 @@
     <div id="eventSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon" id="eventIcon">🌸</div><div class="stat-info"><div class="stat-label" id="eventLabel">ЦВЕТОЧКИ</div><div class="stat-value" id="eventCurrencyValue">100</div></div></div>
-            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsEvent">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsEvent">40</div></div></div>
         </div>
         
         <div class="info-card">
@@ -882,7 +1073,7 @@
                 <p>В каждом сезоне доступны <strong class="info-highlight">эксклюзивные карты</strong>, которые нельзя получить в обычных паках ✨</p>
                 <p>🎴 <strong>1 карта</strong> в паке</p>
                 <p>🌸 Цена: <strong class="info-highlight">20 ивент-валюты</strong></p>
-                <p>🎪 Ранги: <span class="info-badge" style="background:#ff6600;">H</span>/ <span class="info-badge" style="background:#00ccff;">N</span>/ <span class="info-badge" style="background:#ff88cc;">V</span>/ <span class="info-badge" style="background:#ffaa44;">L</span></p>
+                <p>🎪 Ранги: <span class="info-badge" style="background:#ff6600;">H</span> (Хэллоуин) / <span class="info-badge" style="background:#00ccff;">N</span> (Новый год) / <span class="info-badge" style="background:#ff88cc;">V</span> (Весна) / <span class="info-badge" style="background:#ffaa44;">L</span> (Лето)</p>
                 <p>🔄 Дубликат = <strong class="info-highlight">7💎</strong></p>
             </div>
         </div>
@@ -905,7 +1096,7 @@
     <div id="fishingSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ПЛАТНЫХ ЛОВУШЕК</div><div class="stat-value" id="paidFishingLeft">10</div><div class="stat-label">/10</div></div></div>
-            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsFishing">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsFishing">40</div></div></div>
         </div>
 
         <div class="fishing-card">
@@ -950,7 +1141,7 @@
             <h2>⛏️ ШАХТА</h2>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
                 <span class="stat-card" style="padding: 8px 16px;">📊 <span id="clicksToday">0</span>/<span id="maxClicks">100</span></span>
-                <span class="stat-card" style="padding: 8px 16px;">💰 <span id="orePerClick">10</span>-<span id="orePerClickMax">15</span><img src="images/cristal.png" style="width:16px; height:16px; vertical-align:middle; margin-left:4px;" onerror="this.style.display='none'"></span>
+                <span class="stat-card" style="padding: 8px 16px;"><img src="images/cristal.png" style="width:24px; height:32px; vertical-align:middle;" onerror="this.style.display='none'; this.parentElement.innerHTML='💰'"> <span id="orePerClick">10</span>-<span id="orePerClickMax">15</span></span>
             </div>
             <button class="mine-button" id="mineBtn">⛏️<br>КОПАТЬ</button>
             <div class="progress-bar"><div class="progress-fill" id="mineProgress"></div></div>
@@ -959,24 +1150,94 @@
         </div>
     </div>
 
+    <!-- Магазин -->
+    <div id="shopSection" class="section">
+        <div class="stats-row">
+            <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsShop">500</div></div></div>
+            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsShop">40</div></div></div>
+        </div>
+
+        <div class="shop-tabs">
+            <button class="shop-tab active" data-shop="recharge">💎 ПОПОЛНИТЬ</button>
+            <button class="shop-tab" data-shop="pro">👑 ПРО-АККАУНТ</button>
+        </div>
+
+        <div id="rechargePanel" class="shop-panel active">
+            <div class="shop-item">
+                <div class="shop-item-info">
+                    <div class="shop-item-icon">💎</div>
+                    <div>
+                        <div class="shop-item-title">100 кристаллов</div>
+                        <div class="shop-item-price">10 ₽</div>
+                    </div>
+                </div>
+                <a href="https://yoomoney.ru/to/4100119003253255/10" target="_blank" class="shop-buy-btn" data-price="10">КУПИТЬ</a>
+            </div>
+            <div class="shop-item">
+                <div class="shop-item-info">
+                    <div class="shop-item-icon">💎</div>
+                    <div>
+                        <div class="shop-item-title">500 кристаллов</div>
+                        <div class="shop-item-price">45 ₽</div>
+                    </div>
+                </div>
+                <a href="https://yoomoney.ru/to/4100119003253255/45" target="_blank" class="shop-buy-btn" data-price="45">КУПИТЬ</a>
+            </div>
+            <div class="shop-item">
+                <div class="shop-item-info">
+                    <div class="shop-item-icon">💎</div>
+                    <div>
+                        <div class="shop-item-title">1000 кристаллов</div>
+                        <div class="shop-item-price">80 ₽</div>
+                    </div>
+                </div>
+                <a href="https://yoomoney.ru/to/4100119003253255/80" target="_blank" class="shop-buy-btn" data-price="80">КУПИТЬ</a>
+            </div>
+            <div class="shop-item">
+                <div class="shop-item-info">
+                    <div class="shop-item-icon">💎</div>
+                    <div>
+                        <div class="shop-item-title">5000 кристаллов</div>
+                        <div class="shop-item-price">350 ₽</div>
+                    </div>
+                </div>
+                <a href="https://yoomoney.ru/to/4100119003253255/350" target="_blank" class="shop-buy-btn" data-price="350">КУПИТЬ</a>
+            </div>
+        </div>
+
+        <div id="proPanel" class="shop-panel">
+            <div class="pro-card">
+                <div class="pro-title">👑 PRO АККАУНТ</div>
+                <div class="pro-description">
+                    Скоро здесь появятся эксклюзивные возможности для PRO-пользователей!
+                </div>
+                <div style="font-size: 0.8rem; opacity: 0.6;">В разработке...</div>
+            </div>
+        </div>
+    </div>
+
     <!-- Коллекция -->
     <div id="collectionSection" class="section">
-        <div class="stats-row">
-            <div class="stat-card"><div class="stat-icon">📚</div><div class="stat-info"><div class="stat-label">КАРТ В КОЛЛЕКЦИИ</div><div class="stat-value" id="collectionCount">0</div></div></div>
-            <div class="stat-card"><div class="stat-icon"><img src="images/cristal.png" class="ore-icon" onerror="this.style.display='none'; this.parentElement.innerHTML='✨'"></div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsCollection">40</div></div></div>
+        <div class="collection-container">
+            <div class="allcards-header">
+                <span>📚 Моя коллекция</span>
+                <span style="font-size: 0.7rem; color: #aa8899;">Карт: <span id="collectionCount">0</span></span>
+            </div>
+            <div class="rank-filter-scroll" id="collectionRankFilters"></div>
+            <div id="collectionGrid" class="collection-grid"></div>
         </div>
-        <div class="rank-filter-scroll" id="collectionRankFilters"></div>
-        <div id="collectionGrid" class="collection-grid"></div>
     </div>
 
     <!-- Каталог -->
     <div id="catalogSection" class="section">
-        <div class="stats-row">
-            <div class="stat-card"><div class="stat-icon">📖</div><div class="stat-info"><div class="stat-label">ВСЕГО КАРТ</div><div class="stat-value" id="totalCardsCount">0</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-info"><div class="stat-label">СОБРАНО</div><div class="stat-value" id="collectedPercent">0%</div></div></div>
+        <div class="catalog-container">
+            <div class="allcards-header">
+                <span>📖 Каталог карточек</span>
+                <span style="font-size: 0.7rem; color: #aa8899;">Всего: <span id="totalAllCardsCount">0</span></span>
+            </div>
+            <div class="rank-filter-scroll" id="catalogRankFilters"></div>
+            <div id="catalogGrid" class="catalog-grid"></div>
         </div>
-        <div class="rank-filter-scroll" id="catalogRankFilters"></div>
-        <div id="catalogGrid" class="catalog-grid"></div>
     </div>
 </div>
 
@@ -1016,7 +1277,7 @@
 
 <script src="cards.js"></script>
 <script>
-    // ========== ГЛОБАЛЬНЫЕ КОНСТАНТЫ (ДОЛЖНЫ БЫТЬ ОПРЕДЕЛЕНЫ ПЕРВЫМИ) ==========
+    // ========== ГЛОБАЛЬНЫЕ КОНСТАНТЫ ==========
     const ALL_RANKS = ["ALL", "X", "S", "A", "P", "G", "B", "C", "D", "E", "H", "N", "V", "L", "Q"];
     
     // ========== ГЕНЕРАЦИЯ ID ==========
@@ -1047,12 +1308,10 @@
     let lastResetDate = new Date().toDateString();
     let lastDailyBonus = localStorage.getItem("lastDailyBonus") || "";
     
-    // Рыбалка
     let lastFreeFishTime = localStorage.getItem("lastFreeFishTime") || "0";
     let paidFishUsed = parseInt(localStorage.getItem("paidFishUsed")) || 0;
     let lastPaidResetDate = localStorage.getItem("lastPaidResetDate") || new Date().toDateString();
     
-    // Промокоды
     let usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
     let userId = localStorage.getItem("userId");
     if (!userId) {
@@ -1738,10 +1997,11 @@
     }
     
     function updateAllUI() {
+        document.getElementById("navbarShards").innerHTML = `✨ ${shards}`;
         document.getElementById("userId").innerText = userId;
         
-        document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine").forEach(el => el && (el.innerText = crystals));
-        document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing").forEach(el => el && (el.innerText = shards));
+        document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine, #crystalsShop").forEach(el => el && (el.innerText = crystals));
+        document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing, #shardsShop").forEach(el => el && (el.innerText = shards));
         document.querySelectorAll("#eventCurrencyValue").forEach(el => el && (el.innerText = eventCurrency));
         document.querySelectorAll("#oreAmount").forEach(el => el && (el.innerText = ore));
         document.querySelectorAll("#levelMine, #profileLevel").forEach(el => el && (el.innerText = level));
@@ -1792,10 +2052,15 @@
         allCards = filterByRank(allCards, catalogRankFilter);
         allCards = sortByRank(allCards);
         
-        document.getElementById("totalCardsCount").innerText = allCards.length;
         const totalExistCards = ALL_CARDS.filter(c => c.rank !== "A+").length;
+        document.getElementById("totalAllCardsCount").innerText = allCards.length;
+        document.getElementById("totalExistCardsCount").innerText = totalExistCards;
+        
+        document.getElementById("profileTotalCount").innerText = totalExistCards;
+        document.getElementById("profileCollectedCount").innerText = collection.length;
         const percent = totalExistCards > 0 ? Math.round((collection.length / totalExistCards) * 100) : 0;
-        document.getElementById("collectedPercent").innerHTML = `${percent}%`;
+        document.getElementById("profileCollectedPercent").innerHTML = `${percent}%`;
+        
         const catalogGrid = document.getElementById("catalogGrid");
         catalogGrid.innerHTML = "";
         allCards.forEach(card => {
@@ -1885,19 +2150,33 @@
         if (sectionId === "fishing") updateFishingUI();
     }
     
-    // Обновление таймера рыбалки
+    function initShopTabs() {
+        const tabs = document.querySelectorAll('.shop-tab');
+        const panels = document.querySelectorAll('.shop-panel');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.shop;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                panels.forEach(panel => panel.classList.remove('active'));
+                document.getElementById(`${target}Panel`).classList.add('active');
+            });
+        });
+    }
+    
     setInterval(() => {
         if (document.getElementById("fishingSection").classList.contains("active")) {
             updateFishingUI();
         }
     }, 1000);
     
-    // ========== ИНИЦИАЛИЗАЦИЯ ==========
     window.onload = () => {
         updateSeason();
         loadGame();
         createRankFilters("collectionRankFilters", "collection");
         createRankFilters("catalogRankFilters", "catalog");
+        initShopTabs();
         
         document.getElementById("mineBtn").onclick = mineOre;
         document.getElementById("exchangeBtn").onclick = exchangeOre;
