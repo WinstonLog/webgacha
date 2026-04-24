@@ -2701,7 +2701,10 @@
         
         document.getElementById("exchangeTargetRank").innerHTML = isReroll ? `🔄 ${selectedRank} → ${selectedRank} (РЕРОЛЛ)` : targetRank;
         
-        // Если есть выбранный ранг, показываем только карты этого ранга
+        // Исключаем H, N, V, L, Q ранги из доступных для переплавки
+        const EXCLUDED_RANKS_FOR_MERGE = ["H", "N", "V", "L", "Q"];
+        
+        // Если есть выбранный ранг, показываем только карты этого ранга (НЕ исключая)
         let availableCards = [];
         if (selectedRank) {
             const cardsInSlotsIds = exchangeSlots.filter(s => s !== null).map(s => s.id);
@@ -2709,26 +2712,33 @@
                 c.rank === selectedRank && !cardsInSlotsIds.includes(c.id)
             );
         } else {
-            // Если ячейки пустые, показываем все карты, сортируя по рангу
+            // Если ячейки пустые, показываем все карты, сортируя по рангу, НО исключая H,N,V,L,Q
             availableCards = [...collection];
+            availableCards = availableCards.filter(c => !EXCLUDED_RANKS_FOR_MERGE.includes(c.rank));
             availableCards = sortByRank(availableCards);
         }
         
-        // Обновляем список карт
+        // Обновляем список карт...
         const listContainer = document.getElementById("exchangeCardsList");
         listContainer.innerHTML = "";
         
         if (availableCards.length === 0) {
             if (selectedRank) {
-                listContainer.innerHTML = `<div style='text-align:center; padding:20px; opacity:0.6;'>Нет карт ранга ${selectedRank} в коллекции</div>`;
+                if (EXCLUDED_RANKS_FOR_MERGE.includes(selectedRank)) {
+                    listContainer.innerHTML = `<div style='text-align:center; padding:20px; opacity:0.6; color:#ff6600;'>⚠️ Ранг ${selectedRank} нельзя переплавить! Выберите другой ранг.</div>`;
+                } else {
+                    listContainer.innerHTML = `<div style='text-align:center; padding:20px; opacity:0.6;'>Нет карт ранга ${selectedRank} в коллекции</div>`;
+                }
             } else {
-                listContainer.innerHTML = "<div style='text-align:center; padding:20px; opacity:0.6;'>Выберите карту, нажав на неё в списке ниже</div>";
+                listContainer.innerHTML = "<div style='text-align:center; padding:20px; opacity:0.6;'>Доступны только ранги E, D, C, B, G, P, A, S, X</div>";
             }
         } else {
             availableCards.forEach(card => {
                 const isInSlot = exchangeSlots.some(slot => slot && slot.id === card.id);
+                // Если выбранный ранг запрещён, делаем карты неактивными
+                const isDisabled = isInSlot || (selectedRank && EXCLUDED_RANKS_FOR_MERGE.includes(selectedRank));
                 const div = document.createElement("div");
-                div.className = `exchange-card-item ${isInSlot ? "disabled" : ""}`;
+                div.className = `exchange-card-item ${isDisabled ? "disabled" : ""}`;
                 div.innerHTML = `
                     <img src="${card.image || 'https://via.placeholder.com/50'}" onerror="this.src='https://via.placeholder.com/50'">
                     <div class="exchange-card-info">
@@ -2737,7 +2747,7 @@
                     </div>
                     <div style="font-size:0.7rem; color:#4caf50;">+</div>
                 `;
-                if (!isInSlot) {
+                if (!isDisabled) {
                     div.onclick = () => addToExchangeSlot(card);
                 }
                 listContainer.appendChild(div);
@@ -2768,7 +2778,11 @@
         // Обновляем кнопку обмена
         const filledCount = exchangeSlots.filter(s => s !== null).length;
         const actionBtn = document.getElementById("exchangeActionBtn");
-        if (filledCount === 3) {
+        
+        // Проверяем, есть ли запрещённый ранг в ячейках
+        const hasForbiddenRank = exchangeSlots.some(slot => slot && EXCLUDED_RANKS_FOR_MERGE.includes(slot.rank));
+        
+        if (filledCount === 3 && !hasForbiddenRank) {
             actionBtn.disabled = false;
             if (isReroll) {
                 actionBtn.innerHTML = `🔄 ПЕРЕПЛАВИТЬ (3x${selectedRank} → НОВАЯ ${selectedRank} КАРТА)`;
@@ -2777,7 +2791,11 @@
             }
         } else {
             actionBtn.disabled = true;
-            actionBtn.innerHTML = `❌ НУЖНО ЕЩЁ ${3 - filledCount} КАРТЫ (все одного ранга)`;
+            if (hasForbiddenRank) {
+                actionBtn.innerHTML = `❌ РАНГ ${exchangeSlots.find(s => s && EXCLUDED_RANKS_FOR_MERGE.includes(s.rank))?.rank} НЕЛЬЗЯ ПЕРЕПЛАВИТЬ!`;
+            } else {
+                actionBtn.innerHTML = `❌ НУЖНО ЕЩЁ ${3 - filledCount} КАРТЫ (все одного ранга)`;
+            }
         }
     }
     
@@ -4273,8 +4291,10 @@
         // Обработчики для обменов
         const exchangeActionBtn = document.getElementById("exchangeActionBtn");
         const exchangeClearBtn = document.getElementById("exchangeClearBtn");
+        const exchangeOreToEventBtn = document.getElementById("exchangeOreToEventBtn");
         if (exchangeActionBtn) exchangeActionBtn.onclick = performExchange;
         if (exchangeClearBtn) exchangeClearBtn.onclick = clearExchangeSlots;
+        if (exchangeOreToEventBtn) exchangeOreToEventBtn.onclick = exchangeOreToEvent;
         
         const mineBtn = document.getElementById("mineBtn");
         const exchangeOreBtn = document.getElementById("exchangeBtn");
