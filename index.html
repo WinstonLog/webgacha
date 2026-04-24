@@ -3223,6 +3223,8 @@
     
     setInterval(() => {
         if (document.getElementById("fishingSection")?.classList.contains("active")) updateFishingUI();
+        if (document.getElementById("auctionSection")?.classList.contains("active")) updateAuctionUI();
+        if (auctionActive && Date.now() >= auctionEndTime) endAuction();
         updateProUI();
     }, 1000);
     
