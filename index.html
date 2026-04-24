@@ -37,27 +37,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 600px;
+            max-width: 100%;
             margin: 0 auto;
         }
 
         .logo {
             font-size: 1.4rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #c0c0c0, #a0a0a0, #808080);
+            background: linear-gradient(135deg, #FFD700, #FF8C00, #FF6B6B);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            flex-shrink: 0;
         }
 
-        .shards-display {
-            background: rgba(0,0,0,0.5);
-            border-radius: 40px;
-            padding: 4px 12px;
-            font-size: 0.8rem;
+        .navbar-right {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
+        }
+
+        .navbar-stats {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .crystals-display, .shards-display {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 40px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
         }
 
         .burger-menu {
@@ -67,6 +81,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+            flex-shrink: 0;
         }
 
         .burger-line {
@@ -129,8 +144,9 @@
         .main-content {
             max-width: 600px;
             margin: 0 auto;
-            padding: 80px 16px 20px 16px;
+            padding: 80px 12px 20px 12px;
             flex: 1;
+            width: 100%;
         }
 
         .section {
@@ -143,23 +159,6 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Контейнер для коллекции и каталога с правильной прокруткой */
-        .collection-container, .catalog-container {
-            display: flex;
-            flex-direction: column;
-            height: calc(100vh - 220px);
-            min-height: 400px;
-        }
-
-        .collection-grid, .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            overflow-y: auto;
-            padding: 5px;
-            flex: 1;
         }
 
         .footer {
@@ -211,7 +210,7 @@
 
         .stats-row {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
@@ -219,11 +218,11 @@
         .stat-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(10px);
-            border-radius: 28px;
-            padding: 12px 18px;
+            border-radius: 24px;
+            padding: 10px 12px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
             flex: 1;
             justify-content: center;
             border: 1px solid rgba(255, 215, 0, 0.2);
@@ -231,7 +230,7 @@
         }
 
         .stat-icon {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             flex-shrink: 0;
         }
 
@@ -244,21 +243,20 @@
         }
 
         .stat-label {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.7;
             text-transform: uppercase;
             letter-spacing: 1px;
-            white-space: nowrap;
         }
 
         .stat-value {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             font-weight: 700;
         }
 
         .ore-icon {
-            width: 38px;
-            height: 38px;
+            width: 32px;
+            height: 32px;
             object-fit: contain;
             vertical-align: middle;
         }
@@ -266,8 +264,8 @@
         .profile-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
             backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 20px;
+            border-radius: 28px;
+            padding: 16px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 215, 0, 0.15);
         }
@@ -275,36 +273,37 @@
         .profile-header {
             display: flex;
             align-items: center;
-            gap: 18px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .avatar {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
         }
 
-        .profile-info h3 { font-size: 1.3rem; margin-bottom: 5px; }
-        .profile-info p { font-size: 0.8rem; opacity: 0.7; }
+        .profile-info h3 { font-size: 1.2rem; margin-bottom: 5px; }
+        .profile-info p { font-size: 0.7rem; opacity: 0.7; }
 
         .id-container {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-top: 8px;
+            gap: 8px;
+            margin-top: 6px;
             background: rgba(0, 0, 0, 0.4);
-            padding: 6px 12px;
+            padding: 4px 10px;
             border-radius: 40px;
             width: fit-content;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 0.8rem;
         }
 
         .id-container:hover {
@@ -312,16 +311,16 @@
         }
 
         .copy-icon {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             opacity: 0.7;
         }
 
         .level-progress {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            height: 8px;
+            height: 6px;
             overflow: hidden;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .level-fill {
@@ -335,17 +334,17 @@
         .profile-stats {
             display: flex;
             justify-content: space-around;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
         .profile-stat { text-align: center; }
-        .profile-stat .num { font-size: 1.3rem; font-weight: 700; }
-        .profile-stat .label { font-size: 0.7rem; opacity: 0.6; }
+        .profile-stat .num { font-size: 1.1rem; font-weight: 700; }
+        .profile-stat .label { font-size: 0.6rem; opacity: 0.6; }
 
         .promo-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-            border-radius: 28px;
-            padding: 16px;
+            border-radius: 24px;
+            padding: 14px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
@@ -361,9 +360,9 @@
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 215, 0, 0.3);
             border-radius: 40px;
-            padding: 12px 16px;
+            padding: 10px 14px;
             color: white;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             outline: none;
         }
 
@@ -374,70 +373,72 @@
         .promo-btn {
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             border: none;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 40px;
             font-weight: 700;
             cursor: pointer;
             color: #1a1a2e;
+            font-size: 0.85rem;
         }
 
         .daily-bonus {
             background: linear-gradient(135deg, #4a90e2, #8e44ad);
-            border-radius: 28px;
-            padding: 14px;
+            border-radius: 24px;
+            padding: 12px;
             margin-bottom: 20px;
             text-align: center;
             cursor: pointer;
             font-weight: 600;
             transition: 0.2s;
+            font-size: 0.9rem;
         }
 
         .daily-bonus:active { transform: scale(0.98); }
 
         .fishing-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
-            border-radius: 32px;
-            padding: 20px;
+            border-radius: 28px;
+            padding: 16px;
             margin-bottom: 20px;
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.15);
         }
 
         .fishing-icon {
-            font-size: 4rem;
+            font-size: 3rem;
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .fishing-stats {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .fishing-stat {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 40px;
-            padding: 8px 16px;
+            padding: 6px 12px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.9rem;
+            gap: 6px;
+            font-size: 0.8rem;
         }
 
         .fishing-buttons {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
+            gap: 10px;
+            margin-bottom: 15px;
         }
 
         .fish-btn {
             flex: 1;
             border: none;
-            padding: 14px;
-            font-size: 1rem;
+            padding: 12px;
+            font-size: 0.9rem;
             font-weight: 700;
             border-radius: 28px;
             cursor: pointer;
@@ -459,44 +460,44 @@
 
         .fish-info {
             background: rgba(0, 0, 0, 0.4);
-            border-radius: 28px;
-            padding: 16px;
-            margin-top: 15px;
+            border-radius: 24px;
+            padding: 12px;
+            margin-top: 12px;
             text-align: left;
         }
 
         .fish-info h4 {
-            margin-bottom: 12px;
-            font-size: 1rem;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
         }
 
         .fish-item {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 5px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         .info-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
-            border-radius: 28px;
-            padding: 18px;
+            border-radius: 24px;
+            padding: 14px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 215, 0, 0.15);
         }
 
         .info-title {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
         .info-content {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             line-height: 1.5;
             opacity: 0.9;
         }
@@ -510,16 +511,16 @@
             display: inline-block;
             background: rgba(255, 215, 0, 0.2);
             border-radius: 20px;
-            padding: 4px 12px;
-            font-size: 0.7rem;
-            margin-right: 6px;
-            margin-bottom: 4px;
+            padding: 3px 10px;
+            font-size: 0.65rem;
+            margin-right: 5px;
+            margin-bottom: 3px;
         }
 
         .season-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
-            border-radius: 28px;
-            padding: 16px;
+            border-radius: 24px;
+            padding: 12px;
             margin-bottom: 20px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -527,15 +528,15 @@
 
         .pack-buttons {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
         .pack-btn {
             flex: 1;
             border: none;
-            padding: 16px;
-            font-size: 1rem;
+            padding: 14px;
+            font-size: 0.9rem;
             font-weight: 700;
             border-radius: 28px;
             cursor: pointer;
@@ -550,8 +551,8 @@
         .selection-area {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 20px;
+            border-radius: 28px;
+            padding: 16px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
@@ -559,14 +560,14 @@
         .cards-row {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 12px;
         }
 
         .choice-card {
             background: linear-gradient(135deg, #1e1b3c, #15122e);
-            border-radius: 20px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 10px;
             cursor: pointer;
             transition: 0.2s;
             border: 2px solid transparent;
@@ -580,22 +581,22 @@
         }
 
         .choice-card img {
-            width: 70px;
-            height: 70px;
+            width: 55px;
+            height: 55px;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: 10px;
         }
 
         .take-btn {
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 28px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 12px;
             color: #1a1a2e;
         }
 
@@ -606,8 +607,8 @@
 
         .mine-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-            border-radius: 32px;
-            padding: 24px;
+            border-radius: 28px;
+            padding: 20px;
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.1);
         }
@@ -615,38 +616,39 @@
         .mine-button {
             background: linear-gradient(135deg, #f5af19, #f12711);
             border: none;
-            width: 150px;
-            height: 150px;
+            width: 130px;
+            height: 130px;
             border-radius: 50%;
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: bold;
             color: white;
             cursor: pointer;
             transition: 0.05s linear;
-            box-shadow: 0 10px 0 #8b3a0e;
+            box-shadow: 0 8px 0 #8b3a0e;
             margin: 15px auto;
         }
 
-        .mine-button:active { transform: translateY(4px); box-shadow: 0 6px 0 #8b3a0e; }
+        .mine-button:active { transform: translateY(4px); box-shadow: 0 4px 0 #8b3a0e; }
 
         .exchange-btn {
             background: linear-gradient(135deg, #4a90e2, #8e44ad);
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 28px;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
-            margin-top: 15px;
+            margin-top: 12px;
             color: white;
+            font-size: 0.85rem;
         }
 
         .progress-bar {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            height: 8px;
+            height: 6px;
             overflow: hidden;
-            margin: 15px 0;
+            margin: 12px 0;
         }
 
         .progress-fill {
@@ -658,14 +660,14 @@
 
         .rank-badge {
             display: inline-block;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 20px;
             font-weight: 700;
-            font-size: 0.7rem;
-            margin: 5px 0;
+            font-size: 0.65rem;
+            margin: 4px 0;
         }
 
-        .rank-X { background: #dc3545; box-shadow: 0 0 10px #ff0000; }
+        .rank-X { background: #dc3545; box-shadow: 0 0 8px #ff0000; }
         .rank-S { background: #ffc107; color: #1a1a2e; }
         .rank-A { background: #fc363b; }
         .rank-P { background: #005db6; }
@@ -680,10 +682,20 @@
         .rank-L { background: #ffaa44; }
         .rank-Q { background: #4984b2; }
 
+        /* КОЛЛЕКЦИЯ И КАТАЛОГ - ИСПРАВЛЕНО ДЛЯ ТЕЛЕФОНА */
+        .collection-grid, .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            max-height: 55vh;
+            overflow-y: auto;
+            padding: 5px;
+        }
+
         .collected-card, .catalog-card {
             background: linear-gradient(135deg, rgba(30, 27, 60, 0.9), rgba(20, 18, 45, 0.9));
-            border-radius: 20px;
-            padding: 12px;
+            border-radius: 16px;
+            padding: 10px;
             text-align: center;
             position: relative;
             cursor: pointer;
@@ -694,17 +706,141 @@
         .collected-card:hover, .catalog-card:hover { transform: translateY(-3px); border-color: #FFD700; }
 
         .collected-card img, .catalog-card img {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
-            border-radius: 12px;
+            border-radius: 10px;
+        }
+
+        /* Мобильная версия */
+        @media (max-width: 480px) {
+            .main-content {
+                padding: 70px 10px 20px 10px;
+            }
+            
+            .collection-grid, .catalog-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+                max-height: 60vh;
+            }
+            
+            .collected-card img, .catalog-card img {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .collected-card, .catalog-card {
+                padding: 8px;
+            }
+            
+            .stat-card {
+                padding: 8px 10px;
+            }
+            
+            .stat-icon {
+                font-size: 1.2rem;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+            }
+            
+            .stat-label {
+                font-size: 0.55rem;
+            }
+            
+            .cards-row {
+                gap: 6px;
+            }
+            
+            .choice-card img {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .choice-card {
+                padding: 6px;
+            }
+            
+            .mine-button {
+                width: 110px;
+                height: 110px;
+                font-size: 1rem;
+            }
+            
+            .toast {
+                white-space: normal;
+                text-align: center;
+                max-width: 85%;
+                font-size: 0.75rem;
+                padding: 10px 18px;
+            }
+            
+            .promo-input-group {
+                flex-direction: column;
+            }
+            
+            .info-title {
+                font-size: 0.9rem;
+            }
+            
+            .fishing-stat {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+            }
+            
+            .profile-stats .num {
+                font-size: 1rem;
+            }
+            
+            .profile-stats .label {
+                font-size: 0.55rem;
+            }
+
+            .navbar {
+                padding: 10px 16px;
+            }
+            
+            .logo {
+                font-size: 1.1rem;
+            }
+            
+            .navbar-stats {
+                gap: 5px;
+            }
+            
+            .crystals-display, .shards-display {
+                font-size: 0.65rem;
+                padding: 3px 8px;
+            }
+            
+            .burger-menu {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .collection-grid, .catalog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .collected-card img, .catalog-card img {
+                width: 55px;
+                height: 55px;
+            }
+            
+            .rank-badge {
+                font-size: 0.55rem;
+                padding: 2px 8px;
+            }
         }
 
         .check-mark {
             position: absolute;
-            top: 8px;
-            left: 8px;
-            font-size: 1.3rem;
+            top: 5px;
+            left: 5px;
+            font-size: 1.1rem;
             color: #4caf50;
             text-shadow: 0 0 3px black;
         }
@@ -712,9 +848,9 @@
         .upgrade-btn {
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             border: none;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 20px;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: bold;
             cursor: pointer;
             margin-top: 5px;
@@ -737,37 +873,38 @@
 
         .modal.active { display: flex; }
         .modal-content { text-align: center; max-width: 90%; }
-        .modal-content img { max-width: 80vw; max-height: 60vh; object-fit: contain; border-radius: 24px; }
+        .modal-content img { max-width: 80vw; max-height: 55vh; object-fit: contain; border-radius: 20px; }
 
         .reset-btn {
             background: linear-gradient(135deg, #dc3545, #c82333);
             border: none;
-            padding: 14px;
+            padding: 12px;
             border-radius: 28px;
             color: white;
             font-weight: 700;
             cursor: pointer;
             width: 100%;
             margin-top: 15px;
+            font-size: 0.9rem;
         }
 
         .rank-filter-scroll {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             overflow-x: auto;
-            padding: 8px 0;
-            margin-bottom: 15px;
+            padding: 6px 0;
+            margin-bottom: 12px;
             white-space: nowrap;
         }
 
         .rank-filter-btn {
             background: rgba(255, 255, 255, 0.1);
             border: none;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 40px;
             color: white;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -783,7 +920,7 @@
 
         .toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: linear-gradient(135deg, #FFD700, #FF8C00);
@@ -801,10 +938,10 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Вкладки магазина */
+        /* Магазин */
         .shop-tabs {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             margin-bottom: 20px;
         }
 
@@ -812,12 +949,13 @@
             flex: 1;
             background: rgba(255, 255, 255, 0.1);
             border: none;
-            padding: 12px;
+            padding: 10px;
             border-radius: 28px;
             color: white;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
+            font-size: 0.85rem;
         }
 
         .shop-tab.active {
@@ -835,9 +973,9 @@
 
         .shop-item {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-            border-radius: 28px;
-            padding: 16px;
-            margin-bottom: 15px;
+            border-radius: 24px;
+            padding: 12px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -847,33 +985,34 @@
         .shop-item-info {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .shop-item-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
 
         .shop-item-title {
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .shop-item-price {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.7;
         }
 
         .shop-buy-btn {
             background: linear-gradient(135deg, #4a90e2, #8e44ad);
             border: none;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 40px;
             color: white;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
             text-decoration: none;
+            font-size: 0.75rem;
         }
 
         .shop-buy-btn:hover {
@@ -882,16 +1021,16 @@
 
         .pro-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
-            border-radius: 28px;
-            padding: 30px 20px;
+            border-radius: 24px;
+            padding: 25px 15px;
             text-align: center;
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         .pro-title {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             background: linear-gradient(135deg, #FFD700, #FF8C00);
             -webkit-background-clip: text;
             background-clip: text;
@@ -900,62 +1039,18 @@
 
         .pro-description {
             opacity: 0.7;
-            margin-bottom: 20px;
-        }
-
-        .allcards-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 15px;
-            padding: 0 5px;
-            flex-shrink: 0;
+            font-size: 0.8rem;
         }
 
-        /* Телефоны - 3 карточки в ряд */
-        @media (max-width: 480px) {
-            .choice-card img { width: 55px; height: 55px; }
-            .mine-button { width: 120px; height: 120px; font-size: 1rem; }
-            .collected-card img, .catalog-card img { width: 75px; height: 75px; }
-            .toast { white-space: normal; text-align: center; max-width: 80%; font-size: 0.8rem; }
-            .promo-input-group { flex-direction: column; }
-            .cards-row { gap: 8px; }
-            .choice-card { padding: 8px; }
-            .choice-card img { width: 55px; height: 55px; }
-            
-            /* Фиксированная сетка 3 колонки */
-            .collection-grid, .catalog-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            
-            .collected-card, .catalog-card {
-                padding: 8px;
-            }
-            
-            .collected-card img, .catalog-card img {
-                width: 65px;
-                height: 65px;
-            }
-            
-            .collected-card div:first-of-type, .catalog-card div:first-of-type {
-                font-size: 0.6rem;
-            }
-            
-            .stat-label { white-space: normal; font-size: 0.6rem; text-align: center; }
-            .stat-value { font-size: 1.1rem; }
-            .stat-icon { font-size: 1.4rem; }
-            .stat-card { padding: 8px 12px; min-width: 0; }
-            .stat-icon { font-size: 1.2rem; }
-            .stat-value { font-size: 1rem; }
-            .stat-label { font-size: 0.55rem; white-space: normal; word-break: break-word; }
-            .navbar-container { justify-content: space-between; gap: 8px; }
-            .logo { font-size: 1.2rem; }
-            .shards-display { font-size: 0.7rem; padding: 2px 8px; }
-            .collection-container, .catalog-container {
-                height: calc(100vh - 190px);
-                min-height: 300px;
-            }
+        .duplicate-badge {
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -963,12 +1058,17 @@
 
 <div class="navbar">
     <div class="navbar-container">
-        <div class="logo">🎴 Bloody</div>
-        <div class="shards-display" id="navbarShards">✨ 40</div>
-        <div class="burger-menu" id="burgerBtn">
-            <div class="burger-line"></div>
-            <div class="burger-line"></div>
-            <div class="burger-line"></div>
+        <div class="logo">🎴 BLOODY</div>
+        <div class="navbar-right">
+            <div class="navbar-stats">
+                <div class="crystals-display" id="navbarCrystals">💎 500</div>
+                <div class="shards-display" id="navbarShards">⚡ 40</div>
+            </div>
+            <div class="burger-menu" id="burgerBtn">
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+                <div class="burger-line"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -990,7 +1090,7 @@
     <div id="profileSection" class="section active">
         <div class="profile-card">
             <div class="profile-header">
-                <div class="avatar">🎴</div>
+                <div class="avatar">⚡</div>
                 <div class="profile-info">
                     <h3 id="username">Коллекционер</h3>
                     <div class="id-container" id="copyIdBtn">
@@ -1009,19 +1109,18 @@
         </div>
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsProfile">500</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsProfile">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsProfile">40</div></div></div>
         </div>
         
-        <div style="background: rgba(0,0,0,0.4); border-radius: 28px; padding: 16px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="background: rgba(0,0,0,0.4); border-radius: 22px; padding: 10px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
             <div><span style="font-weight: 700;">📖 Всего карт:</span> <span id="totalExistCardsCount">0</span></div>
-            <div><span style="font-weight: 700;">✅ Собрано:</span> <span id="profileCollectedPercent">0%</span> <span style="font-size: 0.7rem;">(<span id="profileCollectedCount">0</span>/<span id="profileTotalCount">0</span>)</span></div>
+            <div><span style="font-weight: 700;">✅ Собрано:</span> <span id="profileCollectedPercent">0%</span> <span style="font-size: 0.6rem;">(<span id="profileCollectedCount">0</span>/<span id="profileTotalCount">0</span>)</span></div>
         </div>
         
         <div class="promo-card">
             <div class="info-title">🎫 ПРОМОКОД</div>
             <div class="info-content">
                 <p>Введите промокод для получения бонуса! Каждый код можно использовать только один раз.</p>
-                <p style="font-size:0.7rem; margin-top:5px;">💎 Обычные промокоды для всех игроков<br>🔐 Персональные промокоды привязаны к вашему ID</p>
             </div>
             <div class="promo-input-group">
                 <input type="text" class="promo-input" id="promoInput" placeholder="Введите промокод...">
@@ -1037,16 +1136,16 @@
     <div id="packsSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsPacks">500</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsPacks">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsPacks">40</div></div></div>
         </div>
         
         <div class="info-card">
             <div class="info-title">📦 Что такое пак?</div>
             <div class="info-content">
                 <p>Пак — это набор из <strong class="info-highlight">3 случайных карт</strong>. Когда вы открываете пак, вам показываются <strong>все 3 карты</strong>, но <strong class="info-highlight">вы можете выбрать только 1 карту</strong> и забрать её в свою коллекцию.</p>
-                <p>✨ Если карта уже есть — вы получите <strong class="info-highlight">7💎</strong> вместо дубликата!</p>
+                <p>⚡ Если карта уже есть — вы получите <strong class="info-highlight">7💎</strong> вместо дубликата!</p>
                 <p>🎴 <strong>3 карты</strong> в паке</p>
-                <p>⚡ Карты <strong class="info-highlight">A+</strong> дают осколки ✨</p>
+                <p>⚡ Карты <strong class="info-highlight">A+</strong> дают осколки ⚡</p>
                 <p>🎲 <strong>Выбор только 1 карты</strong></p>
             </div>
         </div>
@@ -1064,16 +1163,16 @@
     <div id="eventSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon" id="eventIcon">🌸</div><div class="stat-info"><div class="stat-label" id="eventLabel">ЦВЕТОЧКИ</div><div class="stat-value" id="eventCurrencyValue">100</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsEvent">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsEvent">40</div></div></div>
         </div>
         
         <div class="info-card">
             <div class="info-title">🎪 Уникальные ивент-карты!</div>
             <div class="info-content">
-                <p>В каждом сезоне доступны <strong class="info-highlight">эксклюзивные карты</strong>, которые нельзя получить в обычных паках ✨</p>
+                <p>В каждом сезоне доступны <strong class="info-highlight">эксклюзивные карты</strong>, которые нельзя получить в обычных паках ⚡</p>
                 <p>🎴 <strong>1 карта</strong> в паке</p>
                 <p>🌸 Цена: <strong class="info-highlight">20 ивент-валюты</strong></p>
-                <p>🎪 Ранги: <span class="info-badge" style="background:#ff6600;">H</span> (Хэллоуин) / <span class="info-badge" style="background:#00ccff;">N</span> (Новый год) / <span class="info-badge" style="background:#ff88cc;">V</span> (Весна) / <span class="info-badge" style="background:#ffaa44;">L</span> (Лето)</p>
+                <p>🎪 Ранги: <span class="info-badge" style="background:#ff6600;">H</span>/ <span class="info-badge" style="background:#00ccff;">N</span>/ <span class="info-badge" style="background:#ff88cc;">V</span>/ <span class="info-badge" style="background:#ffaa44;">L</span></p>
                 <p>🔄 Дубликат = <strong class="info-highlight">7💎</strong></p>
             </div>
         </div>
@@ -1084,19 +1183,13 @@
         </div>
         
         <div class="pack-buttons"><button class="pack-btn event-btn" id="eventPackBtn">🎪 КУПИТЬ ИВЕНТ-ПАК ЗА 20🎴</button></div>
-        
-        <div id="eventResultPanel" class="selection-area" style="display: none;">
-            <h3>✨ ВЫ ПОЛУЧИЛИ КАРТУ ✨</h3>
-            <div id="eventResultContainer" class="cards-row"></div>
-            <button class="take-btn" id="closeEventResultBtn">✅ ЗАБРАТЬ</button>
-        </div>
     </div>
 
     <!-- Рыбалка -->
     <div id="fishingSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ПЛАТНЫХ ЛОВУШЕК</div><div class="stat-value" id="paidFishingLeft">10</div><div class="stat-label">/10</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsFishing">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsFishing">40</div></div></div>
         </div>
 
         <div class="fishing-card">
@@ -1123,7 +1216,7 @@
                 <div class="fish-item"><span>🎁 Сундук</span> <span class="info-highlight">→ 🎴 бесплатный пак</span></div>
             </div>
             
-            <div style="margin-top: 12px; font-size: 0.7rem; opacity: 0.7; text-align: center;">
+            <div style="margin-top: 10px; font-size: 0.65rem; opacity: 0.7; text-align: center;">
                 ⏰ Бесплатно: 1 раз / 5 минут &nbsp;&nbsp;|&nbsp;&nbsp;
                 ⚡ Платно: до 10 раз в день за 2⚡ &nbsp;&nbsp;|&nbsp;&nbsp;
                 🔄 Сброс в 00:00
@@ -1139,9 +1232,9 @@
         </div>
         <div class="mine-card">
             <h2>⛏️ ШАХТА</h2>
-            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 15px 0;">
-                <span class="stat-card" style="padding: 8px 16px;">📊 <span id="clicksToday">0</span>/<span id="maxClicks">100</span></span>
-                <span class="stat-card" style="padding: 8px 16px;"><img src="images/cristal.png" style="width:24px; height:32px; vertical-align:middle;" onerror="this.style.display='none'; this.parentElement.innerHTML='💰'"> <span id="orePerClick">10</span>-<span id="orePerClickMax">15</span></span>
+            <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 12px 0;">
+                <span class="stat-card" style="padding: 6px 12px;">📊 <span id="clicksToday">0</span>/<span id="maxClicks">100</span></span>
+                <span class="stat-card" style="padding: 6px 12px;"><img src="images/cristal.png" style="width:20px; height:20px; vertical-align:middle;" onerror="this.style.display='none'; this.parentElement.innerHTML='💰'"> <span id="orePerClick">10</span>-<span id="orePerClickMax">15</span></span>
             </div>
             <button class="mine-button" id="mineBtn">⛏️<br>КОПАТЬ</button>
             <div class="progress-bar"><div class="progress-fill" id="mineProgress"></div></div>
@@ -1154,7 +1247,7 @@
     <div id="shopSection" class="section">
         <div class="stats-row">
             <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">КРИСТАЛЛЫ</div><div class="stat-value" id="crystalsShop">500</div></div></div>
-            <div class="stat-card"><div class="stat-icon">✨</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsShop">40</div></div></div>
+            <div class="stat-card"><div class="stat-icon">⚡</div><div class="stat-info"><div class="stat-label">ОСКОЛКИ</div><div class="stat-value" id="shardsShop">40</div></div></div>
         </div>
 
         <div class="shop-tabs">
@@ -1171,7 +1264,7 @@
                         <div class="shop-item-price">10 ₽</div>
                     </div>
                 </div>
-                <a href="https://yoomoney.ru/to/4100119003253255/10" target="_blank" class="shop-buy-btn" data-price="10">КУПИТЬ</a>
+                <a href="https://yoomoney.ru/to/4100119003253255/10" target="_blank" class="shop-buy-btn">КУПИТЬ</a>
             </div>
             <div class="shop-item">
                 <div class="shop-item-info">
@@ -1181,7 +1274,7 @@
                         <div class="shop-item-price">45 ₽</div>
                     </div>
                 </div>
-                <a href="https://yoomoney.ru/to/4100119003253255/45" target="_blank" class="shop-buy-btn" data-price="45">КУПИТЬ</a>
+                <a href="https://yoomoney.ru/to/4100119003253255/45" target="_blank" class="shop-buy-btn">КУПИТЬ</a>
             </div>
             <div class="shop-item">
                 <div class="shop-item-info">
@@ -1191,7 +1284,7 @@
                         <div class="shop-item-price">80 ₽</div>
                     </div>
                 </div>
-                <a href="https://yoomoney.ru/to/4100119003253255/80" target="_blank" class="shop-buy-btn" data-price="80">КУПИТЬ</a>
+                <a href="https://yoomoney.ru/to/4100119003253255/80" target="_blank" class="shop-buy-btn">КУПИТЬ</a>
             </div>
             <div class="shop-item">
                 <div class="shop-item-info">
@@ -1201,7 +1294,7 @@
                         <div class="shop-item-price">350 ₽</div>
                     </div>
                 </div>
-                <a href="https://yoomoney.ru/to/4100119003253255/350" target="_blank" class="shop-buy-btn" data-price="350">КУПИТЬ</a>
+                <a href="https://yoomoney.ru/to/4100119003253255/350" target="_blank" class="shop-buy-btn">КУПИТЬ</a>
             </div>
         </div>
 
@@ -1211,33 +1304,29 @@
                 <div class="pro-description">
                     Скоро здесь появятся эксклюзивные возможности для PRO-пользователей!
                 </div>
-                <div style="font-size: 0.8rem; opacity: 0.6;">В разработке...</div>
+                <div style="font-size: 0.7rem; opacity: 0.6;">В разработке...</div>
             </div>
         </div>
     </div>
 
     <!-- Коллекция -->
     <div id="collectionSection" class="section">
-        <div class="collection-container">
-            <div class="allcards-header">
-                <span>📚 Моя коллекция</span>
-                <span style="font-size: 0.7rem; color: #aa8899;">Карт: <span id="collectionCount">0</span></span>
-            </div>
-            <div class="rank-filter-scroll" id="collectionRankFilters"></div>
-            <div id="collectionGrid" class="collection-grid"></div>
+        <div class="allcards-header">
+            <span>📚 Моя коллекция</span>
+            <span style="font-size: 0.7rem; opacity: 0.7;">Карт: <span id="collectionCount">0</span></span>
         </div>
+        <div class="rank-filter-scroll" id="collectionRankFilters"></div>
+        <div id="collectionGrid" class="collection-grid"></div>
     </div>
 
     <!-- Каталог -->
     <div id="catalogSection" class="section">
-        <div class="catalog-container">
-            <div class="allcards-header">
-                <span>📖 Каталог карточек</span>
-                <span style="font-size: 0.7rem; color: #aa8899;">Всего: <span id="totalAllCardsCount">0</span></span>
-            </div>
-            <div class="rank-filter-scroll" id="catalogRankFilters"></div>
-            <div id="catalogGrid" class="catalog-grid"></div>
+        <div class="allcards-header">
+            <span>📖 Каталог карточек</span>
+            <span style="font-size: 0.7rem; opacity: 0.7;">Всего: <span id="totalAllCardsCount">0</span></span>
         </div>
+        <div class="rank-filter-scroll" id="catalogRankFilters"></div>
+        <div id="catalogGrid" class="catalog-grid"></div>
     </div>
 </div>
 
@@ -1260,18 +1349,19 @@
 <div id="cardModal" class="modal">
     <div class="modal-content">
         <img id="cardModalImage" src="" alt="">
-        <h3 id="cardModalName" style="margin-top: 15px;"></h3>
+        <h3 id="cardModalName" style="margin-top: 12px;"></h3>
         <p id="cardModalSet" style="opacity: 0.8;"></p>
-        <button id="cardModalClose" style="margin-top: 20px; padding: 10px 30px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
+        <div id="cardModalDuplicateBadge" style="display: none;" class="duplicate-badge">⚠️ Дубликат! +7💎</div>
+        <button id="cardModalClose" style="margin-top: 15px; padding: 8px 25px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
     </div>
 </div>
 
 <div id="viewModal" class="modal">
     <div class="modal-content">
         <img id="viewModalImage" src="" alt="">
-        <h3 id="viewModalName" style="margin-top: 15px;"></h3>
+        <h3 id="viewModalName" style="margin-top: 12px;"></h3>
         <p id="viewModalSet" style="opacity: 0.8;"></p>
-        <button id="viewModalClose" style="margin-top: 20px; padding: 10px 30px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
+        <button id="viewModalClose" style="margin-top: 15px; padding: 8px 25px; background: linear-gradient(135deg, #667eea, #764ba2); border: none; border-radius: 28px; color: white; font-weight: bold; cursor: pointer;">ЗАКРЫТЬ</button>
     </div>
 </div>
 
@@ -1321,8 +1411,8 @@
     
     // ========== ПРОМОКОДЫ ==========
     const PUBLIC_PROMOCODES = {
-        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20✨" },
-        "GACHASTAR": { crystals: 200, shards: 30, message: "Спасибо за поддержку! +200💎 и +30✨" },
+        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
+        "GACHASTAR": { crystals: 200, shards: 30, message: "Спасибо за поддержку! +200💎 и +30⚡" },
         "SPRING2026": { eventCurrency: 50, message: "Весенний бонус! +50🌸 цветочков" },
         "LUCKYFISH": { crystals: 50, paidFishCharges: 3, message: "Удачная рыбалка! +50💎 и +3⚡ платных ловушки" },
         "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
@@ -1355,8 +1445,8 @@
             case "250CRYSTALS": return { crystals: 250, message: "Персональный бонус! +250💎", isPersonal: true };
             case "500CRYSTALS": return { crystals: 500, message: "Персональный бонус! +500💎", isPersonal: true };
             case "1000CRYSTALS": return { crystals: 1000, message: "Персональный бонус! +1000💎", isPersonal: true };
-            case "50SHARDS": return { shards: 50, message: "Персональный бонус! +50✨ осколков", isPersonal: true };
-            case "100SHARDS": return { shards: 100, message: "Персональный бонус! +100✨ осколков", isPersonal: true };
+            case "50SHARDS": return { shards: 50, message: "Персональный бонус! +50⚡ осколков", isPersonal: true };
+            case "100SHARDS": return { shards: 100, message: "Персональный бонус! +100⚡ осколков", isPersonal: true };
             case "EVENT50": return { eventCurrency: 50, message: "Персональный бонус! +50 ивент-валюты", isPersonal: true };
             case "EVENT100": return { eventCurrency: 100, message: "Персональный бонус! +100 ивент-валюты", isPersonal: true };
             case "FREEPACK": return { freePack: true, message: "Персональный бонус! +1 бесплатный пак", isPersonal: true };
@@ -1365,8 +1455,11 @@
         }
     }
     
+    let currentToastTimeout = null;
+    
     function showToast(message, isLevelUp = false) {
         const toast = document.getElementById("toast");
+        if (currentToastTimeout) clearTimeout(currentToastTimeout);
         toast.textContent = message;
         toast.classList.add("show");
         if (isLevelUp) {
@@ -1374,9 +1467,10 @@
         } else {
             toast.style.background = "linear-gradient(135deg, #4a90e2, #8e44ad)";
         }
-        setTimeout(() => {
+        currentToastTimeout = setTimeout(() => {
             toast.classList.remove("show");
-        }, 3000);
+            currentToastTimeout = null;
+        }, 2500);
     }
     
     function copyUserId() {
@@ -1387,16 +1481,36 @@
         });
     }
     
-    function showCardModal(card) {
+    function showCardModalWithRank(card) {
         const modal = document.getElementById("cardModal");
         const img = document.getElementById("cardModalImage");
         const nameEl = document.getElementById("cardModalName");
         const setEl = document.getElementById("cardModalSet");
+        const duplicateBadge = document.getElementById("cardModalDuplicateBadge");
+        if (duplicateBadge) duplicateBadge.style.display = "none";
         
         const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
         img.src = imgUrl || "https://via.placeholder.com/300";
         nameEl.innerText = card.name;
-        setEl.innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</span>`;
+        setEl.innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:6px;">${card.rankLabel || card.rank}</span>`;
+        modal.classList.add("active");
+    }
+    
+    function showCardModalSimple(card, isDuplicate = false) {
+        const modal = document.getElementById("cardModal");
+        const img = document.getElementById("cardModalImage");
+        const nameEl = document.getElementById("cardModalName");
+        const setEl = document.getElementById("cardModalSet");
+        const duplicateBadge = document.getElementById("cardModalDuplicateBadge");
+        
+        const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+        img.src = imgUrl || "https://via.placeholder.com/300";
+        nameEl.innerText = card.name;
+        setEl.innerHTML = `📀 ${card.set || "?"}`;
+        
+        if (duplicateBadge) {
+            duplicateBadge.style.display = isDuplicate ? "inline-block" : "none";
+        }
         modal.classList.add("active");
     }
     
@@ -1405,7 +1519,7 @@
         const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
         document.getElementById("viewModalImage").src = imgUrl || "https://via.placeholder.com/300";
         document.getElementById("viewModalName").innerText = card.name;
-        document.getElementById("viewModalSet").innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</span>`;
+        document.getElementById("viewModalSet").innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:6px;">${card.rankLabel || card.rank}</span>`;
         modal.classList.add("active");
     }
     
@@ -1453,7 +1567,7 @@
     function updateSeason() {
         const now = new Date();
         const springStart = new Date(now.getFullYear(), 2, 20);
-        const springEnd = new Date(now.getFullYear(), 3, 20);
+        const springEnd = new Date(now.getFullYear(), 3, 30);
         const summerStart = new Date(now.getFullYear(), 5, 20);
         const summerEnd = new Date(now.getFullYear(), 6, 20);
         const halloweenStart = new Date(now.getFullYear(), 9, 25);
@@ -1572,27 +1686,28 @@
             const timeLeft = Math.ceil((300000 - (now - lastFreeTime)) / 1000);
             const minutes = Math.floor(timeLeft / 60);
             const seconds = timeLeft % 60;
-            showToast(`⏳ Бесплатная рыбалка будет доступна через ${minutes}:${seconds.toString().padStart(2, '0')}`);
+            showToast(`⏳ Бесплатная рыбалка через ${minutes}:${seconds.toString().padStart(2, '0')}`);
             return;
         }
         
         const fish = getRandomFish();
         let rewardText = "";
         let obtainedCard = null;
+        let isDuplicate = false;
         
         if (fish.ore > 0) {
             ore += fish.ore;
-            rewardText = `+${fish.ore}⛏️ руды`;
+            rewardText = `+${fish.ore}⛏️`;
         }
         if (fish.crystals > 0) {
             crystals += fish.crystals;
             rewardText = `+${fish.crystals}💎`;
         }
         if (fish.ore > 0 && fish.crystals > 0) {
-            rewardText = `+${fish.ore}⛏️ и +${fish.crystals}💎`;
+            rewardText = `+${fish.ore}⛏️ +${fish.crystals}💎`;
         }
         if (fish.paidCharge > 0) {
-            rewardText = `+1⚡ платная рыбалка`;
+            rewardText = `+1⚡ ловушка`;
         }
         if (fish.card) {
             const card = getRandomCard(false);
@@ -1601,9 +1716,11 @@
             if (existingIndex !== -1) {
                 crystals += 7;
                 rewardText = `Дубликат! +7💎`;
+                isDuplicate = true;
             } else {
                 collection.push({ ...card });
-                rewardText = `🎴 Получена карта: ${card.name} [${card.rank}]`;
+                rewardText = `🎴 ${card.name}`;
+                isDuplicate = false;
             }
         }
         if (fish.freePack) {
@@ -1615,10 +1732,10 @@
         saveGame();
         updateAllUI();
         updateFishingUI();
-        showToast(`🎣 Поймано: ${fish.name}! ${rewardText}`);
+        showToast(`🎣 ${fish.name}! ${rewardText}`);
         
         if (obtainedCard) {
-            setTimeout(() => showCardModal(obtainedCard), 500);
+            setTimeout(() => showCardModalSimple(obtainedCard, isDuplicate), 500);
         }
     }
     
@@ -1626,12 +1743,12 @@
         resetPaidFishingIfNeeded();
         
         if (paidFishUsed >= 10) {
-            showToast("❌ Лимит платной рыбалки на сегодня исчерпан (10/10)");
+            showToast("❌ Лимит 10/10");
             return;
         }
         
         if (shards < 2) {
-            showToast("❌ Не хватает осколков! Нужно 2⚡");
+            showToast("❌ Нужно 2⚡");
             return;
         }
         
@@ -1641,20 +1758,21 @@
         const fish = getRandomFish();
         let rewardText = "";
         let obtainedCard = null;
+        let isDuplicate = false;
         
         if (fish.ore > 0) {
             ore += fish.ore;
-            rewardText = `+${fish.ore}⛏️ руды`;
+            rewardText = `+${fish.ore}⛏️`;
         }
         if (fish.crystals > 0) {
             crystals += fish.crystals;
             rewardText = `+${fish.crystals}💎`;
         }
         if (fish.ore > 0 && fish.crystals > 0) {
-            rewardText = `+${fish.ore}⛏️ и +${fish.crystals}💎`;
+            rewardText = `+${fish.ore}⛏️ +${fish.crystals}💎`;
         }
         if (fish.paidCharge > 0) {
-            rewardText = `+1⚡ платная рыбалка`;
+            rewardText = `+1⚡ ловушка`;
         }
         if (fish.card) {
             const card = getRandomCard(false);
@@ -1663,9 +1781,11 @@
             if (existingIndex !== -1) {
                 crystals += 7;
                 rewardText = `Дубликат! +7💎`;
+                isDuplicate = true;
             } else {
                 collection.push({ ...card });
-                rewardText = `🎴 Получена карта: ${card.name} [${card.rank}]`;
+                rewardText = `🎴 ${card.name}`;
+                isDuplicate = false;
             }
         }
         if (fish.freePack) {
@@ -1676,10 +1796,10 @@
         saveGame();
         updateAllUI();
         updateFishingUI();
-        showToast(`🎣 Поймано: ${fish.name}! ${rewardText}`);
+        showToast(`🎣 ${fish.name}! ${rewardText}`);
         
         if (obtainedCard) {
-            setTimeout(() => showCardModal(obtainedCard), 500);
+            setTimeout(() => showCardModalSimple(obtainedCard, isDuplicate), 500);
         }
     }
     
@@ -1732,13 +1852,12 @@
         resetDailyIfNeeded();
         const maxClicks = getMaxClicks();
         if (clicksToday >= maxClicks) {
-            showToast(`⛔ Лимит кликов на сегодня: ${maxClicks}/${maxClicks}`);
+            showToast(`⛔ Лимит ${maxClicks}/${maxClicks}`);
             return;
         }
         const oreGained = Math.floor(Math.random() * (getOrePerClickMax() - getOrePerClickMin() + 1)) + getOrePerClickMin();
         ore += oreGained;
         clicksToday++;
-        oreMinedToday += oreGained;
         addExp(1);
         saveGame();
         updateAllUI();
@@ -1746,15 +1865,15 @@
     
     function exchangeOre() {
         if (ore < 100) {
-            showToast(`Не хватает руды! У вас ${ore} / 100`);
+            showToast(`Не хватает! ${ore} / 100`);
             return;
         }
-        const exchangeCount = Math.floor(ore / 100);
-        crystals += exchangeCount;
-        ore -= exchangeCount * 100;
+        const count = Math.floor(ore / 100);
+        crystals += count;
+        ore -= count * 100;
         saveGame();
         updateAllUI();
-        showToast(`🔄 Обменяно ${exchangeCount} 💎! Получено ${exchangeCount} кристаллов!`);
+        showToast(`🔄 +${count}💎`);
     }
     
     // ========== ОБЫЧНЫЕ ПАКИ ==========
@@ -1768,8 +1887,8 @@
             div.className = "choice-card";
             div.innerHTML = `
                 <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
-                <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 15 ? card.name.substring(0,12)+'...' : card.name}</div>
-                <div style="font-size:0.6rem; opacity:0.7;">${card.set || ""}</div>
+                <div style="font-size:0.65rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
+                <div style="font-size:0.55rem; opacity:0.7;">${card.set ? (card.set.length > 10 ? card.set.substring(0,8)+'...' : card.set) : ""}</div>
             `;
             div.onclick = () => {
                 document.querySelectorAll("#choiceContainer .choice-card").forEach(c => c.classList.remove("selected"));
@@ -1789,7 +1908,7 @@
         
         if (chosen.rank === "A+") {
             shards += 15;
-            showToast(`✨ Осколок (A+)! +15 осколков ✨`);
+            showToast(`⚡ Осколок (A+)! +15⚡`);
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
@@ -1799,7 +1918,7 @@
         const existingIndex = collection.findIndex(c => c.id === chosen.id);
         if (existingIndex !== -1) {
             crystals += 7;
-            showToast(`🔄 Дубликат! +7 кристаллов`);
+            showToast(`🔄 Дубликат! +7💎`);
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
@@ -1810,18 +1929,18 @@
         saveGame();
         updateAllUI();
         document.getElementById("selectionPanel").style.display = "none";
-        showToast(`🎉 + ${chosen.name} [${chosen.rank}] из "${chosen.set}"!`);
-        showCardModal(chosen);
+        showToast(`🎉 + ${chosen.name} [${chosen.rank}]`);
+        showCardModalWithRank(chosen);
     }
     
     function openNormalPack(isFree = false) {
-        if (!isFree && crystals < 70) { showToast("❌ Нет кристаллов! Идите в шахту!"); return; }
+        if (!isFree && crystals < 70) { showToast("❌ Нет кристаллов!"); return; }
         if (!isFree) crystals -= 70;
         addExp(3);
         
         if (checkAplusDrop()) {
             shards += 10;
-            showToast("🌟 УДАЧА! Выпал Осколок (A+)! +10 осколков 🌟");
+            showToast("🌟 Осколок A+! +10⚡");
             saveGame();
             updateAllUI();
             return;
@@ -1841,91 +1960,64 @@
         
         const card = getRandomCard(true);
         
-        const container = document.getElementById("eventResultContainer");
-        container.innerHTML = "";
-        const div = document.createElement("div");
-        div.className = "choice-card";
-        div.style.width = "100%";
-        div.style.cursor = "default";
-        div.innerHTML = `
-            <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
-            <div class="rank-badge rank-${card.rank}" style="margin-top:8px;">${card.rankLabel || card.rank}</div>
-            <div style="font-size:0.8rem; font-weight:bold; margin-top:5px;">${card.name}</div>
-            <div style="font-size:0.65rem; opacity:0.7;">${card.set || ""}</div>
-        `;
-        container.appendChild(div);
-        document.getElementById("eventResultPanel").style.display = "block";
-        
-        window.pendingEventCard = card;
-    }
-    
-    function takeEventCard() {
-        const chosen = window.pendingEventCard;
-        if (!chosen) return;
-        
-        if (chosen.rank === "A+") {
-            shards += 15;
-            showToast(`✨ Осколок (A+)! +15 осколков ✨`);
-            saveGame();
-            updateAllUI();
-            document.getElementById("eventResultPanel").style.display = "none";
-            window.pendingEventCard = null;
-            return;
-        }
-        
-        const existingIndex = collection.findIndex(c => c.id === chosen.id);
+        const existingIndex = collection.findIndex(c => c.id === card.id);
         if (existingIndex !== -1) {
             crystals += 7;
-            showToast(`🔄 Дубликат! +7 кристаллов`);
             saveGame();
             updateAllUI();
-            document.getElementById("eventResultPanel").style.display = "none";
-            window.pendingEventCard = null;
+            showCardModalSimple(card, true);
+            showToast(`🔄 Дубликат! +7💎`);
             return;
         }
         
-        collection.push({ ...chosen });
+        if (card.rank === "A+") {
+            shards += 15;
+            saveGame();
+            updateAllUI();
+            showToast(`⚡ Осколок (A+)! +15⚡`);
+            return;
+        }
+        
+        collection.push({ ...card });
         saveGame();
         updateAllUI();
-        document.getElementById("eventResultPanel").style.display = "none";
-        window.pendingEventCard = null;
-        showToast(`🎉 + ${chosen.name} [${chosen.rank}] из "${chosen.set}"!`);
-        showCardModal(chosen);
+        showCardModalSimple(card, false);
+        showToast(`🎉 Вы получили карту из ивент-пака!`);
     }
     
     function claimDailyBonus() {
         const today = new Date().toDateString();
-        if (lastDailyBonus === today) { showToast("Вы уже получили бонус сегодня!"); return; }
+        if (lastDailyBonus === today) { showToast("Бонус уже получен!"); return; }
         crystals += 30;
         lastDailyBonus = today;
         saveGame();
         updateAllUI();
-        showToast("🎁 +30 кристаллов! Заходите завтра снова 🎁");
+        showToast("🎁 +30 кристаллов!");
     }
     
     function upgradeCard(cardId) {
-        const cardIndex = collection.findIndex(c => c.id === cardId);
-        if (cardIndex === -1) return;
-        const card = collection[cardIndex];
-        if (!card.canUpgrade) { showToast("Эту карту нельзя улучшить!"); return; }
-        if (shards < 25) { showToast("Не хватает осколков! Нужно 25"); return; }
-        if (card.isUpgraded) { showToast("Карта уже улучшена!"); return; }
+        const idx = collection.findIndex(c => c.id === cardId);
+        if (idx === -1) return;
+        const card = collection[idx];
+        if (!card.canUpgrade) { showToast("Эту карту нельзя улучшить"); return; }
+        if (shards < 25) { showToast("Нужно 25⚡"); return; }
+        if (card.isUpgraded) { showToast("Уже улучшена"); return; }
         shards -= 25;
         card.isUpgraded = true;
         saveGame();
         updateAllUI();
-        showToast(`✨ Карта "${card.name}" улучшена! Теперь у неё есть анимация! ✨`);
+        showToast(`✨ ${card.name} улучшена! Анимация ✨`);
     }
     
     // ========== СОРТИРОВКА ==========
     function sortByRank(cards) {
-        const rankOrder = { "X":0, "S":1, "A":2, "P":3, "G":4, "B":5, "C":6, "D":7, "E":8, "H":9, "N":10, "V":11, "L":12, "Q":13 };
-        return [...cards].sort((a, b) => (rankOrder[a.rank] || 99) - (rankOrder[b.rank] || 99));
+        const order = { X:0, S:1, A:2, P:3, G:4, B:5, C:6, D:7, E:8, H:9, N:10, V:11, L:12, Q:13 };
+        return [...cards].sort((a,b) => (order[a.rank]||99) - (order[b.rank]||99));
     }
     
-    function filterByRank(cards, rankFilter) {
-        if (rankFilter === "ALL") return cards;
-        return cards.filter(c => c.rank === rankFilter);
+    function filterByRank(cards, filter) {
+        if (filter === "ALL") return cards;
+        return cards.filter(c => c.rank === filter);
     }
     
     // ========== СОХРАНЕНИЕ ==========
@@ -1976,8 +2068,7 @@
         ALL_RANKS.forEach(rank => {
             const btn = document.createElement("button");
             btn.className = "rank-filter-btn";
-            if ((type === "collection" && collectionRankFilter === rank) || 
-                (type === "catalog" && catalogRankFilter === rank)) {
+            if ((type === "collection" && collectionRankFilter === rank) || (type === "catalog" && catalogRankFilter === rank)) {
                 btn.classList.add("active");
             }
             btn.innerText = rank;
@@ -1997,8 +2088,13 @@
     }
     
     function updateAllUI() {
-        document.getElementById("navbarShards").innerHTML = `✨ ${shards}`;
-        document.getElementById("userId").innerText = userId;
+        const navbarCrystals = document.getElementById("navbarCrystals");
+        const navbarShards = document.getElementById("navbarShards");
+        if (navbarCrystals) navbarCrystals.innerHTML = `💎 ${crystals}`;
+        if (navbarShards) navbarShards.innerHTML = `⚡ ${shards}`;
+        
+        const userIdEl = document.getElementById("userId");
+        if (userIdEl) userIdEl.innerText = userId;
         
         document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine, #crystalsShop").forEach(el => el && (el.innerText = crystals));
         document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing, #shardsShop").forEach(el => el && (el.innerText = shards));
@@ -2006,80 +2102,95 @@
         document.querySelectorAll("#oreAmount").forEach(el => el && (el.innerText = ore));
         document.querySelectorAll("#levelMine, #profileLevel").forEach(el => el && (el.innerText = level));
         
-        document.getElementById("profileExp").innerText = exp;
-        document.getElementById("profileCards").innerText = collection.length;
-        document.getElementById("profileShards").innerText = shards;
-        const expPercent = Math.min(100, (exp / expNeeded()) * 100);
-        document.getElementById("levelFill").style.width = `${expPercent}%`;
+        const profileExpEl = document.getElementById("profileExp");
+        const profileCardsEl = document.getElementById("profileCards");
+        const profileShardsEl = document.getElementById("profileShards");
+        const levelFillEl = document.getElementById("levelFill");
+        if (profileExpEl) profileExpEl.innerText = exp;
+        if (profileCardsEl) profileCardsEl.innerText = collection.length;
+        if (profileShardsEl) profileShardsEl.innerText = shards;
+        if (levelFillEl) levelFillEl.style.width = `${Math.min(100, (exp / expNeeded()) * 100)}%`;
         
-        document.getElementById("clicksToday").innerText = clicksToday;
-        document.getElementById("maxClicks").innerText = getMaxClicks();
-        document.getElementById("orePerClick").innerText = getOrePerClickMin();
-        document.getElementById("orePerClickMax").innerText = getOrePerClickMax();
-        document.getElementById("mineProgress").style.width = `${(clicksToday / getMaxClicks()) * 100}%`;
+        const clicksTodayEl = document.getElementById("clicksToday");
+        const maxClicksEl = document.getElementById("maxClicks");
+        const orePerClickEl = document.getElementById("orePerClick");
+        const orePerClickMaxEl = document.getElementById("orePerClickMax");
+        const mineProgressEl = document.getElementById("mineProgress");
+        if (clicksTodayEl) clicksTodayEl.innerText = clicksToday;
+        if (maxClicksEl) maxClicksEl.innerText = getMaxClicks();
+        if (orePerClickEl) orePerClickEl.innerText = getOrePerClickMin();
+        if (orePerClickMaxEl) orePerClickMaxEl.innerText = getOrePerClickMax();
+        if (mineProgressEl) mineProgressEl.style.width = `${(clicksToday / getMaxClicks()) * 100}%`;
         
         updateFishingUI();
         
-        // Коллекция
+        const totalExistCards = ALL_CARDS.filter(c => c.rank !== "A+").length;
+        const totalExistCardsCountEl = document.getElementById("totalExistCardsCount");
+        const profileTotalCountEl = document.getElementById("profileTotalCount");
+        const profileCollectedCountEl = document.getElementById("profileCollectedCount");
+        const profileCollectedPercentEl = document.getElementById("profileCollectedPercent");
+        if (totalExistCardsCountEl) totalExistCardsCountEl.innerText = totalExistCards;
+        if (profileTotalCountEl) profileTotalCountEl.innerText = totalExistCards;
+        if (profileCollectedCountEl) profileCollectedCountEl.innerText = collection.length;
+        if (profileCollectedPercentEl) profileCollectedPercentEl.innerHTML = `${Math.round((collection.length / totalExistCards) * 100)}%`;
+        
         let filteredCollection = filterByRank(collection, collectionRankFilter);
         filteredCollection = sortByRank(filteredCollection);
+        const collectionCountEl = document.getElementById("collectionCount");
+        if (collectionCountEl) collectionCountEl.innerText = collection.length;
         
-        document.getElementById("collectionCount").innerText = collection.length;
         const collectionGrid = document.getElementById("collectionGrid");
-        if (filteredCollection.length === 0) {
-            collectionGrid.innerHTML = "<div style='text-align:center; padding:40px;'>Нет карт. Открывайте паки!</div>";
-        } else {
-            collectionGrid.innerHTML = "";
-            filteredCollection.forEach(card => {
-                const div = document.createElement("div");
-                div.className = "collected-card";
-                const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
-                div.innerHTML = `
-                    <img src="${imgUrl || 'https://via.placeholder.com/90'}" onerror="this.src='https://via.placeholder.com/90'">
-                    <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
-                    <div style="font-size:0.55rem; opacity:0.6;">${card.set ? (card.set.length > 12 ? card.set.substring(0,10)+'...' : card.set) : ""}</div>
-                    ${card.canUpgrade && !card.isUpgraded ? `<button class="upgrade-btn" data-id="${card.id}">✨ Улучшить (25)</button>` : (card.isUpgraded ? '<span style="font-size:0.6rem; color:#FFD700;">✨ Анимация</span>' : '')}
-                `;
-                div.onclick = (e) => { if(!e.target.classList.contains("upgrade-btn")) viewCard(card); };
-                const btn = div.querySelector(".upgrade-btn");
-                if(btn) btn.onclick = (e) => { e.stopPropagation(); upgradeCard(card.id); };
-                collectionGrid.appendChild(div);
-            });
+        if (collectionGrid) {
+            if (filteredCollection.length === 0) {
+                collectionGrid.innerHTML = "<div style='text-align:center; padding:20px;'>Нет карт</div>";
+            } else {
+                collectionGrid.innerHTML = "";
+                filteredCollection.forEach(card => {
+                    const div = document.createElement("div");
+                    div.className = "collected-card";
+                    const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+                    div.innerHTML = `
+                        <img src="${imgUrl || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
+                        <div style="font-size:0.6rem; font-weight:bold;">${card.name.length > 10 ? card.name.substring(0,8)+'...' : card.name}</div>
+                        <div style="font-size:0.5rem; opacity:0.6;">${card.set ? (card.set.length > 8 ? card.set.substring(0,6)+'...' : card.set) : ""}</div>
+                        ${card.canUpgrade && !card.isUpgraded ? `<button class="upgrade-btn" data-id="${card.id}">⚡ Улучшить</button>` : (card.isUpgraded ? '<span style="font-size:0.5rem; color:#FFD700;">⚡ Анимация</span>' : '')}
+                    `;
+                    div.onclick = (e) => { if(!e.target.classList.contains("upgrade-btn")) viewCard(card); };
+                    const btn = div.querySelector(".upgrade-btn");
+                    if(btn) btn.onclick = (e) => { e.stopPropagation(); upgradeCard(card.id); };
+                    collectionGrid.appendChild(div);
+                });
+            }
         }
         
-        // Каталог
         let allCards = ALL_CARDS.filter(c => c.rank !== "A+");
         allCards = filterByRank(allCards, catalogRankFilter);
         allCards = sortByRank(allCards);
         
-        const totalExistCards = ALL_CARDS.filter(c => c.rank !== "A+").length;
-        document.getElementById("totalAllCardsCount").innerText = allCards.length;
-        document.getElementById("totalExistCardsCount").innerText = totalExistCards;
-        
-        document.getElementById("profileTotalCount").innerText = totalExistCards;
-        document.getElementById("profileCollectedCount").innerText = collection.length;
-        const percent = totalExistCards > 0 ? Math.round((collection.length / totalExistCards) * 100) : 0;
-        document.getElementById("profileCollectedPercent").innerHTML = `${percent}%`;
+        const totalAllCardsCountEl = document.getElementById("totalAllCardsCount");
+        if (totalAllCardsCountEl) totalAllCardsCountEl.innerText = allCards.length;
         
         const catalogGrid = document.getElementById("catalogGrid");
-        catalogGrid.innerHTML = "";
-        allCards.forEach(card => {
-            const owned = collection.some(c => c.id === card.id);
-            const div = document.createElement("div");
-            div.className = "catalog-card";
-            div.innerHTML = `
-                ${owned ? '<div class="check-mark">✓</div>' : ''}
-                <img src="${card.image || 'https://via.placeholder.com/90'}" onerror="this.src='https://via.placeholder.com/90'">
-                <div style="font-size:0.7rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
-                <div style="font-size:0.55rem; opacity:0.6;">${card.set ? (card.set.length > 12 ? card.set.substring(0,10)+'...' : card.set) : ""}</div>
-            `;
-            div.onclick = () => viewCard(card);
-            catalogGrid.appendChild(div);
-        });
+        if (catalogGrid) {
+            catalogGrid.innerHTML = "";
+            allCards.forEach(card => {
+                const owned = collection.some(c => c.id === card.id);
+                const div = document.createElement("div");
+                div.className = "catalog-card";
+                div.innerHTML = `
+                    ${owned ? '<div class="check-mark">✓</div>' : ''}
+                    <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
+                    <div style="font-size:0.6rem; font-weight:bold;">${card.name.length > 10 ? card.name.substring(0,8)+'...' : card.name}</div>
+                    <div style="font-size:0.5rem; opacity:0.6;">${card.set ? (card.set.length > 8 ? card.set.substring(0,6)+'...' : card.set) : ""}</div>
+                `;
+                div.onclick = () => viewCard(card);
+                catalogGrid.appendChild(div);
+            });
+        }
     }
     
     function resetGame() {
-        if (confirm("Сбросить ВСЁ? Коллекция, кристаллы, осколки, уровни будут очищены.")) {
+        if (confirm("Сбросить ВСЁ?")) {
             crystals = 500; shards = 40; ore = 0; eventCurrency = 100; collection = [];
             level = 1; exp = 0; clicksToday = 0; oreMinedToday = 0;
             lastResetDate = new Date().toDateString();
@@ -2091,7 +2202,6 @@
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
-            document.getElementById("eventResultPanel").style.display = "none";
             showToast("Игра сброшена!");
         }
     }
@@ -2099,42 +2209,21 @@
     function activatePromoCode() {
         const input = document.getElementById("promoInput");
         const code = input.value.trim().toUpperCase();
-        
-        if (!code) {
-            showToast("❌ Введите промокод!");
-            return;
-        }
-        
-        if (usedPromoCodes.includes(code)) {
-            showToast("❌ Этот промокод уже был активирован!");
-            return;
-        }
-        
+        if (!code) { showToast("❌ Введите код"); return; }
+        if (usedPromoCodes.includes(code)) { showToast("❌ Код уже использован"); return; }
         let promo = checkPersonalPromoCode(code);
         let isPersonal = !!promo;
-        
-        if (!promo) {
-            promo = PUBLIC_PROMOCODES[code];
-        }
-        
-        if (!promo) {
-            showToast("❌ Неверный промокод!");
-            return;
-        }
-        
+        if (!promo) promo = PUBLIC_PROMOCODES[code];
+        if (!promo) { showToast("❌ Неверный код"); return; }
         usedPromoCodes.push(code);
-        
         if (promo.crystals) crystals += promo.crystals;
         if (promo.shards) shards += promo.shards;
         if (promo.eventCurrency) eventCurrency += promo.eventCurrency;
         if (promo.paidFishCharges) paidFishUsed = Math.max(0, paidFishUsed - promo.paidFishCharges);
         if (promo.freePack) setTimeout(() => openNormalPack(true), 100);
-        
         saveGame();
         updateAllUI();
-        
-        const typeMessage = isPersonal ? "🔐 Персональный промокод активирован!" : "🎉 Промокод активирован!";
-        showToast(`${typeMessage} ${promo.message}`);
+        showToast(`${isPersonal ? "🔐 Персональный" : "🎉"} код активирован! ${promo.message}`);
         input.value = "";
     }
     
@@ -2151,24 +2240,19 @@
     }
     
     function initShopTabs() {
-        const tabs = document.querySelectorAll('.shop-tab');
-        const panels = document.querySelectorAll('.shop-panel');
-        
-        tabs.forEach(tab => {
+        document.querySelectorAll('.shop-tab').forEach(tab => {
             tab.addEventListener('click', () => {
                 const target = tab.dataset.shop;
-                tabs.forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.shop-tab').forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                panels.forEach(panel => panel.classList.remove('active'));
+                document.querySelectorAll('.shop-panel').forEach(p => p.classList.remove('active'));
                 document.getElementById(`${target}Panel`).classList.add('active');
             });
         });
     }
     
     setInterval(() => {
-        if (document.getElementById("fishingSection").classList.contains("active")) {
-            updateFishingUI();
-        }
+        if (document.getElementById("fishingSection")?.classList.contains("active")) updateFishingUI();
     }, 1000);
     
     window.onload = () => {
@@ -2185,7 +2269,6 @@
         document.getElementById("resetBtn").onclick = resetGame;
         document.getElementById("dailyBonusBtn").onclick = claimDailyBonus;
         document.getElementById("takeSelectedBtn").onclick = takeSelectedCard;
-        document.getElementById("closeEventResultBtn").onclick = takeEventCard;
         document.getElementById("freeFishBtn").onclick = freeFishing;
         document.getElementById("paidFishBtn").onclick = paidFishing;
         document.getElementById("activatePromoBtn").onclick = activatePromoCode;
