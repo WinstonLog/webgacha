@@ -74,6 +74,20 @@
             white-space: nowrap;
         }
 
+        .shard-badge-on-card {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border-radius: 20px;
+            padding: 2px 6px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
         .burger-menu {
             cursor: pointer;
             width: 32px;
@@ -313,6 +327,18 @@
         .copy-icon {
             font-size: 0.8rem;
             opacity: 0.7;
+        }
+
+        .pro-badge {
+            display: none;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #1a1a2e;
+            margin-top: 8px;
+            text-align: center;
         }
 
         .level-progress {
@@ -565,6 +591,7 @@
         }
 
         .choice-card {
+            position: relative;
             background: linear-gradient(135deg, #1e1b3c, #15122e);
             border-radius: 16px;
             padding: 10px;
@@ -682,7 +709,6 @@
         .rank-L { background: #ffaa44; }
         .rank-Q { background: #4984b2; }
 
-        /* КОЛЛЕКЦИЯ И КАТАЛОГ - ИСПРАВЛЕНО ДЛЯ ТЕЛЕФОНА */
         .collection-grid, .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -712,128 +738,36 @@
             border-radius: 10px;
         }
 
-        /* Мобильная версия */
         @media (max-width: 480px) {
-            .main-content {
-                padding: 70px 10px 20px 10px;
-            }
-            
-            .collection-grid, .catalog-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-                max-height: 60vh;
-            }
-            
-            .collected-card img, .catalog-card img {
-                width: 70px;
-                height: 70px;
-            }
-            
-            .collected-card, .catalog-card {
-                padding: 8px;
-            }
-            
-            .stat-card {
-                padding: 8px 10px;
-            }
-            
-            .stat-icon {
-                font-size: 1.2rem;
-            }
-            
-            .stat-value {
-                font-size: 1rem;
-            }
-            
-            .stat-label {
-                font-size: 0.55rem;
-            }
-            
-            .cards-row {
-                gap: 6px;
-            }
-            
-            .choice-card img {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .choice-card {
-                padding: 6px;
-            }
-            
-            .mine-button {
-                width: 110px;
-                height: 110px;
-                font-size: 1rem;
-            }
-            
-            .toast {
-                bottom: 15px;
-                padding: 10px 18px;
-                font-size: 0.75rem;
-                white-space: normal;
-                max-width: 85%;
-            }
-            
-            .promo-input-group {
-                flex-direction: column;
-            }
-            
-            .info-title {
-                font-size: 0.9rem;
-            }
-            
-            .fishing-stat {
-                font-size: 0.7rem;
-                padding: 4px 10px;
-            }
-            
-            .profile-stats .num {
-                font-size: 1rem;
-            }
-            
-            .profile-stats .label {
-                font-size: 0.55rem;
-            }
-
-            .navbar {
-                padding: 10px 16px;
-            }
-            
-            .logo {
-                font-size: 1.1rem;
-            }
-            
-            .navbar-stats {
-                gap: 5px;
-            }
-            
-            .crystals-display, .shards-display {
-                font-size: 0.65rem;
-                padding: 3px 8px;
-            }
-            
-            .burger-menu {
-                width: 28px;
-                height: 28px;
-            }
+            .main-content { padding: 70px 10px 20px 10px; }
+            .collection-grid, .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; max-height: 60vh; }
+            .collected-card img, .catalog-card img { width: 70px; height: 70px; }
+            .collected-card, .catalog-card { padding: 8px; }
+            .stat-card { padding: 8px 10px; }
+            .stat-icon { font-size: 1.2rem; }
+            .stat-value { font-size: 1rem; }
+            .stat-label { font-size: 0.55rem; }
+            .cards-row { gap: 6px; }
+            .choice-card img { width: 45px; height: 45px; }
+            .choice-card { padding: 6px; }
+            .mine-button { width: 110px; height: 110px; font-size: 1rem; }
+            .toast { bottom: 15px; padding: 10px 18px; font-size: 0.75rem; white-space: normal; max-width: 85%; }
+            .promo-input-group { flex-direction: column; }
+            .info-title { font-size: 0.9rem; }
+            .fishing-stat { font-size: 0.7rem; padding: 4px 10px; }
+            .profile-stats .num { font-size: 1rem; }
+            .profile-stats .label { font-size: 0.55rem; }
+            .navbar { padding: 10px 16px; }
+            .logo { font-size: 1.1rem; }
+            .navbar-stats { gap: 5px; }
+            .crystals-display, .shards-display { font-size: 0.65rem; padding: 3px 8px; }
+            .burger-menu { width: 28px; height: 28px; }
         }
 
         @media (max-width: 380px) {
-            .collection-grid, .catalog-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .collected-card img, .catalog-card img {
-                width: 55px;
-                height: 55px;
-            }
-            
-            .rank-badge {
-                font-size: 0.55rem;
-                padding: 2px 8px;
-            }
+            .collection-grid, .catalog-grid { grid-template-columns: repeat(2, 1fr); }
+            .collected-card img, .catalog-card img { width: 55px; height: 55px; }
+            .rank-badge { font-size: 0.55rem; padding: 2px 8px; }
         }
 
         .check-mark {
@@ -941,7 +875,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* Магазин */
         .shop-tabs {
             display: flex;
             gap: 10px;
@@ -1061,7 +994,7 @@
 
 <div class="navbar">
     <div class="navbar-container">
-        <div class="logo">🎴 BLOODY</div>
+        <div class="logo">🎴 GachaCards</div>
         <div class="navbar-right">
             <div class="navbar-stats">
                 <div class="crystals-display" id="navbarCrystals">💎 500</div>
@@ -1099,6 +1032,10 @@
                     <div class="id-container" id="copyIdBtn">
                         <span>🆔 ID: <strong id="userId">XXXX</strong></span>
                         <span class="copy-icon">📋</span>
+                    </div>
+                    <div id="proBadge" class="pro-badge">
+                        👑 PRO АККАУНТ
+                        <span id="proDaysLeft"></span>
                     </div>
                 </div>
             </div>
@@ -1384,8 +1321,8 @@
     }
     
     // ========== СОСТОЯНИЕ ==========
-    let crystals = 40;
-    let shards = 0;
+    let crystals = 500;
+    let shards = 40;
     let ore = 0;
     let eventCurrency = 100;
     let collection = [];
@@ -1393,6 +1330,8 @@
     let selectedCardIndex = null;
     let collectionRankFilter = "ALL";
     let catalogRankFilter = "ALL";
+    let isPackOpen = false;
+    let isEventPackOpen = false;
     
     let level = 1;
     let exp = 0;
@@ -1412,19 +1351,60 @@
         localStorage.setItem("userId", userId);
     }
     
+    // PRO-аккаунт
+    let proExpiry = localStorage.getItem("gacha_proExpiry") ? parseInt(localStorage.getItem("gacha_proExpiry")) : 0;
+    
     // ========== ПРОМОКОДЫ ==========
     const PUBLIC_PROMOCODES = {
-/*        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
+        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
         "GACHASTAR": { crystals: 200, shards: 30, message: "Спасибо за поддержку! +200💎 и +30⚡" },
         "SPRING2026": { eventCurrency: 50, message: "Весенний бонус! +50🌸 цветочков" },
         "LUCKYFISH": { crystals: 50, paidFishCharges: 3, message: "Удачная рыбалка! +50💎 и +3⚡ платных ловушки" },
-        "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }*/
+        "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
     };
     
     const PERSONAL_PROMOCODES = {
-/*        "PERSONAL_QVKQJPMX_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPMX" },
-        "PERSONAL_QVKQJPM1_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPM1" }*/
+/*        "PERSONAL_QVKQJPMX_PRO30_V2": { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", targetId: "QVKQJPMX" },*/
     };
+    
+    // PRO функции
+    function isProActive() {
+        return proExpiry > Date.now();
+    }
+    
+    function updateProUI() {
+        const proBadge = document.getElementById("proBadge");
+        const proDaysLeftSpan = document.getElementById("proDaysLeft");
+        if (proBadge) {
+            if (isProActive()) {
+                const daysLeft = Math.ceil((proExpiry - Date.now()) / (1000 * 60 * 60 * 24));
+                proBadge.style.display = "block";
+                if (proDaysLeftSpan) proDaysLeftSpan.innerHTML = ` (осталось ${daysLeft} д.)`;
+            } else {
+                proBadge.style.display = "none";
+            }
+        }
+    }
+    
+    function activatePro(days = 30) {
+        const now = Date.now();
+        let newExpiry;
+        
+        if (proExpiry > now) {
+            // Если PRO уже активен - ПРИБАВЛЯЕМ дни к текущему сроку
+            newExpiry = proExpiry + days * 24 * 60 * 60 * 1000;
+        } else {
+            // Если PRO не активен - устанавливаем с сегодня + days
+            newExpiry = now + days * 24 * 60 * 60 * 1000;
+        }
+        
+        proExpiry = newExpiry;
+        localStorage.setItem("gacha_proExpiry", proExpiry);
+        updateProUI();
+        
+        const daysLeft = Math.ceil((proExpiry - now) / (1000 * 60 * 60 * 24));
+        showToast(`👑 PRO-аккаунт продлён до ${daysLeft} дней!`);
+    }
     
     function checkPersonalPromoCode(code) {
         if (PERSONAL_PROMOCODES[code]) {
@@ -1454,6 +1434,8 @@
             case "EVENT100": return { eventCurrency: 100, message: "Персональный бонус! +100 ивент-валюты", isPersonal: true };
             case "FREEPACK": return { freePack: true, message: "Персональный бонус! +1 бесплатный пак", isPersonal: true };
             case "FISHCHARGES": return { paidFishCharges: 3, message: "Персональный бонус! +3⚡ платных ловушки", isPersonal: true };
+            case "PRO30": return { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", isPersonal: true };
+            case "PRO7": return { proDays: 7, message: "👑 PRO-аккаунт на 7 дней активирован!", isPersonal: true };
             default: return null;
         }
     }
@@ -1464,7 +1446,6 @@
         const toast = document.getElementById("toast");
         if (currentToastTimeout) clearTimeout(currentToastTimeout);
         
-        // Обрезаем длинные сообщения
         let displayMessage = message;
         const maxLength = 55;
         if (displayMessage.length > maxLength) {
@@ -1844,7 +1825,26 @@
     
     function generateThreeCards() {
         let cards = [];
-        for (let i = 0; i < 3; i++) cards.push(getRandomCard(false));
+        let usedCardIds = new Set();
+        
+        while (cards.length < 3) {
+            const card = getRandomCard(false);
+            // Проверяем, что такой карты ещё нет в пачке
+            if (!usedCardIds.has(card.id)) {
+                usedCardIds.add(card.id);
+                cards.push(card);
+            }
+        }
+        
+        const hasShardChance = Math.random() < 0.05;
+        if (hasShardChance) {
+            const shardIndex = Math.floor(Math.random() * 3);
+            cards[shardIndex] = {
+                ...cards[shardIndex],
+                hasShard: true,
+                shardValue: 1
+            };
+        }
         return cards;
     }
     
@@ -1894,13 +1894,20 @@
         const container = document.getElementById("choiceContainer");
         container.innerHTML = "";
         cards.forEach((card, idx) => {
+            const ownsCard = collection.some(c => c.id === card.id);
             const div = document.createElement("div");
             div.className = "choice-card";
+            
+            // Проверяем, является ли эта карта осколком
+            const isShardCard = card.isShard || false;
+            
             div.innerHTML = `
                 <img src="${card.image || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
                 <div style="font-size:0.65rem; font-weight:bold;">${card.name.length > 12 ? card.name.substring(0,10)+'...' : card.name}</div>
                 <div style="font-size:0.55rem; opacity:0.7;">${card.set ? (card.set.length > 10 ? card.set.substring(0,8)+'...' : card.set) : ""}</div>
-            `;
+                ${ownsCard ? '<div style="color: #4caf50; font-size: 0.7rem; margin-top: 4px;">✓ Уже есть</div>' : ''}
+                ${card.hasShard ? '<div class="shard-badge-on-card">⚡ ОСКОЛОК! +1⚡</div>' : ''}
+            `;  
             div.onclick = () => {
                 document.querySelectorAll("#choiceContainer .choice-card").forEach(c => c.classList.remove("selected"));
                 div.classList.add("selected");
@@ -1917,15 +1924,18 @@
         if (selectedCardIndex === null) return;
         const chosen = currentOfferedCards[selectedCardIndex];
         
-        if (chosen.rank === "A+") {
-            shards += 15;
-            showToast(`⚡ Осколок (A+)! +15⚡`);
+        // Сначала проверяем осколок на карте
+        if (chosen.hasShard) {
+            shards += chosen.shardValue || 3;
+            showToast(`⚡ На карте "${chosen.name}" найден осколок! +${chosen.shardValue || 3}⚡`);
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
+            isPackOpen = false;
             return;
         }
         
+        // Дальше как обычно...
         const existingIndex = collection.findIndex(c => c.id === chosen.id);
         if (existingIndex !== -1) {
             crystals += 7;
@@ -1933,6 +1943,7 @@
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
+            isPackOpen = false;
             return;
         }
         
@@ -1940,11 +1951,18 @@
         saveGame();
         updateAllUI();
         document.getElementById("selectionPanel").style.display = "none";
+        isPackOpen = false;
         showToast(`🎉 + ${chosen.name} [${chosen.rank}]`);
         showCardModalWithRank(chosen);
     }
     
     function openNormalPack(isFree = false) {
+        // === НОВАЯ ПРОВЕРКА ===
+        if (isPackOpen) {
+            showToast("❌ Сначала выберите карту из открытого пака!");
+            return;
+        }
+        
         if (!isFree && crystals < 70) { showToast("❌ Нет кристаллов!"); return; }
         if (!isFree) crystals -= 70;
         addExp(3);
@@ -1959,17 +1977,25 @@
         
         saveGame();
         updateAllUI();
+        isPackOpen = true; // Устанавливаем флаг, что пак открыт
         showChoicePanel(generateThreeCards());
     }
     
     // ========== ИВЕНТОВЫЕ ПАКИ ==========
     function openEventPack() {
+        // === НОВАЯ ПРОВЕРКА ===
+        if (isEventPackOpen) {
+            showToast("❌ Сначала заберите карту из открытого ивент-пака!");
+            return;
+        }
+        
         if (!hasEvent) { showToast("❌ Нет активного ивента!"); return; }
         if (eventCurrency < 20) { showToast(`❌ Не хватает ${getSeasonLabel()}!`); return; }
         eventCurrency -= 20;
         addExp(3);
         
         const card = getRandomCard(true);
+        isEventPackOpen = true; // Флаг, что ивент-пак открыт
         
         const existingIndex = collection.findIndex(c => c.id === card.id);
         if (existingIndex !== -1) {
@@ -1978,6 +2004,7 @@
             updateAllUI();
             showCardModalSimple(card, true);
             showToast(`🔄 Дубликат! +7💎`);
+            isEventPackOpen = false; // Сбрасываем флаг
             return;
         }
         
@@ -1986,6 +2013,7 @@
             saveGame();
             updateAllUI();
             showToast(`⚡ Осколок (A+)! +15⚡`);
+            isEventPackOpen = false; // Сбрасываем флаг
             return;
         }
         
@@ -1994,26 +2022,48 @@
         updateAllUI();
         showCardModalSimple(card, false);
         showToast(`🎉 Вы получили карту из ивент-пака!`);
+        isEventPackOpen = false; // Сбрасываем флаг
     }
-    
+        
     function claimDailyBonus() {
         const today = new Date().toDateString();
-        if (lastDailyBonus === today) { showToast("Бонус уже получен!"); return; }
+        if (lastDailyBonus === today) { 
+            showToast("Бонус уже получен!"); 
+            return; 
+        }
         crystals += 30;
         lastDailyBonus = today;
         saveGame();
         updateAllUI();
         showToast("🎁 +30 кристаллов!");
+        
+        // Скрываем кнопку после получения
+        const dailyBonusBtn = document.getElementById("dailyBonusBtn");
+        if (dailyBonusBtn) {
+            dailyBonusBtn.style.display = "none";
+        }
     }
     
+    function checkDailyBonusButton() {
+        const today = new Date().toDateString();
+        const dailyBonusBtn = document.getElementById("dailyBonusBtn");
+        if (dailyBonusBtn) {
+            if (lastDailyBonus === today) {
+                dailyBonusBtn.style.display = "none";
+            } else {
+                dailyBonusBtn.style.display = "block";
+            }
+        }
+    }
+
     function upgradeCard(cardId) {
         const idx = collection.findIndex(c => c.id === cardId);
         if (idx === -1) return;
         const card = collection[idx];
         if (!card.canUpgrade) { showToast("Эту карту нельзя улучшить"); return; }
-        if (shards < 25) { showToast("Нужно 25⚡"); return; }
+        if (shards < 3) { showToast("Нужно 3⚡"); return; }  // ← 25 → 3
         if (card.isUpgraded) { showToast("Уже улучшена"); return; }
-        shards -= 25;
+        shards -= 3;  // ← 25 → 3
         card.isUpgraded = true;
         saveGame();
         updateAllUI();
@@ -2049,6 +2099,7 @@
         localStorage.setItem("lastPaidResetDate", lastPaidResetDate);
         localStorage.setItem("usedPromoCodes", JSON.stringify(usedPromoCodes));
         localStorage.setItem("userId", userId);
+        localStorage.setItem("gacha_proExpiry", proExpiry);
     }
     
     function loadGame() {
@@ -2070,11 +2121,13 @@
         paidFishUsed = parseInt(localStorage.getItem("paidFishUsed")) || 0;
         lastPaidResetDate = localStorage.getItem("lastPaidResetDate") || new Date().toDateString();
         usedPromoCodes = JSON.parse(localStorage.getItem("usedPromoCodes")) || [];
+        proExpiry = parseInt(localStorage.getItem("gacha_proExpiry")) || 0;
         
         resetDailyIfNeeded();
         resetPaidFishingIfNeeded();
         if (!Array.isArray(collection)) collection = [];
         updateAllUI();
+        checkDailyBonusButton();
     }
     
     function createRankFilters(containerId, type) {
@@ -2110,6 +2163,8 @@
         
         const userIdEl = document.getElementById("userId");
         if (userIdEl) userIdEl.innerText = userId;
+        
+        updateProUI();
         
         document.querySelectorAll("#crystalsProfile, #crystalsPacks, #crystalsMine, #crystalsShop").forEach(el => el && (el.innerText = crystals));
         document.querySelectorAll("#shardsProfile, #shardsPacks, #shardsEvent, #shardsCollection, #shardsFishing, #shardsShop").forEach(el => el && (el.innerText = shards));
@@ -2168,7 +2223,7 @@
                         <img src="${imgUrl || 'https://via.placeholder.com/70'}" onerror="this.src='https://via.placeholder.com/70'">
                         <div style="font-size:0.6rem; font-weight:bold;">${card.name.length > 10 ? card.name.substring(0,8)+'...' : card.name}</div>
                         <div style="font-size:0.5rem; opacity:0.6;">${card.set ? (card.set.length > 8 ? card.set.substring(0,6)+'...' : card.set) : ""}</div>
-                        ${card.canUpgrade && !card.isUpgraded ? `<button class="upgrade-btn" data-id="${card.id}">⚡ Улучшить</button>` : (card.isUpgraded ? '<span style="font-size:0.5rem; color:#FFD700;">⚡ Анимация</span>' : '')}
+                        ${card.canUpgrade && !card.isUpgraded ? `<button class="upgrade-btn" data-id="${card.id}">⚡ Улучшить (3⚡)</button>` : (card.isUpgraded ? '<span style="font-size:0.5rem; color:#FFD700;">⚡ Анимация</span>' : '')}
                     `;
                     div.onclick = (e) => { if(!e.target.classList.contains("upgrade-btn")) viewCard(card); };
                     const btn = div.querySelector(".upgrade-btn");
@@ -2202,11 +2257,12 @@
                 catalogGrid.appendChild(div);
             });
         }
+        checkDailyBonusButton();
     }
     
     function resetGame() {
         if (confirm("Сбросить ВСЁ?")) {
-            crystals = 500; shards = 40; ore = 0; eventCurrency = 100; collection = [];
+            crystals = 40; shards = 0; ore = 0; eventCurrency = 0; collection = [];
             level = 1; exp = 0; clicksToday = 0; oreMinedToday = 0;
             lastResetDate = new Date().toDateString();
             lastDailyBonus = "";
@@ -2214,6 +2270,9 @@
             paidFishUsed = 0;
             lastPaidResetDate = new Date().toDateString();
             usedPromoCodes = [];
+            proExpiry = 0;
+            isPackOpen = false;
+            isEventPackOpen = false;
             saveGame();
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
@@ -2236,6 +2295,7 @@
         if (promo.eventCurrency) eventCurrency += promo.eventCurrency;
         if (promo.paidFishCharges) paidFishUsed = Math.max(0, paidFishUsed - promo.paidFishCharges);
         if (promo.freePack) setTimeout(() => openNormalPack(true), 100);
+        if (promo.proDays) activatePro(promo.proDays);
         saveGame();
         updateAllUI();
         showToast(`${isPersonal ? "🔐 Персональный" : "🎉"} код активирован! ${promo.message}`);
@@ -2268,6 +2328,7 @@
     
     setInterval(() => {
         if (document.getElementById("fishingSection")?.classList.contains("active")) updateFishingUI();
+        updateProUI();
     }, 1000);
     
     window.onload = () => {
