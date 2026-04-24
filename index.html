@@ -769,11 +769,11 @@
             }
             
             .toast {
-                white-space: normal;
-                text-align: center;
-                max-width: 85%;
-                font-size: 0.75rem;
+                bottom: 15px;
                 padding: 10px 18px;
+                font-size: 0.75rem;
+                white-space: normal;
+                max-width: 85%;
             }
             
             .promo-input-group {
@@ -920,7 +920,7 @@
 
         .toast {
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: linear-gradient(135deg, #FFD700, #FF8C00);
@@ -932,6 +932,9 @@
             transition: transform 0.3s ease;
             white-space: nowrap;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            max-width: 90%;
+            text-align: center;
+            font-size: 0.85rem;
         }
 
         .toast.show {
@@ -1381,8 +1384,8 @@
     }
     
     // ========== СОСТОЯНИЕ ==========
-    let crystals = 500;
-    let shards = 40;
+    let crystals = 40;
+    let shards = 0;
     let ore = 0;
     let eventCurrency = 100;
     let collection = [];
@@ -1411,16 +1414,16 @@
     
     // ========== ПРОМОКОДЫ ==========
     const PUBLIC_PROMOCODES = {
-        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
+/*        "WELCOME2026": { crystals: 100, shards: 20, message: "Добро пожаловать! +100💎 и +20⚡" },
         "GACHASTAR": { crystals: 200, shards: 30, message: "Спасибо за поддержку! +200💎 и +30⚡" },
         "SPRING2026": { eventCurrency: 50, message: "Весенний бонус! +50🌸 цветочков" },
         "LUCKYFISH": { crystals: 50, paidFishCharges: 3, message: "Удачная рыбалка! +50💎 и +3⚡ платных ловушки" },
-        "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }
+        "SECRETGIFT": { freePack: true, message: "Секретный подарок! +1 бесплатный пак" }*/
     };
     
     const PERSONAL_PROMOCODES = {
-        "PERSONAL_QVKQJPMX_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPMX" },
-        "PERSONAL_QVKQJPM1_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPM1" }
+/*        "PERSONAL_QVKQJPMX_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPMX" },
+        "PERSONAL_QVKQJPM1_100CRYSTALS": { crystals: 100, message: "Персональный бонус! +100💎", targetId: "QVKQJPM1" }*/
     };
     
     function checkPersonalPromoCode(code) {
@@ -1460,7 +1463,15 @@
     function showToast(message, isLevelUp = false) {
         const toast = document.getElementById("toast");
         if (currentToastTimeout) clearTimeout(currentToastTimeout);
-        toast.textContent = message;
+        
+        // Обрезаем длинные сообщения
+        let displayMessage = message;
+        const maxLength = 55;
+        if (displayMessage.length > maxLength) {
+            displayMessage = displayMessage.substring(0, maxLength) + "...";
+        }
+        
+        toast.textContent = displayMessage;
         toast.classList.add("show");
         if (isLevelUp) {
             toast.style.background = "linear-gradient(135deg, #FFD700, #FF8C00)";
@@ -1470,7 +1481,7 @@
         currentToastTimeout = setTimeout(() => {
             toast.classList.remove("show");
             currentToastTimeout = null;
-        }, 2500);
+        }, 3000);
     }
     
     function copyUserId() {
