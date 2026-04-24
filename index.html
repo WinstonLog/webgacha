@@ -2154,7 +2154,7 @@
     };
     
     const PERSONAL_PROMOCODES = {
-        "PERSONAL_QVKQJPMX_30PRO_TEST": { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", targetId: "QVKQJPMX" }
+        "PERSONAL_LV9M8NJA_365PRO_TEST": { proDays: 365, message: "👑 PRO-аккаунт на 365 дней активирован!", targetId: "LV9M8NJA" }
     };
     
     // PRO функции
@@ -2221,6 +2221,7 @@
             case "EVENT100": return { eventCurrency: 100, message: "Персональный бонус! +100 ивент-валюты", isPersonal: true };
             case "FREEPACK": return { freePack: true, message: "Персональный бонус! +1 бесплатный пак", isPersonal: true };
             case "FISHCHARGES": return { paidFishCharges: 3, message: "Персональный бонус! +3⚡ платных ловушки", isPersonal: true };
+            case "PRO365": return { proDays: 365, message: "👑 PRO-аккаунт на 365 дней активирован!", isPersonal: true };
             case "PRO30": return { proDays: 30, message: "👑 PRO-аккаунт на 30 дней активирован!", isPersonal: true };
             case "PRO7": return { proDays: 7, message: "👑 PRO-аккаунт на 7 дней активирован!", isPersonal: true };
             default: return null;
