@@ -1594,6 +1594,148 @@
             border-left: 3px solid transparent;
         }
 
+        /* Колесо Фортуны */
+        .wheel-container {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.3));
+            border-radius: 28px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .wheel-status {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+        }
+
+        .wheel-status-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .wheel-status-label {
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+
+        .wheel-status-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .wheel-canvas {
+            margin: 20px auto;
+            position: relative;
+            width: 280px;
+            height: 280px;
+        }
+
+        canvas {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        canvas:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Стрелка-указатель */
+        .wheel-pointer {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid #FFD700;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.5));
+            z-index: 10;
+        }
+
+        .wheel-pointer::after {
+            content: "▼";
+            position: absolute;
+            top: -38px;
+            left: -8px;
+            font-size: 14px;
+            color: #FFD700;
+            text-shadow: 0 1px 2px black;
+        }
+
+        .wheel-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .wheel-spin-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #FFD700, #FF8C00);
+            border: none;
+            padding: 12px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #1a1a2e;
+        }
+
+        .wheel-spin-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .wheel-buy-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            flex: 1;
+            border: none;
+            padding: 12px;
+            border-radius: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+        }
+
+        .wheel-history {
+            margin-top: 20px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .wheel-history-title {
+            font-size: 0.7rem;
+            opacity: 0.7;
+            margin-bottom: 8px;
+        }
+
+        .wheel-history-item {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .winner-highlight {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
     </style>
 </head>
 <body>
@@ -1621,6 +1763,7 @@
     <div class="menu-item" data-section="event">🎪 Ивент</div>
     <div class="menu-item" data-section="achievements">🏆 Достижения</div>
     <div class="menu-item" data-section="quests">📋 Квесты</div>
+    <div class="menu-item" data-section="wheel">🎰 Колесо</div>
     <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
     <div class="menu-item" data-section="mine">⛏️ Шахта</div>
     <div class="menu-item" data-section="exchange">🔄 Обмены</div>
@@ -1789,10 +1932,46 @@
             <button class="mine-button" id="mineBtn">⛏️<br>КОПАТЬ</button>
             <div class="progress-bar"><div class="progress-fill" id="mineProgress"></div></div>
             <button class="exchange-btn" id="exchangeBtn">🔄 ОБМЕНЯТЬ 100 РУДЫ → 1 💎</button>
-            <button class="exchange-btn" id="exchangeOreToEventBtn">🔄 ОБМЕНЯТЬ 500 РУДЫ → 10 🌸</button>
+            <button class="exchange-btn" id="exchangeOreToEventBtn" style="margin-top: 8px;">🔄 ОБМЕНЯТЬ 500 РУДЫ → 10 🌸</button>
             <small>⚡ 1 клик = 1 XP. С уровнем растёт лимит кликов и руда за клик!</small>
         </div>
     </div>
+
+        <!-- Колесо Фортуны -->
+        <div id="wheelSection" class="section">
+            <div class="stats-row">
+                <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-info"><div class="stat-label">БЕСПЛАТНЫЙ СПИН</div><div class="stat-value" id="freeSpinStatus">Доступен</div></div></div>
+                <div class="stat-card"><div class="stat-icon">💎</div><div class="stat-info"><div class="stat-label">ПЛАТНЫХ СПИНОВ</div><div class="stat-value" id="paidSpinsToday">0</div><div class="stat-label">/10</div></div></div>
+            </div>
+            
+            <div class="wheel-container">
+                <div class="wheel-canvas">
+                    <div class="wheel-pointer"></div>
+                    <canvas id="wheelCanvas" width="280" height="280"></canvas>
+                </div>
+                
+                <div class="wheel-buttons">
+                    <button class="wheel-spin-btn" id="freeSpinBtn">🎡 БЕСПЛАТНО</button>
+                    <button class="wheel-buy-btn" id="paidSpinBtn">💎 ЗА 50 КРИСТАЛЛОВ</button>
+                </div>
+                
+                <div class="wheel-history">
+                    <div class="wheel-history-title">📜 ИСТОРИЯ ВЫИГРЫШЕЙ</div>
+                    <div id="wheelHistoryList"></div>
+                </div>
+            </div>
+            
+            <div class="info-card">
+                <div class="info-title">🎰 Правила Колеса Фортуны</div>
+                <div class="info-content">
+                    <p>🎡 <strong class="info-highlight">1 бесплатный спин</strong> — возобновляется каждые 3 часа</p>
+                    <p>💎 <strong class="info-highlight">Платные спины</strong> — до 10 раз в день за 50💎</p>
+                    <p>🏆 <strong class="info-highlight">Джекпот 500💎</strong> — редкий выигрыш!</p>
+                    <p>🎴 Шанс получить <strong class="info-highlight">случайную карту</strong> или <strong class="info-highlight">бесплатный пак</strong></p>
+                    <p>🔄 Сброс платных спинов в <strong class="info-highlight">00:00</strong></p>
+                </div>
+            </div>
+        </div>
 
     <!-- Обмены -->
     <div id="exchangeSection" class="section">
@@ -2109,6 +2288,7 @@
     let isPackOpen = false;
     let isEventPackOpen = false;
     let currentAuctionCard = null;
+    let pendingFreePacks = 0; 
     
     // Состояние для обменов
     let exchangeSlots = [null, null, null];
@@ -2451,7 +2631,9 @@
             halloween: { name: "Тыква", emoji: "🎃", value: 10 },
             winter: { name: "Снежинка", emoji: "❄️", value: 10 }
         };
-        return seasonItems[currentSeason] || { name: "Звезда", emoji: "⭐", value: 10 };
+        const result = seasonItems[currentSeason] || { name: "Звезда", emoji: "⭐", value: 10 };
+        console.log("getSeasonCurrencyItem:", currentSeason, result);
+        return result;
     }
 
     function getRandomFish() {
@@ -2473,11 +2655,14 @@
         
         for (let i = 0; i < baseFishes.length; i++) {
             accum += weights[i];
-            if (rand <= accum) return { ...baseFishes[i] };
+            if (rand <= accum) {
+                console.log("Выпала рыба:", baseFishes[i].name, "eventCurrency:", baseFishes[i].eventCurrency);
+                return { ...baseFishes[i] };
+            }
         }
         return baseFishes[0];
     }
-    
+        
     async function freeFishing() {
         const now = Date.now();
         const lastFreeTime = parseInt(lastFreeFishTime);
@@ -2491,6 +2676,8 @@
         }
         
         const fish = getRandomFish();
+        console.log("Поймана рыба:", fish);
+        
         let rewardText = "";
         let obtainedCard = null;
         let isDuplicate = false;
@@ -2506,12 +2693,11 @@
         if (fish.ore > 0 && fish.crystals > 0) {
             rewardText = `+${fish.ore}⛏️ +${fish.crystals}💎`;
         }
-
         if (fish.eventCurrency > 0) {
             eventCurrency += fish.eventCurrency;
             rewardText = `+${fish.eventCurrency} ${getSeasonLabel()}`;
+            console.log(`Добавлено ${fish.eventCurrency} ивент-валюты, теперь eventCurrency = ${eventCurrency}`);
         }
-
         if (fish.paidCharge > 0) {
             rewardText = `+1⚡ ловушка`;
         }
@@ -2952,6 +3138,18 @@
         });
         document.getElementById("selectionPanel").style.display = "block";
         document.getElementById("takeSelectedBtn").disabled = true;
+        
+        // Добавляем кнопку "Закрыть" для пака (если нужно отменить)
+        const closeBtn = document.createElement("button");
+        closeBtn.textContent = "❌ ЗАКРЫТЬ ПАК";
+        closeBtn.style.cssText = "background: #e74c3c; border: none; padding: 8px; border-radius: 28px; margin-top: 10px; color: white; cursor: pointer; width: 100%;";
+        closeBtn.onclick = () => {
+            document.getElementById("selectionPanel").style.display = "none";
+            isPackOpen = false;
+            showToast("Пак закрыт без выбора карты");
+            checkPendingFreePacks();
+        };
+        container.parentElement.appendChild(closeBtn);
     }
     
     function takeSelectedCard() {
@@ -2966,6 +3164,8 @@
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
             isPackOpen = false;
+            // Проверяем очередь бесплатных паков
+            checkPendingFreePacks();
             return;
         }
         
@@ -2977,6 +3177,7 @@
             updateAllUI();
             document.getElementById("selectionPanel").style.display = "none";
             isPackOpen = false;
+            checkPendingFreePacks();
             return;
         }
         
@@ -2989,12 +3190,31 @@
         showCardModalWithRank(chosen);
         updateAchievement("unique_cards", 1);
         updateQuestProgress("new_cards", 1);
+        
+        // Проверяем очередь бесплатных паков
+        checkPendingFreePacks();
+    }
+
+    function checkPendingFreePacks() {
+        if (pendingFreePacks > 0 && !isPackOpen) {
+            pendingFreePacks--;
+            showToast(`🎁 Открываем бесплатный пак из очереди! (осталось ${pendingFreePacks})`);
+            openNormalPack(true);
+        }
     }
     
     function openNormalPack(isFree = false) {
         if (isPackOpen) {
-            showToast("❌ Сначала выберите карту из открытого пака!");
-            return;
+            if (isFree) {
+                // Если пак уже открыт, добавляем в очередь
+                pendingFreePacks++;
+                showToast(`🎁 Бесплатный пак добавлен в очередь! (${pendingFreePacks} в очереди)`);
+                saveGame();
+                return;
+            } else {
+                showToast("❌ Сначала выберите карту из открытого пака!");
+                return;
+            }
         }
         
         if (!isFree && crystals < 70) { showToast("❌ Нет кристаллов!"); return; }
@@ -3005,8 +3225,6 @@
         updateAllUI();
         isPackOpen = true;
         showChoicePanel(generateThreeCards());
-        updateAchievement("packs", 1);
-        updateQuestProgress("open_packs", 1);
     }
         
     // ========== ИВЕНТОВЫЕ ПАКИ ==========
@@ -3445,6 +3663,7 @@
         localStorage.setItem("usedPromoCodes", JSON.stringify(usedPromoCodes));
         localStorage.setItem("userId", userId);
         localStorage.setItem("gacha_proExpiry", proExpiry);
+        localStorage.setItem("pendingFreePacks", pendingFreePacks);
         
         // Сохраняем состояние аукциона
         localStorage.setItem("auction_active", auctionActive);
@@ -3458,24 +3677,21 @@
         } else {
             localStorage.setItem("auction_currentCard", "");
         }
+        
+        // Сохраняем данные колеса фортуны
+        localStorage.setItem("freeLastSpinTime", freeLastSpinTime);
+        localStorage.setItem("paidSpinsToday", paidSpinsToday);
+        localStorage.setItem("lastPaidSpinReset", lastPaidSpinReset);
+        localStorage.setItem("wheelHistory", JSON.stringify(wheelHistory));
+        localStorage.setItem("currentWheelRotation", currentWheelRotation);
     }
     
     function loadGame() {
-        achievementStats = {
-            packs: 0,
-            unique_cards: collection.length,
-            clicks: 0,
-            ore_total: 0,
-            level: level,
-            fishing_total: 0,
-            exchanges: 0,
-            shards_total: shards,
-            auction_wins: 0
-        };
         crystals = parseInt(localStorage.getItem("gacha_crystals")) || 500;
         shards = parseInt(localStorage.getItem("gacha_shards")) || 40;
         ore = parseInt(localStorage.getItem("gacha_ore")) || 0;
-        
+        pendingFreePacks = parseInt(localStorage.getItem("pendingFreePacks")) || 0;
+
         const savedEventCurrency = localStorage.getItem("gacha_eventCurrency");
         eventCurrency = savedEventCurrency !== null ? parseInt(savedEventCurrency) : 100;
         
@@ -3520,10 +3736,34 @@
             auctionCooldownEnd = 0;
             currentAuctionCard = null;
         }
+
+        // Загружаем данные ачивок
+        achievementStats = {
+            packs: 0,
+            unique_cards: collection.length,
+            clicks: 0,
+            ore_total: 0,
+            level: level,
+            fishing_total: 0,
+            exchanges: 0,
+            shards_total: shards,
+            auction_wins: 0
+        };
+
+
+        // Загружаем данные колеса фортуны
+        freeLastSpinTime = localStorage.getItem("freeLastSpinTime") || "0";
+        paidSpinsToday = parseInt(localStorage.getItem("paidSpinsToday")) || 0;
+        lastPaidSpinReset = localStorage.getItem("lastPaidSpinReset") || new Date().toDateString();
+        wheelHistory = JSON.parse(localStorage.getItem("wheelHistory")) || [];
+        currentWheelRotation = parseFloat(localStorage.getItem("currentWheelRotation")) || 0;
         
+        console.log("Загружены данные колеса:", { freeLastSpinTime, paidSpinsToday, lastPaidSpinReset, wheelHistoryLength: wheelHistory.length });
+
         resetDailyIfNeeded();
         resetPaidFishingIfNeeded();
         resetDailyQuestsIfNeeded();
+        resetPaidSpinsIfNeeded();
         if (!Array.isArray(collection)) collection = [];
         
         updateAllUI();
@@ -4154,18 +4394,34 @@
         // Удаляем выбранную карту
         collection.splice(cardIndex, 1);
         
-        // Создаём новые карты
+        // Создаём новые карты с проверкой на дубликаты
         const newCards = [];
+        let duplicateCount = 0;
+        let duplicateCrystals = 0;
+        
         for (let i = 0; i < rule.count; i++) {
             const randomCard = { ...targetCards[Math.floor(Math.random() * targetCards.length)] };
-            newCards.push(randomCard);
-            collection.push(randomCard);
+            
+            // Проверяем, есть ли уже такая карта в коллекции
+            const existingIndex = collection.findIndex(c => c.id === randomCard.id);
+            if (existingIndex !== -1) {
+                // Дубликат → +7 кристаллов
+                crystals += 7;
+                duplicateCount++;
+                duplicateCrystals += 7;
+            } else {
+                newCards.push(randomCard);
+                collection.push(randomCard);
+            }
         }
         
-        // Показываем результат
+        // Показываем модальное окно с результатами
+        showCardModalWithCards(newCards, duplicateCrystals);
+        
         const resultContainer = document.getElementById("splitResultContainer");
         const resultCardsDiv = document.getElementById("splitResultCards");
         resultCardsDiv.innerHTML = "";
+        
         newCards.forEach(card => {
             const div = document.createElement("div");
             div.className = "split-result-card";
@@ -4177,9 +4433,27 @@
             `;
             resultCardsDiv.appendChild(div);
         });
+        
+        if (duplicateCount > 0) {
+            const dupDiv = document.createElement("div");
+            dupDiv.className = "split-result-card";
+            dupDiv.style.background = "linear-gradient(135deg, rgba(220, 53, 69, 0.3), rgba(20, 18, 45, 0.9))";
+            dupDiv.style.border = "1px solid #dc3545";
+            dupDiv.innerHTML = `
+                <div style="font-size:1.2rem;">🔄</div>
+                <div style="font-size:0.6rem; font-weight:bold; color:#ff9999;">Дубликаты</div>
+                <div style="font-size:0.65rem; color:#ffd700;">+${duplicateCrystals}💎</div>
+            `;
+            resultCardsDiv.appendChild(dupDiv);
+        }
+        
         resultContainer.style.display = "block";
         
-        showToast(`✨ Раскол выполнен! ${splitSelectedCard.name} [${splitSelectedCard.rank}] → ${rule.count} карт ранга ${rule.targetRank}! ✨`);
+        let resultMessage = `✨ Раскол выполнен! ${splitSelectedCard.name} [${splitSelectedCard.rank}] → ${newCards.length} новых карт`;
+        if (duplicateCount > 0) {
+            resultMessage += ` и ${duplicateCount} дубликатов (+${duplicateCrystals}💎)`;
+        }
+        showToast(resultMessage);
         
         // Очищаем выбор
         splitSelectedCard = null;
@@ -4187,6 +4461,56 @@
         saveGame();
         updateAllUI();
         updateSplitUI();
+    }
+
+    // Функция для показа модального окна с результатами раскола
+    function showCardModalWithCards(cards, crystalsGained = 0) {
+        const modal = document.getElementById("cardModal");
+        const img = document.getElementById("cardModalImage");
+        const nameEl = document.getElementById("cardModalName");
+        const setEl = document.getElementById("cardModalSet");
+        const duplicateBadge = document.getElementById("cardModalDuplicateBadge");
+        
+        if (duplicateBadge) duplicateBadge.style.display = "none";
+        
+        // Если только одна карта
+        if (cards.length === 1) {
+            const card = cards[0];
+            const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+            img.src = imgUrl || "https://via.placeholder.com/300";
+            img.style.display = "block";
+            img.style.width = "auto";
+            img.style.maxHeight = "55vh";
+            nameEl.innerText = card.name;
+            setEl.innerHTML = `📀 ${card.set || "?"}<br><span class="rank-badge rank-${card.rank}" style="margin-top:6px;">${card.rankLabel || card.rank}</span>`;
+        } else {
+            // Несколько карт - показываем их все в сетке
+            img.style.display = "none";
+            nameEl.innerText = `✨ РАСКОЛ ВЫПОЛНЕН ✨`;
+            
+            let cardsHtml = `<div style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 10px;">`;
+            cards.forEach(card => {
+                const imgUrl = (card.isUpgraded && card.animImage) ? card.animImage : card.image;
+                cardsHtml += `
+                    <div style="text-align: center; width: 100px;">
+                        <img src="${imgUrl || 'https://via.placeholder.com/80'}" style="width: 80px; height: 80px; object-fit: contain; border-radius: 12px;" onerror="this.src='https://via.placeholder.com/80'">
+                        <div style="font-size: 0.65rem; font-weight: bold; margin-top: 4px;">${card.name.length > 10 ? card.name.substring(0,8)+'...' : card.name}</div>
+                        <div class="rank-badge rank-${card.rank}" style="font-size: 0.55rem; padding: 2px 8px; margin-top: 2px;">${card.rank}</div>
+                    </div>
+                `;
+            });
+            cardsHtml += `</div>`;
+            
+            if (crystalsGained > 0) {
+                cardsHtml += `<div style="margin-top: 15px; padding: 8px; background: rgba(220, 53, 69, 0.2); border-radius: 16px;">
+                                <span style="color: #ffd700;">🔄 Дубликаты: +${crystalsGained}💎</span>
+                              </div>`;
+            }
+            
+            setEl.innerHTML = cardsHtml;
+        }
+        
+        modal.classList.add("active");
     }
 
     function initSplit() {
@@ -4206,20 +4530,28 @@
     }
 
     function exchangeOreToEvent() {
+        console.log("exchangeOreToEvent вызвана, ore:", ore, "hasEvent:", hasEvent);
+        
         if (ore < 500) {
-            showToast(`Не хватает руды! Нужно 500, у вас ${ore}`);
+            showToast(`❌ Не хватает руды! Нужно 500, у вас ${ore}`);
             return;
         }
         if (!hasEvent) {
             showToast("❌ Нет активного ивента! Ивентовая валюта не нужна.");
             return;
         }
+        
         const exchangeCount = Math.floor(ore / 500);
         const eventGained = exchangeCount * 10;
+        
+        console.log(`Обмен: ${exchangeCount * 500} руды → ${eventGained} ивент-валюты`);
+        
         ore -= exchangeCount * 500;
         eventCurrency += eventGained;
+        
         saveGame();
         updateAllUI();
+        
         const seasonItem = getSeasonCurrencyItem();
         showToast(`🔄 Обменяно ${exchangeCount * 500} руды → +${eventGained} ${seasonItem.emoji} ${getSeasonLabel()}!`);
     }
@@ -4242,7 +4574,12 @@
 
     function updateExchangeOreButton() {
         const btn = document.getElementById("exchangeOreToEventBtn");
-        if (!btn) return;
+        if (!btn) {
+            console.log("Кнопка exchangeOreToEventBtn не найдена!");
+            return;
+        }
+        
+        console.log("updateExchangeOreButton вызвана, hasEvent:", hasEvent);
         
         if (!hasEvent) {
             btn.style.display = "none";
@@ -4252,6 +4589,351 @@
         btn.style.display = "block";
         const seasonItem = getSeasonCurrencyItem();
         btn.innerHTML = `🔄 ОБМЕНЯТЬ 500 РУДЫ → 10 ${seasonItem.emoji}`;
+    }
+
+    // ========== КОЛЕСО ФОРТУНЫ ==========
+    const WHEEL_SECTORS = [
+        { name: "10💎", reward: { crystals: 10 }, color: "#2ecc71", chance: 25 },
+        { name: "20💎", reward: { crystals: 20 }, color: "#3498db", chance: 20 },
+        { name: "50💎", reward: { crystals: 50 }, color: "#9b59b6", chance: 15 },
+        { name: "5⚡", reward: { shards: 5 }, color: "#f39c12", chance: 15 },
+        { name: "🎴 Карта", reward: { card: true }, color: "#e74c3c", chance: 10 },
+        { name: "100💎", reward: { crystals: 100 }, color: "#1abc9c", chance: 8 },
+        { name: "🎁 Пак", reward: { freePack: true }, color: "#e67e22", chance: 5 },
+        { name: "🏆 500💎", reward: { crystals: 500 }, color: "#ff0000", chance: 2 }
+    ];
+
+    let freeLastSpinTime = localStorage.getItem("freeLastSpinTime") || "0";
+    let paidSpinsToday = parseInt(localStorage.getItem("paidSpinsToday")) || 0;
+    let lastPaidSpinReset = localStorage.getItem("lastPaidSpinReset") || new Date().toDateString();
+    let wheelHistory = JSON.parse(localStorage.getItem("wheelHistory")) || [];
+    let currentWheelRotation = 0;
+    let isSpinning = false;
+
+    function resetPaidSpinsIfNeeded() {
+        const today = new Date().toDateString();
+        const savedDate = localStorage.getItem("lastPaidSpinReset");
+        
+        console.log("resetPaidSpinsIfNeeded - Сегодня:", today, "Сохранённая дата:", savedDate);
+        
+        if (savedDate !== today) {
+            console.log("Сброс платных спинов! Было:", paidSpinsToday);
+            paidSpinsToday = 0;
+            lastPaidSpinReset = today;
+            localStorage.setItem("paidSpinsToday", paidSpinsToday);
+            localStorage.setItem("lastPaidSpinReset", lastPaidSpinReset);
+            saveGame();
+            console.log("После сброса:", paidSpinsToday);
+        }
+    }
+
+    function getFreeSpinTimeLeft() {
+        const now = Date.now();
+        const lastTime = parseInt(freeLastSpinTime);
+        const elapsed = now - lastTime;
+        const remaining = 10800000 - elapsed; // 3 часа
+        return Math.max(0, remaining);
+    }
+
+    function updateWheelUI() {
+        const timeLeft = getFreeSpinTimeLeft();
+        const freeAvailable = timeLeft <= 0;
+        
+        const freeSpinsCountEl = document.getElementById("freeSpinsCount");
+        const freeSpinStatusEl = document.getElementById("freeSpinStatus");
+        const paidSpinsTodayEl = document.getElementById("paidSpinsToday");
+        const freeSpinBtn = document.getElementById("freeSpinBtn");
+        const paidSpinBtn = document.getElementById("paidSpinBtn");
+        
+        if (freeSpinsCountEl) freeSpinsCountEl.innerHTML = freeAvailable ? "1" : "0";
+        
+        if (freeSpinStatusEl) {
+            if (freeAvailable) {
+                freeSpinStatusEl.innerHTML = "✅ Доступен";
+            } else {
+                const hours = Math.floor(timeLeft / 3600000);
+                const minutes = Math.floor((timeLeft % 3600000) / 60000);
+                const seconds = Math.floor((timeLeft % 60000) / 1000);
+                freeSpinStatusEl.innerHTML = `⏳ ${hours.toString().padStart(2,'0')}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+            }
+        }
+        
+        if (paidSpinsTodayEl) {
+            paidSpinsTodayEl.innerHTML = paidSpinsToday;
+        }
+        
+        if (freeSpinBtn) freeSpinBtn.disabled = !freeAvailable || isSpinning;
+        if (paidSpinBtn) paidSpinBtn.disabled = paidSpinsToday >= 10 || isSpinning || crystals < 50;
+        
+        // Обновляем историю
+        const historyList = document.getElementById("wheelHistoryList");
+        if (historyList) {
+            historyList.innerHTML = "";
+            wheelHistory.slice(-8).reverse().forEach(item => {
+                const div = document.createElement("div");
+                div.className = "wheel-history-item";
+                div.innerHTML = `
+                    <span>${item.time}</span>
+                    <span class="${item.isJackpot ? 'winner-highlight' : ''}">${item.reward}</span>
+                `;
+                historyList.appendChild(div);
+            });
+        }
+
+    }
+
+    function drawWheel() {
+        const canvas = document.getElementById("wheelCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        const width = canvas.width;
+        const height = canvas.height;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = width / 2 - 8;
+        const angleStep = (Math.PI * 2) / WHEEL_SECTORS.length;
+        
+        ctx.clearRect(0, 0, width, height);
+        
+        for (let i = 0; i < WHEEL_SECTORS.length; i++) {
+            const startAngle = i * angleStep + currentWheelRotation;
+            const endAngle = startAngle + angleStep;
+            
+            ctx.beginPath();
+            ctx.fillStyle = WHEEL_SECTORS[i].color;
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+            ctx.fill();
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Рисуем текст
+            ctx.save();
+            ctx.translate(centerX, centerY);
+            ctx.rotate(startAngle + angleStep / 2);
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 11px 'Inter'";
+            ctx.shadowBlur = 0;
+            const text = WHEEL_SECTORS[i].name;
+            // Центрируем текст по горизонтали и вертикали
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(text, radius - 35, 0);
+            ctx.restore();
+            
+            // Рисуем разделительные линии
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.arc(centerX, centerY, radius, startAngle, startAngle);
+            ctx.lineTo(centerX, centerY);
+            ctx.strokeStyle = "#ffffff";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+        
+        // Центральный круг
+        ctx.beginPath();
+        ctx.fillStyle = "#1a1a2e";
+        ctx.arc(centerX, centerY, 25, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#FFD700";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Рисуем эмодзи ПО ЦЕНТРУ
+        ctx.fillStyle = "#FFD700";
+        ctx.font = "22px 'Segoe UI Emoji'";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("🎰", centerX, centerY);
+    }
+
+    function getCurrentSectorIndex() {
+        const angleStep = (Math.PI * 2) / WHEEL_SECTORS.length;
+        const pointerAngle = -Math.PI / 2;
+        
+        let angle = pointerAngle - currentWheelRotation;
+        angle = ((angle % (Math.PI * 2)) + (Math.PI * 2)) % (Math.PI * 2);
+        
+        const sectorIndex = Math.floor(angle / angleStep) % WHEEL_SECTORS.length;
+        return sectorIndex;
+    }
+
+    function spinWheel(isFree = true) {
+        if (isSpinning) {
+            showToast("❌ Подождите, колесо уже крутится!");
+            return;
+        }
+        
+        resetPaidSpinsIfNeeded();
+        
+        if (isFree) {
+            const timeLeft = getFreeSpinTimeLeft();
+            if (timeLeft > 0) {
+                const minutes = Math.ceil(timeLeft / 60000);
+                showToast(`⏳ Бесплатный спин будет доступен через ${minutes} минут`);
+                return;
+            }
+        } else {
+            console.log("Платный спин. Текущие значения:", { paidSpinsToday, crystals });
+            
+            if (paidSpinsToday >= 10) {
+                showToast("❌ Лимит платных спинов на сегодня (10/10)");
+                return;
+            }
+            if (crystals < 50) {
+                showToast("❌ Не хватает кристаллов! Нужно 50💎");
+                return;
+            }
+            
+            // СПИСЫВАЕМ КРИСТАЛЛЫ
+            crystals -= 50;
+            paidSpinsToday++;
+            
+            console.log("После списания:", { paidSpinsToday, crystals });
+            
+            // СОХРАНЯЕМ СРАЗУ
+            saveGame();
+            updateAllUI();
+            showToast(`💎 -50 кристаллов! Осталось: ${crystals}💎 | Платных спинов сегодня: ${paidSpinsToday}/10`);
+        }
+        
+        isSpinning = true;
+        updateWheelUI();
+        
+        // Выбираем выигрыш
+        let totalChance = 0;
+        for (let sector of WHEEL_SECTORS) totalChance += sector.chance;
+        let rand = Math.random() * totalChance;
+        let accum = 0;
+        let selectedIndex = 0;
+        
+        for (let i = 0; i < WHEEL_SECTORS.length; i++) {
+            accum += WHEEL_SECTORS[i].chance;
+            if (rand <= accum) {
+                selectedIndex = i;
+                break;
+            }
+        }
+        
+        const selected = WHEEL_SECTORS[selectedIndex];
+        
+        // Вычисляем целевой угол для выбранного сектора
+        const angleStep = (Math.PI * 2) / WHEEL_SECTORS.length;
+        const pointerAngle = -Math.PI / 2;
+        const targetSectorMiddle = selectedIndex * angleStep + angleStep / 2;
+        
+        let targetRotation = pointerAngle - targetSectorMiddle;
+        let normalizedCurrent = currentWheelRotation % (Math.PI * 2);
+        if (normalizedCurrent < 0) normalizedCurrent += Math.PI * 2;
+        
+        let deltaAngle = targetRotation - normalizedCurrent;
+        const fullRotations = Math.PI * 2 * (6 + Math.floor(Math.random() * 5));
+        const finalRotation = currentWheelRotation + fullRotations + deltaAngle;
+        
+        const startRotation = currentWheelRotation;
+        const startTime = Date.now();
+        const duration = 2500;
+        
+        function animate() {
+            const elapsed = Date.now() - startTime;
+            let progress = Math.min(1, elapsed / duration);
+            progress = 1 - Math.pow(1 - progress, 3);
+            
+            currentWheelRotation = startRotation + (finalRotation - startRotation) * progress;
+            drawWheel();
+            
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                currentWheelRotation = finalRotation;
+                drawWheel();
+                
+                // Выдача награды
+                let rewardText = "";
+                let isJackpot = false;
+                
+                if (selected.reward.crystals) {
+                    crystals += selected.reward.crystals;
+                    rewardText = `+${selected.reward.crystals}💎`;
+                    if (selected.reward.crystals >= 500) isJackpot = true;
+                }
+                if (selected.reward.shards) {
+                    shards += selected.reward.shards;
+                    rewardText = `+${selected.reward.shards}⚡`;
+                }
+                if (selected.reward.card) {
+                    const card = getRandomCard(false);
+                    collection.push({ ...card });
+                    rewardText = `🎴 ${card.name} [${card.rank}]`;
+                    setTimeout(() => showCardModalWithRank(card), 500);
+                }
+                if (selected.reward.freePack) {
+                    setTimeout(() => openNormalPack(true), 500);
+                    rewardText = `🎁 Бесплатный пак`;
+                }
+                
+                if (isFree) {
+                    freeLastSpinTime = Date.now().toString();
+                }
+                
+                saveGame();
+                updateAllUI();
+                
+                // Добавляем в историю
+                const now = new Date();
+                const timeStr = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+                wheelHistory.unshift({
+                    time: timeStr,
+                    reward: `${selected.name} — ${rewardText}`,
+                    isJackpot: isJackpot
+                });
+                if (wheelHistory.length > 20) wheelHistory.pop();
+                localStorage.setItem("wheelHistory", JSON.stringify(wheelHistory));
+                
+                showToast(`🎉 ВЫПАЛО: ${selected.name}! ${rewardText}`);
+                updateWheelUI();
+                updateAllUI();
+                isSpinning = false;
+                
+                if (isJackpot) {
+                    showToast(`🏆 ДЖЕКПОТ! +${selected.reward.crystals}💎 🏆`, true);
+                }
+            }
+        }
+        
+        requestAnimationFrame(animate);
+    }
+
+    function initWheel() {
+        // Проверяем, существует ли canvas
+        const canvas = document.getElementById("wheelCanvas");
+        if (!canvas) {
+            console.log("Canvas колеса не найден, пропускаем инициализацию");
+            return;
+        }
+        
+        drawWheel();
+        updateWheelUI();
+        
+        const freeBtn = document.getElementById("freeSpinBtn");
+        const paidBtn = document.getElementById("paidSpinBtn");
+        
+        if (freeBtn) freeBtn.onclick = () => spinWheel(true);
+        if (paidBtn) paidBtn.onclick = () => spinWheel(false);
+        
+        // Обновляем колесо при переключении вкладки
+        const wheelSection = document.getElementById("wheelSection");
+        if (wheelSection) {
+            const observer = new MutationObserver(() => {
+                if (wheelSection.classList.contains("active")) {
+                    drawWheel();
+                    updateWheelUI();
+                }
+            });
+            observer.observe(wheelSection, { attributes: true });
+        }
     }
 
     function initShopTabs() {
@@ -4277,6 +4959,9 @@
         if (document.getElementById("questsSection")?.classList.contains("active")) {
             updateQuestTimer();
         }
+        if (document.getElementById("wheelSection")?.classList.contains("active")) {
+            updateWheelUI();
+        }
         updateProUI();
     }, 1000);
     
@@ -4288,6 +4973,9 @@
         initShopTabs();
         initExchangeTabs();
         initSplit();
+        if (document.getElementById("wheelCanvas")) {
+            initWheel();
+        }
 
         // Обработчики для обменов
         const exchangeActionBtn = document.getElementById("exchangeActionBtn");
@@ -4295,7 +4983,12 @@
         const exchangeOreToEventBtn = document.getElementById("exchangeOreToEventBtn");
         if (exchangeActionBtn) exchangeActionBtn.onclick = performExchange;
         if (exchangeClearBtn) exchangeClearBtn.onclick = clearExchangeSlots;
-        if (exchangeOreToEventBtn) exchangeOreToEventBtn.onclick = exchangeOreToEvent;
+        if (exchangeOreToEventBtn) {
+            console.log("Кнопка exchangeOreToEventBtn найдена, добавляем обработчик");
+            exchangeOreToEventBtn.onclick = exchangeOreToEvent;
+        } else {
+            console.log("Кнопка exchangeOreToEventBtn НЕ найдена!");
+        }
         
         const mineBtn = document.getElementById("mineBtn");
         const exchangeOreBtn = document.getElementById("exchangeBtn");
