@@ -2052,8 +2052,8 @@
     <div class="menu-item active" data-section="profile">👤 Профиль</div>
     <div class="menu-item" data-section="packs">📦 Паки</div>
     <div class="menu-item" data-section="event">🎪 Ивент</div>
-    <div class="menu-item" data-section="achievements">🏆 Достижения</div>
-    <div class="menu-item" data-section="quests">📋 Квесты</div>
+<!--     <div class="menu-item" data-section="achievements">🏆 Достижения</div>
+    <div class="menu-item" data-section="quests">📋 Квесты</div> -->
     <div class="menu-item" data-section="wheel">🎰 Колесо</div>
     <div class="menu-item" data-section="fishing">🎣 Рыбалка</div>
     <div class="menu-item" data-section="mine">⛏️ Шахта</div>
@@ -4333,7 +4333,7 @@
         updateExchangeOreButton();
         updateArenaUI();
         updateProStatus();
-        
+
         if (document.getElementById("exchangeSection").classList.contains("active")) {
             if (document.getElementById("mergePanel").classList.contains("active")) {
                 updateExchangeUI();
@@ -5868,15 +5868,15 @@
     }
 
     function updateProStatus() {
-    const statusSpan = document.getElementById("proStatusText");
-    if (statusSpan) {
-        if (isProActive()) {
-            const daysLeft = Math.ceil((proExpiry - Date.now()) / (1000 * 60 * 60 * 24));
-            statusSpan.innerHTML = `✅ Активен (осталось ${daysLeft} д.)`;
-            statusSpan.style.color = "#2ecc71";
-        } else {
-            statusSpan.innerHTML = "❌ Неактивен";
-            statusSpan.style.color = "#e74c3c";
+        const statusSpan = document.getElementById("proStatusText");
+        if (statusSpan) {
+            if (isProActive()) {
+                const daysLeft = Math.ceil((proExpiry - Date.now()) / (1000 * 60 * 60 * 24));
+                statusSpan.innerHTML = `✅ Активен (осталось ${daysLeft} д.)`;
+                statusSpan.style.color = "#2ecc71";
+            } else {
+                statusSpan.innerHTML = "❌ Неактивен";
+                statusSpan.style.color = "#e74c3c";
             }
         }
     }
