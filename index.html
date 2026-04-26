@@ -572,7 +572,7 @@
         }
 
         .pack-btn:active { transform: scale(0.97); }
-/*        .event-btn { background: linear-gradient(135deg, #f093fb, #f5576c); }*/
+        .event-btn { background: linear-gradient(135deg, #f093fb, #f5576c); }
 
         .selection-area {
             background: rgba(0, 0, 0, 0.7);
@@ -2169,7 +2169,7 @@
         
         <div class="pack-buttons">
             <button class="pack-btn event-btn" id="eventPackBtn">🎪 КУПИТЬ ИВЕНТ-ПАК ЗА 20🎴</button>
-            <button class="pack-btn" id="buyEventCurrencyBtn">💎 КУПИТЬ 50🌸 ЗА 100💎</button>
+            <button class="pack-btn event-btn" id="buyEventCurrencyBtn">💎 КУПИТЬ 50🌸 ЗА 100💎</button>
         </div>
     </div>
 
@@ -2555,15 +2555,45 @@
                 </div>
                 <a href="https://yoomoney.ru/to/4100119003253255/500" target="_blank" class="shop-buy-btn">КУПИТЬ</a>
             </div>
+            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 215, 0, 0.1); border-radius: 16px; font-size: 0.65rem;">
+                💡 После оплаты пришлите скриншот чека в Telegram: <a href="https://t.me/b_loody" target="_blank" style="color: #FFD700;">@b_loody</a>
+            </div>
         </div>
 
-        <div id="proPanel" class="shop-panel">
-            <div class="pro-card">
-                <div class="pro-title">👑 PRO АККАУНТ</div>
-                <div class="pro-description">
-                    Скоро здесь появятся эксклюзивные возможности для PRO-пользователей!
-                </div>
-                <div style="font-size: 0.7rem; opacity: 0.6;">В разработке...</div>
+    <div id="proPanel" class="shop-panel">
+        <div class="pro-card">
+            <div class="pro-title">👑 PRO АККАУНТ</div>
+            <div class="pro-description">
+                Расширьте свои возможности в BLOODY CARDS!
+            </div>
+            
+            <div style="text-align: left; margin: 20px 0; padding: 10px; background: rgba(0,0,0,0.3); border-radius: 20px;">
+                <div style="font-weight: bold; margin-bottom: 10px;">✨ ПРЕИМУЩЕСТВА PRO:</div>
+                <div style="font-size: 0.8rem; margin-bottom: 8px;">✅ <span style="color: #FFD700;">Раскол карт</span> — разделяйте карты на несколько более низкого ранга</div>
+                <div style="font-size: 0.8rem; margin-bottom: 8px;">✅ <span style="color: #FFD700;">+20 ивент-валюты</span> ежедневно к бонусу</div>
+                <div style="font-size: 0.8rem; margin-bottom: 8px;">✅ <span style="color: #FFD700;">Эксклюзивные скины</span> для карт (скоро)</div>
+                <div style="font-size: 0.8rem; margin-bottom: 8px;">✅ <span style="color: #FFD700;">Приоритетная поддержка</span> (скоро)</div>
+                <div style="font-size: 0.8rem;">✅ <span style="color: #FFD700;">Доступ к закрытому чату</span> (скоро)</div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 12px; margin: 20px 0;">
+                <a href="https://yoomoney.ru/to/4100119003253255/150" target="_blank" class="shop-buy-btn" style="background: linear-gradient(135deg, #f39c12, #e67e22); text-align: center; text-decoration: none; display: block;">
+                    🎁 7 дней PRO — 150 ₽
+                </a>
+                <a href="https://yoomoney.ru/to/4100119003253255/500" target="_blank" class="shop-buy-btn" style="background: linear-gradient(135deg, #e67e22, #d35400); text-align: center; text-decoration: none; display: block;">
+                    ⭐ 30 дней PRO — 500 ₽ (Скидка!)
+                </a>
+                <a href="https://yoomoney.ru/to/4100119003253255/4500" target="_blank" class="shop-buy-btn" style="background: linear-gradient(135deg, #FFD700, #FF8C00); text-align: center; text-decoration: none; display: block;">
+                    👑 365 дней PRO — 4500 ₽ (ЛУЧШЕЕ ПРЕДЛОЖЕНИЕ!)
+                </a>
+            </div>
+            
+            <div id="proStatus" style="font-size: 0.7rem; opacity: 0.7; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 16px;">
+                🔄 Статус: <span id="proStatusText">Неактивен</span>
+            </div>
+            
+            <div style="margin-top: 15px; padding: 8px; background: rgba(255, 215, 0, 0.1); border-radius: 16px; font-size: 0.65rem;">
+                💡 После оплаты пришлите скриншот чека в Telegram: <a href="https://t.me/b_loody" target="_blank" style="color: #FFD700;">@b_loody</a>
             </div>
         </div>
     </div>
@@ -4302,7 +4332,8 @@
         updateQuestsUI();
         updateExchangeOreButton();
         updateArenaUI();
-
+        updateProStatus();
+        
         if (document.getElementById("exchangeSection").classList.contains("active")) {
             if (document.getElementById("mergePanel").classList.contains("active")) {
                 updateExchangeUI();
@@ -5834,6 +5865,20 @@
         if (healBtn) healBtn.onclick = playerHeal;
         if (surrenderBtn) surrenderBtn.onclick = surrenderBattle;
         if (strongBtn) strongBtn.onclick = strongAttack;
+    }
+
+    function updateProStatus() {
+    const statusSpan = document.getElementById("proStatusText");
+    if (statusSpan) {
+        if (isProActive()) {
+            const daysLeft = Math.ceil((proExpiry - Date.now()) / (1000 * 60 * 60 * 24));
+            statusSpan.innerHTML = `✅ Активен (осталось ${daysLeft} д.)`;
+            statusSpan.style.color = "#2ecc71";
+        } else {
+            statusSpan.innerHTML = "❌ Неактивен";
+            statusSpan.style.color = "#e74c3c";
+            }
+        }
     }
 
     function initShopTabs() {
